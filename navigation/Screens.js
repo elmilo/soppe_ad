@@ -103,14 +103,11 @@ function StackCuentas(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              white
-              transparent
-              title="Tarjetas"
+              title="Cuentas"
               scene={scene}
               navigation={navigation}
             />
-          ),
-          headerTransparent: true
+          )
         }}
       />
     </Stack.Navigator>
