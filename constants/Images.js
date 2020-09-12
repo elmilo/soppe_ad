@@ -1,11 +1,14 @@
-const Onboarding = 'https://images.unsplash.com/photo-1505995433366-e12047f3f144?fit=crop&w=840&q=80';
-const Pro = 'https://images.unsplash.com/photo-1485796826113-174aa68fd81b?fit=crop&w=840&q=80';
+//import Onboarding from '../assets/images/photo-1505995433366-e12047f3f144.jpg';
+
+const Onboarding = require('../assets/images/photo-1505995433366-e12047f3f144.jpg');
+//'./assets/images/photo-1505995433366-e12047f3f144.jpg';
+const Pro = require('../assets/images/photo-1485796826113-174aa68fd81b.jpg');
 const Products = {
-  'Accessories': 'https://source.unsplash.com//l1MCA0VyNrk/840x840',
+  'Accessories': require('../assets/images/photo-1509112756314-34a0badb29d4.jpg'),
 };
 
-const Profile = 'https://images.unsplash.com/photo-1512529920731-e8abaea917a5?fit=crop&w=840&q=80';
-const Avatar = 'https://images.unsplash.com/photo-1518725522904-4b3939358342?fit=crop&w=210&q=80';
+const Profile = require('../assets/images/photo-1512529920731-e8abaea917a5.jpg');
+const Avatar = require('../assets/images/photo-1518725522904-4b3939358342.jpg');
 
 const Viewed = [
   'https://images.unsplash.com/photo-1508264443919-15a31e1d9c1a?fit=crop&w=240&q=80',

@@ -16,7 +16,7 @@ export default class Pro extends React.Component {
         <StatusBar barStyle="light-content" />
         <Block flex>
           <ImageBackground
-            source={{ uri: Images.Pro }}
+            source={Images.Pro}
             style={{ height: height / 1.8, width, zIndex: 1 }}
           >
           <LinearGradient

@@ -263,7 +263,7 @@ export default class Components extends React.Component {
             <Product product={products[4]} full />
             <Block flex card shadow style={styles.category}>
               <ImageBackground
-                source={{ uri: Images.Products['Accessories'] }}
+                source={Images.Products['Accessories']}
                 style={[styles.imageBlock, { width: width - (theme.SIZES.BASE * 2), height: 252 }]}
                 imageStyle={{ width: width - (theme.SIZES.BASE * 2), height: 252 }}>
                 <Block style={styles.categoryTitle}>

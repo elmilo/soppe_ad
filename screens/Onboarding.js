@@ -16,7 +16,7 @@ export default class Onboarding extends React.Component {
         <StatusBar barStyle="light-content" />
         <Block flex center>
           <ImageBackground
-            source={{  uri: Images.Onboarding }}
+            source={Images.Onboarding}
             style={{ height: height, width: width, marginTop: '-55%', zIndex: 1 }}
           />
         </Block>
@@ -27,7 +27,7 @@ export default class Onboarding extends React.Component {
                 <Text color="white" size={60}>Soppe</Text>
               </Block>
               <Text size={16} color='rgba(255,255,255,0.6)'>
-                Tu lugar, tu dinero
+                Un lugar, tu dinero
               </Text>
             </Block>
             <Block center>

@@ -35,7 +35,7 @@ function CustomDrawerContent({
           onPress={() => navigation.navigate("Perfil")}
         >
           <Block style={styles.profile}>
-            <Image source={{ uri: profile.avatar }} style={styles.avatar} />
+            <Image source={profile.avatar} style={styles.avatar} />
             <Text h5 color={"white"}>
               {profile.name}
             </Text>
