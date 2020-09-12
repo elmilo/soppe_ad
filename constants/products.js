@@ -1,29 +1,29 @@
 export default [
   {
-    title: 'Hardly Anything Takes More Coura...',
+    title: 'Banco Galicia',
     image: 'https://source.unsplash.com/dS2hi__ZZMk/840x840',
-    price: 180,
+    price: 20000,
     horizontal: true,
   },
   {
-    title: 'Find the cheapest deals on our range...',
+    title: 'Billetera',
     image: 'https://source.unsplash.com/tb6ulgGY5Zc/840x840',
-    price: 220,
+    price: 1500,
   },
   {
-    title: 'Adidas Tango Terry Jersey',
+    title: 'Mercado Pago',
     image: 'https://source.unsplash.com/YHbcum51JB0/840x840',
-    price: 40,
+    price: 3575,
   },
   {
-    title: 'Internet of Things (IoT) is Here to Stay',
+    title: 'Ualá',
     image: 'https://source.unsplash.com/I7BSOoPa5hM/840x840',
-    price: 188,
+    price: 200,
     horizontal: true,
   },
   {
-    title: 'Coffee - A Drop of Happiness in a Cup',
+    title: 'Banco Santander',
     image: 'https://source.unsplash.com/Ws4wd-vJ9M0/840x840',
-    price: 180,
+    price: 35000,
   },
 ];
