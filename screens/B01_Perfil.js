@@ -10,7 +10,7 @@ import { HeaderHeight } from "../constants/utils";
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
-export default class Profile extends React.Component {
+export default class B01_Perfil extends React.Component {
   render() {
     return (
       <Block flex style={styles.profile}>
@@ -21,22 +21,16 @@ export default class Profile extends React.Component {
             imageStyle={styles.profileImage}>
             <Block flex style={styles.profileDetails}>
               <Block style={styles.profileTexts}>
-                <Text color="white" size={28} style={{ paddingBottom: 8 }}>Rachel Brown</Text>
+                <Text color="white" size={28} style={{ paddingBottom: 8 }}>Román Lamar</Text>
                 <Block row space="between">
                   <Block row>
                     <Block middle style={styles.pro}>
                       <Text size={16} color="white">Pro</Text>
                     </Block>
-                    <Text color="white" size={16} muted style={styles.seller}>Seller</Text>
+                    <Text color="white" size={16} muted style={styles.seller}>12 meses en Soppe</Text>
                     <Text size={16} color={materialTheme.COLORS.WARNING}>
-                      4.8 <Icon name="shape-star" family="GalioExtra" size={14} />
+                    <Icon name="shape-star" family="GalioExtra" size={14} /> 1.2M administrados 
                     </Text>
-                  </Block>
-                  <Block>
-                    <Text color={theme.COLORS.MUTED} size={16}>
-                      <Icon name="map-marker" family="font-awesome" color={theme.COLORS.MUTED} size={16} />
-                      {` `} Los Angeles, CA
-                      </Text>
                   </Block>
                 </Block>
               </Block>
@@ -44,6 +38,8 @@ export default class Profile extends React.Component {
             </Block>
           </ImageBackground>
         </Block>
+
+
         <Block flex style={styles.options}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <Block row space="between" style={{ padding: theme.SIZES.BASE, }}>

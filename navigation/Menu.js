@@ -17,13 +17,12 @@ function CustomDrawerContent({
 }) {
   const insets = useSafeArea();
   const screens = [
-    "Home",
-    "Woman",
-    "Man",
-    "Kids",
-    "New Collection",
-    "Profile",
-    "Settings",
+    "Inicio",
+    "Tarjetas",
+    "Cuentas",
+    "Préstamos",
+    "Inversiones",
+    "Análisis",
     "Components"
   ];
   return (
@@ -33,7 +32,7 @@ function CustomDrawerContent({
     >
       <Block flex={0.25} style={styles.header}>
         <TouchableWithoutFeedback
-          onPress={() => navigation.navigate("Profile")}
+          onPress={() => navigation.navigate("Perfil")}
         >
           <Block style={styles.profile}>
             <Image source={{ uri: profile.avatar }} style={styles.avatar} />

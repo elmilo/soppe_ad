@@ -6,9 +6,18 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Block, Text, theme } from "galio-framework";
 
 import ComponentsScreen from '../screens/Components';
-import HomeScreen from '../screens/Home';
+
+import B0_Inicio from '../screens/B0_Inicio';
+import B01_Perfil from '../screens/B01_Perfil';
+import C0_Tarjetas from '../screens/C0_Tarjetas';
+import D0_Cuentas from '../screens/D0_Cuentas';
+import E00_Inversiones from '../screens/E00_Inversiones';
+import F00_Prestamos from '../screens/F00_Prestamos';
+import G00_Presupuestos from '../screens/G00_Presupuestos';
+
+
+
 import OnboardingScreen from '../screens/Onboarding';
-import ProfileScreen from '../screens/Profile';
 import ProScreen from '../screens/Pro';
 import SettingsScreen from '../screens/Settings';
 
@@ -23,24 +32,176 @@ const Drawer = createDrawerNavigator();
 
 const profile = {
   avatar: Images.Profile,
-  name: "Rachel Brown",
-  type: "Seller",
+  type: "12 meses en Soppe",
   plan: "Pro",
   rating: 4.8
 };
-
-function ProfileStack(props) {
+/******************************************************************** */
+function StackInicio(props) {
   return (
-    <Stack.Navigator initialRouteName="Profile" mode="card" headerMode="screen">
+    <Stack.Navigator mode="card" headerMode="screen">
+      <Stack.Screen 
+        name="Inicio"
+        component={B0_Inicio}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header 
+              search
+              tabs
+              title="Inicio"
+              navigation={navigation}
+              scene={scene}
+            />
+          )
+        }}
+      />
+      <Stack.Screen 
+        name="Pro"
+        component={ProScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header back white transparent title="" navigation={navigation} scene={scene} />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
+function StackTarjetas(props) {
+  return (
+    <Stack.Navigator initialRouteName="Tarjetas" mode="card" headerMode="screen">
       <Stack.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="Tarjetas"
+        component={C0_Tarjetas}
         options={{
           header: ({ navigation, scene }) => (
             <Header
               white
               transparent
-              title="Profile"
+              title="Tarjetas"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
+function StackCuentas(props) {
+  return (
+    <Stack.Navigator initialRouteName="Cuentas" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Cuentas"
+        component={D0_Cuentas}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              white
+              transparent
+              title="Tarjetas"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
+function StackInversiones(props) {
+  return (
+    <Stack.Navigator initialRouteName="Inversiones" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Inversiones"
+        component={E00_Inversiones}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              white
+              transparent
+              title="Inversiones"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
+function StackPrestamos(props) {
+  return (
+    <Stack.Navigator initialRouteName="Préstamos" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Préstamos"
+        component={F00_Prestamos}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              white
+              transparent
+              title="Préstamos"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+/************************************************************************** */
+function StackPresupuestos(props) {
+  return (
+    <Stack.Navigator initialRouteName="Presupuestos" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Presupuestos"
+        component={G00_Presupuestos}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              white
+              transparent
+              title="Presupuestos"
+              scene={scene}
+              navigation={navigation}
+            />
+          ),
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+
+/************************************************************************** */
+function StackPerfil(props) {
+  return (
+    <Stack.Navigator initialRouteName="Perfil" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Perfil"
+        component={B01_Perfil}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              white
+              transparent
+              title="Perfil"
               scene={scene}
               navigation={navigation}
             />
@@ -88,37 +249,8 @@ function ComponentsStack(props) {
   );
 }
 
-function HomeStack(props) {
-  return (
-    <Stack.Navigator mode="card" headerMode="screen">
-      <Stack.Screen 
-        name="Home"
-        component={HomeScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header 
-              search
-              tabs
-              title="Home"
-              navigation={navigation}
-              scene={scene}
-            />
-          )
-        }}
-      />
-      <Stack.Screen 
-        name="Pro"
-        component={ProScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header back white transparent title="" navigation={navigation} scene={scene} />
-          ),
-          headerTransparent: true
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
+
+
 
 function AppStack(props) {
   return (
@@ -150,11 +282,11 @@ function AppStack(props) {
           fontWeight: "normal"
         }
       }}
-      initialRouteName="Home"
+      initialRouteName="Inicio"
     >
       <Drawer.Screen
-        name="Home"
-        component={HomeStack}
+        name="Inicio"
+        component={StackInicio}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
@@ -210,22 +342,79 @@ function AppStack(props) {
         }}
       />
       <Drawer.Screen
-        name="New Collection"
-        component={ProScreen}
+        name="Cuentas"
+        component={StackCuentas}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
               size={16}
-              name="grid-on"
-              family="material"
+              name="circle-10"
+              family="GalioExtra"
               color={focused ? "white" : materialTheme.COLORS.MUTED}
             />
           )
         }}
       />
       <Drawer.Screen
-        name="Profile"
-        component={ProfileStack}
+        name="Préstamos"
+        component={StackPrestamos}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+        <Drawer.Screen
+        name="Presupuestos"
+        component={StackPresupuestos}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+        <Drawer.Screen
+        name="Tarjetas"
+        component={StackTarjetas}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen
+        name="Inversiones"
+        component={StackInversiones}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+
+      <Drawer.Screen
+        name="Perfil"
+        component={StackPerfil}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
