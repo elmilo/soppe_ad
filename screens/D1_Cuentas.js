@@ -9,13 +9,13 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header } from '../components';
 
 import products from '../constants/products';
-export default class D0_Cuentas extends React.Component {
+export default class D1_Cuentas extends React.Component {
   renderNavigation = () => {
     return (
       <Block flex style={styles.group}>
         <Block>
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header back title="Title" navigation={this.props.navigation} />
+            <Header back title="Nueva cuenta de dinero" navigation={this.props.navigation} />
           </Block>
         </Block>
       </Block>
@@ -28,13 +28,15 @@ export default class D0_Cuentas extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Block flex>
-          <Product product={products[0]} horizontal />
-          <Product product={products[1]} horizontal />
-          <Product product={products[2]} horizontal /> 
+        <Text h4 style={{marginBottom: theme.SIZES.BASE / 2}}>Nueva cuenta de dinero</Text>
+        <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Últimos 4 dígitos tarjeta de debito</Text>
+       
+        <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de vencimiento</Text>
+        <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Saldo</Text>
           <Button shadowless color="success" style={[styles.button, styles.shadow]}>
-             +  Agregar nueva cuenta 
+             +
           </Button>
-         </Block>
+        </Block>
         </ScrollView>
     )
   }

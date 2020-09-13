@@ -16,10 +16,9 @@ export default [
     price: 3575,
   },
   {
-    title: 'z',
+    title: 'a',
     image: 'https://i.imgur.com/SlODudL.png',
-    price: 3575,
-  },
+      },
   {
     title: 'b',
     image: 'https://i.imgur.com/SlODudL.png',
