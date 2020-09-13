@@ -35,7 +35,7 @@ export default class D0_Cuentas extends React.Component {
           <Cuenta cuenta={cuentas[1]} horizontal />
           <Cuenta cuenta={cuentas[2]} horizontal /> 
           <Button shadowless color="success" style={[styles.button, styles.shadow]} 
-          // onPress={() => navigation.navigate('D1_Cuentas')}
+           onPress={() => navigation.navigate('Nueva Cuenta')}
           >
              +  Agregar nueva cuenta 
           </Button>

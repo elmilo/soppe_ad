@@ -120,14 +120,14 @@ function StackCuentas(props) {
 
 function StackNuevaCuenta(props) {
   return (
-    <Stack.Navigator initialRouteName="D1_Cuentas" mode="card" headerMode="screen">
+    <Stack.Navigator initialRouteName="Nueva Cuenta" mode="card" headerMode="screen">
       <Stack.Screen
-        name="D1_Cuentas"
+        name="Nueva Cuentas"
         component={D1_Cuentas}
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title="D1_Cuentas"
+              title="Nueva Cuenta"
               scene={scene}
               navigation={navigation}
             />
@@ -434,7 +434,20 @@ function AppStack(props) {
           )
         }}
       />
-
+      <Drawer.Screen
+        name="Nueva Cuenta"
+        component={StackNuevaCuenta}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
       <Drawer.Screen
         name="Perfil"
         component={StackPerfil}
