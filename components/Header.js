@@ -1,9 +1,9 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
 import { TouchableOpacity, StyleSheet, Platform, Dimensions } from 'react-native';
-import { Button, Block, NavBar, Input, Text, theme } from 'galio-framework';
+import { Button, Block, NavBar, Input, Text, theme, Icon } from 'galio-framework';
 
-import Icon from './Icon';
+//import Icon from './Icon';
 import materialTheme from '../constants/Theme';
 
 const { height, width } = Dimensions.get('window');
@@ -50,7 +50,7 @@ class Header extends React.Component {
     return (back ? navigation.goBack() : navigation.openDrawer());
   }
 
-  renderRight = () => {
+  /*renderRight = () => {
     const { white, title, navigation } = this.props;
 
     if (title === 'Title') {
@@ -61,17 +61,17 @@ class Header extends React.Component {
     }
 
     switch (title) {
-      case 'Home':
+      case 'Análisis':
         return ([
           <ChatButton key='chat-home' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
         ]);
-      case 'Deals':
+      case 'Perfil':
         return ([
           <ChatButton key='chat-categories' navigation={navigation} />,
           <BasketButton key='basket-categories' navigation={navigation} />
         ]);
-      case 'Categories':
+      case 'Inversiones':
         return ([
           <ChatButton key='chat-categories' navigation={navigation} isWhite={white} />,
           <BasketButton key='basket-categories' navigation={navigation} isWhite={white} />
@@ -105,8 +105,8 @@ class Header extends React.Component {
         break;
     }
   }
-
-  renderSearch = () => {
+*/
+ /* renderSearch = () => {
     const { navigation } = this.props;
     return (
       <Input
@@ -118,51 +118,52 @@ class Header extends React.Component {
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="magnifying-glass" family="entypo" />}
       />
     )
-  }
+  }*/
 
   renderTabs = () => {
     const { navigation, tabTitleLeft, tabTitleRight } = this.props;
 
     return (
       <Block row style={styles.tabs}>
-        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
+        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Nuevo Ingreso')}>
           <Block row middle>
-            <Icon name="grid" family="feather" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Categories'}</Text>
+            <Icon size={22} name="pluscircleo" family="AntDesign" style={{ paddingRight: 8 }} />
+            <Text size={16} style={styles.tabTitle}>{tabTitleLeft || 'Nuevo Ingreso'}</Text>
           </Block>
         </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
+        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Nuevo Egreso')}>
           <Block row middle>
-            <Icon size={16} name="camera-18" family="GalioExtra" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Best Deals'}</Text>
+            <Icon size={22} name="minuscircleo" family="AntDesign" style={{ paddingRight: 8 }} />
+            <Text size={16} style={styles.tabTitle}>{tabTitleRight || 'Nuevo Egreso'}</Text>
           </Block>
         </Button>
       </Block>
     )
   }
 
+  //          {search ? this.renderSearch() : null}
   renderHeader = () => {
-    const { search, tabs } = this.props;
-    if (search || tabs) {
+    const { tabs } = this.props;
       return (
         <Block center>
-          {search ? this.renderSearch() : null}
           {tabs ? this.renderTabs() : null}
         </Block>
       )
-    }
-    return null;
   }
 
   render() {
     const { back, title, white, transparent, navigation } = this.props;
     // const { routeName } = navigation.state;
-    const noShadow = ["Search", "Categories", "Deals", "Pro", "Profile"].includes(title);
+    const noShadow = ["Search", "Categories", "Deals", "Pro", "Perfil"].includes(title);
     const headerStyles = [
       !noShadow ? styles.shadow : null,
       transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null,
     ];
 
+    /**
+  right={this.renderRight()}
+  rightStyle={{ alignItems: 'center' }} 
+ */
     return (
       <Block style={headerStyles}>
         <NavBar
@@ -170,8 +171,7 @@ class Header extends React.Component {
           title={title}
           style={styles.navbar}
           transparent={transparent}
-          right={this.renderRight()}
-          rightStyle={{ alignItems: 'center' }}
+
           leftStyle={{ flex: 0.3, paddingTop: 2  }}
           leftIconName={(back ? 'chevron-left' : 'navicon')}
           leftIconColor={white ? theme.COLORS.WHITE : theme.COLORS.ICON}

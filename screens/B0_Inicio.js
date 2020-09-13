@@ -6,6 +6,7 @@ import { Icon, Product } from '../components';
 
 const { width } = Dimensions.get('screen');
 import products from '../constants/products';
+import GraficoAvance from '../components/GraficoAvance';
 
 export default class B0_Inicio extends React.Component {
   renderSearch = () => {
@@ -58,6 +59,9 @@ export default class B0_Inicio extends React.Component {
           </Block>
           <Product product={products[3]} horizontal />
           <Product product={products[4]} full />
+        </Block>
+        <Block flex>
+          <GraficoAvance/>
         </Block>
       </ScrollView>
     )

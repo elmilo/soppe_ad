@@ -14,7 +14,7 @@ class Product extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={[styles.product, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { product: product })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { tarjetaID: miID })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
             <Image source={{ uri: product.image }} style={imageStyles} />
           </Block>
