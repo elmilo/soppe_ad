@@ -1,29 +1,28 @@
 export default [
   {
-    title: 'Banco Galicia',
-    image: 'https://i.imgur.com/Eb3Vq92.jpg',
+    title: 'Banco',
+    image: 'https://i.imgur.com/LXy4hDf.png',
     price: 70000,
     horizontal: true,
   },
   {
-    title: 'Billetera',
-    image: 'https://i.imgur.com/Eq35gep.png',
+    title: 'Efectivo ARS',
+    image: 'https://i.imgur.com/NomEAbu.png',
     price: 1500,
   },
   {
-    title: 'Mercado Pago',
-    image: 'https://source.unsplash.com/YHbcum51JB0/840x840',
+    title: 'Efectivo USD',
+    image: 'https://i.imgur.com/iaSPaR0.png',
     price: 3575,
   },
   {
-    title: 'Ualá',
-    image: 'https://source.unsplash.com/I7BSOoPa5hM/840x840',
-    price: 200,
-    horizontal: true,
+    title: 'a',
+    image: 'https://i.imgur.com/SlODudL.png',
+    price: 3575,
   },
   {
-    title: 'Banco Santander',
-    image: 'https://source.unsplash.com/Ws4wd-vJ9M0/840x840',
-    price: 35000,
+    title: 'b',
+    image: 'https://i.imgur.com/SlODudL.png',
+    price: 3575,
   },
 ];

@@ -75,7 +75,7 @@ function StackTarjetas(props) {
     <Stack.Navigator initialRouteName="Tarjetas" mode="card" headerMode="screen">
       <Stack.Screen
         name="Tarjetas"
-        component={C0_Tarjetas}
+        component={ProScreen}
         options={{
           header: ({ navigation, scene }) => (
             <Header
@@ -108,6 +108,16 @@ function StackCuentas(props) {
               navigation={navigation}
             />
           )
+        }}
+      />
+      <Stack.Screen 
+        name="D0_Cuentas_Mod_Valor"
+        component={D0_Cuentas_Mod_ValorScreen}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header back white transparent title="" navigation={navigation} scene={scene} />
+          ),
+          headerTransparent: true
         }}
       />
     </Stack.Navigator>

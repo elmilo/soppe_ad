@@ -31,16 +31,11 @@ export default class D0_Cuentas extends React.Component {
           <Product product={products[0]} horizontal />
           <Product product={products[1]} horizontal />
           <Product product={products[2]} horizontal />
-          <Product product={products[3]} horizontal />
-          <Product product={products[4]} horizontal />
-          <Product product={products[0]} horizontal />
-          <Product product={products[1]} horizontal />
-          <Product product={products[2]} horizontal />
-          <Product product={products[3]} horizontal />
-          <Product product={products[4]} horizontal />
-          <Product product={products[4]} full />
+          <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+             +  Agregar nueva cuenta
+          </Button>
         </Block>
-      </ScrollView>
+        </ScrollView>
     )
   }
 
