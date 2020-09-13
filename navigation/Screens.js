@@ -11,6 +11,7 @@ import B0_Inicio from '../screens/B0_Inicio';
 import B01_Perfil from '../screens/B01_Perfil';
 import C0_Tarjetas from '../screens/C0_Tarjetas';
 import D0_Cuentas from '../screens/D0_Cuentas';
+import D1_Cuentas from '../screens/D1_Cuentas';
 import E00_Inversiones from '../screens/E00_Inversiones';
 import F00_Prestamos from '../screens/F00_Prestamos';
 import G00_Presupuestos from '../screens/G00_Presupuestos';
@@ -116,6 +117,30 @@ function StackCuentas(props) {
 }
 
 /************************************************************************** */
+
+function StackNuevaCuenta(props) {
+  return (
+    <Stack.Navigator initialRouteName="D1_Cuentas" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="D1_Cuentas"
+        component={D1_Cuentas}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="D1_Cuentas"
+              scene={scene}
+              navigation={navigation}
+            />
+          )
+        }}
+      />
+      
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
+
 function StackInversiones(props) {
   return (
     <Stack.Navigator initialRouteName="Inversiones" mode="card" headerMode="screen">
