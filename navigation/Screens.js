@@ -128,6 +128,7 @@ function StackCuentas(props) {
           headerTransparent: true,
         }}
       />
+      
     </Stack.Navigator>
   );
 }
