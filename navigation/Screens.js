@@ -110,16 +110,7 @@ function StackCuentas(props) {
           )
         }}
       />
-      <Stack.Screen 
-        name="D0_Cuentas_Mod_Valor"
-        component={D0_Cuentas_Mod_ValorScreen}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header back white transparent title="" navigation={navigation} scene={scene} />
-          ),
-          headerTransparent: true
-        }}
-      />
+      
     </Stack.Navigator>
   );
 }
