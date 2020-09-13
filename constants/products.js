@@ -1,13 +1,13 @@
 export default [
   {
     title: 'Banco Galicia',
-    image: 'https://source.unsplash.com/dS2hi__ZZMk/840x840',
-    price: 20000,
+    image: 'https://i.imgur.com/Eb3Vq92.jpg',
+    price: 70000,
     horizontal: true,
   },
   {
     title: 'Billetera',
-    image: 'https://source.unsplash.com/tb6ulgGY5Zc/840x840',
+    image: 'https://i.imgur.com/Eq35gep.png',
     price: 1500,
   },
   {
