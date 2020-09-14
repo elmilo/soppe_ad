@@ -25,4 +25,9 @@ export default [
     image: 'https://i.imgur.com/SlODudL.png',
     price: 3575,
   },
+  {
+    title: 'santi',
+    image: 'https://i.imgur.com/SlODudL.png',
+    price: 3575,
+  },
 ];

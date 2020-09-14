@@ -26,14 +26,21 @@ export default class D0_Cuentas extends React.Component {
 
   renderCuentas = () => {
     const { navigation} = this.props;
+    let datos = [];
+    cuentas.forEach((cuenta) => {
+        datos.push(
+                <Cuenta cuenta ={cuenta} horizontal/>
+            )
+        
+    })
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.cuentas}>
         <Block flex>
-          <Cuenta cuenta={cuentas[0]} horizontal />
-          <Cuenta cuenta={cuentas[1]} horizontal />
-          <Cuenta cuenta={cuentas[2]} horizontal /> 
+          <Block dense>
+              {datos}
+          </Block>
           <Button shadowless color="success" style={[styles.button, styles.shadow]} 
            onPress={() => navigation.navigate('Nueva Cuenta')}
           >
