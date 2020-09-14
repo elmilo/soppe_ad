@@ -17,16 +17,13 @@ export default class Onboarding extends React.Component {
         <Block flex center>
           <ImageBackground
             source={Images.Onboarding}
-            style={{ height: height, width: width, marginTop: '-55%', zIndex: 1 }}
+            style={{ height: height, width: width, marginTop: '-10%', zIndex: 1 }}
           />
         </Block>
         <Block flex space="between" style={styles.padded}>
           <Block flex space="around" style={{ zIndex: 2 }}>
             <Block>
-              <Block>
-                <Text color="white" size={60}>Soppe</Text>
-              </Block>
-              <Text size={16} color='rgba(255,255,255,0.6)'>
+              <Text size={26} color='rgba(255,255,255,0.8)'>
                 Un lugar, tu dinero
               </Text>
             </Block>

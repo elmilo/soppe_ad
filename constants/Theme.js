@@ -1,13 +1,13 @@
 export default {
   COLORS: {
-    DEFAULT: '#9090a9',
+    DEFAULT: '#d2b28c',
     PRIMARY: '#ff7f2a',
     LABEL: '#FE2472',
     INFO: '#00BCD4',
     ERROR: '#F44336',
     SUCCESS: '#4CAF50',
     WARNING: '#FF9800',
-    MUTED: '#979797',
+    MUTED: '#f5efe6',//979797
     INPUT: '#9090a9',
     ACTIVE: '#ff7f2a',
     BUTTON_COLOR: '#ff7f2a',

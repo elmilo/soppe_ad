@@ -33,7 +33,7 @@ const Drawer = createDrawerNavigator();
 
 const profile = {
   avatar: Images.Profile,
-  type: "12 meses en Soppe",
+  type: "12 meses",
   plan: "Pro",
   rating: 4.8,
 };
@@ -148,7 +148,6 @@ function StackInversiones(props) {
           header: ({ navigation, scene }) => (
             <Header
               white
-              back
               transparent
               title="Inversiones"
               scene={scene}

@@ -1,13 +1,12 @@
 //import Onboarding from '../assets/images/photo-1505995433366-e12047f3f144.jpg';
-
-const Onboarding = require('../assets/images/photo-1505995433366-e12047f3f144.jpg');
+const Onboarding = require('../assets/images/inicio.png');
 //'./assets/images/photo-1505995433366-e12047f3f144.jpg';
 const Pro = require('../assets/images/photo-1485796826113-174aa68fd81b.jpg');
 const Products = {
   'Accessories': require('../assets/images/photo-1509112756314-34a0badb29d4.jpg'),
 };
 
-const Profile = require('../assets/images/photo-1512529920731-e8abaea917a5.jpg');
+const Profile = require('../assets/images/foto-perfil.jpg');
 const Avatar = require('../assets/images/photo-1518725522904-4b3939358342.jpg');
 
 const Viewed = [
