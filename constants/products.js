@@ -17,11 +17,12 @@ export default [
   },
   {
     title: 'a',
-    image: 'https://i.imgur.com/SlODudL.png',
+    image: 'https://i.imgur.com/yxgbmfX.jpg',
+    price: 4577,
       },
   {
     title: 'b',
-    image: 'https://i.imgur.com/SlODudL.png',
+    image: 'https://i.imgur.com/yxgbmfX.jpg',
     price: 3575,
   },
 ];

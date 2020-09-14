@@ -42,7 +42,7 @@ export default class D1_Cuentas extends React.Component {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
-       <Text></Text>
+        <Text></Text>
         <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
         <ModalSelector
                     data={entidad}
@@ -73,7 +73,7 @@ export default class D1_Cuentas extends React.Component {
           />
         </Block>
         </Block>
-        <Text></Text>
+       
         <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de vencimiento</Text>
 
         <Block flex style={styles.group}>
@@ -98,10 +98,10 @@ export default class D1_Cuentas extends React.Component {
           />
         </Block>
         </Block>
-
           <Button shadowless color="success" style={[styles.button, styles.shadow]}>
              +
           </Button>
+          <Text></Text>
         </Block>
         </ScrollView>
     )

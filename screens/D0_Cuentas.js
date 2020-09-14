@@ -46,6 +46,7 @@ export default class D0_Cuentas extends React.Component {
           >
              +  Agregar nueva cuenta 
           </Button>
+          <Text></Text>
          </Block>
         </ScrollView>
     )

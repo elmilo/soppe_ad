@@ -16,18 +16,9 @@ export default [
     saldo: 3575,
   },
   {
-    title: 'z',
-    image: 'https://i.imgur.com/SlODudL.png',
-    saldo: 3575,
-  },
-  {
-    title: 'b',
-    image: 'https://i.imgur.com/SlODudL.png',
-    saldo: 3575,
-  },
-  {
     title: 'santi',
-    image: 'https://i.imgur.com/SlODudL.png',
+    image: 'https://i.imgur.com/FTtWFlQ.png',
     saldo: 3575,
   },
+ 
 ];

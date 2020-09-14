@@ -21,8 +21,8 @@ class Cuenta extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { cuenta: cuenta })}>
           <Block flex space="between" style={styles.cuentaDescription}>
-            <Text size={25} style={styles.cuentaTitle}>{cuenta.title}</Text>
-            <Text size={21} muted={!saldoColor} color={saldoColor}>${cuenta.saldo}</Text>
+            <Text size={22} style={styles.cuentaTitle}>{cuenta.title}</Text>
+            <Text size={18} muted={!saldoColor} color={saldoColor}>${cuenta.saldo}</Text>
           </Block>
         </TouchableWithoutFeedback>
         
