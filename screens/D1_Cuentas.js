@@ -33,14 +33,36 @@ export default class D1_Cuentas extends React.Component {
         { key: index++, label: 'Ualá' },
         { key: index++, label: 'Mercado Pago' },
     ];
+    const monedas = [
+      { key: index++, label: 'Pesos Argentinos' },
+      { key: index++, label: 'Dolares' },
+      { key: index++, label: 'Euros' },
+     ];
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
-        <Block flex>
-        <Text h4 style={{marginBottom: theme.SIZES.BASE / 2}}>Nueva cuenta de dinero</Text>
+       <Text></Text>
+        <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
+        <ModalSelector
+                    data={entidad}
+                    initValue="Seleccione una entidad"
+                    // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+                    />
+
+        <Block/>
+        <Text></Text>
+        <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Moneda</Text>
+        <ModalSelector
+                    data={monedas}
+                    initValue="Seleccione una Moneda"
+                    // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+                    />
+
+        <Block/>
+        <Text></Text>
         <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Últimos 4 dígitos tarjeta de debito</Text>
-       
+        <Block flex>  
         <Block flex style={styles.group}>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Input
@@ -51,14 +73,7 @@ export default class D1_Cuentas extends React.Component {
           />
         </Block>
         </Block>
-        <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
-        <ModalSelector
-                    data={entidad}
-                    initValue="Seleccione una entidad"
-                    // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-                    />
-
-        <Block/>
+        <Text></Text>
         <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de vencimiento</Text>
 
         <Block flex style={styles.group}>
