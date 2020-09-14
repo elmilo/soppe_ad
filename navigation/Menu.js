@@ -43,17 +43,10 @@ function CustomDrawerContent({
         </TouchableWithoutFeedback>
         <Block row>
           <Block middle style={styles.pro}>
-            <Text size={16} color="white">
+            <Text size={15} color="white">
               {profile.plan}
             </Text>
           </Block>
-          <Text size={16} muted style={styles.seller}>
-            {profile.type}
-          </Text>
-          <Text size={16} color={materialTheme.COLORS.WARNING}>
-            {profile.rating}{" "}
-            <Icon name="shape-star" family="GalioExtra" size={14} />
-          </Text>
         </Block>
       </Block>
       <Block flex style={{ paddingLeft: 7, paddingRight: 14 }}>
@@ -101,7 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#4B1958',
+    backgroundColor: materialTheme.COLORS.INFO,
     paddingHorizontal: 28,
     paddingBottom: theme.SIZES.BASE,
     paddingTop: theme.SIZES.BASE * 2,
@@ -115,8 +108,8 @@ const styles = StyleSheet.create({
     marginBottom: theme.SIZES.BASE / 2,
   },
   avatar: {
-    height: 40,
-    width: 40,
+    height: 60,
+    width: 60,
     borderRadius: 20,
     marginBottom: theme.SIZES.BASE,
   },
@@ -125,7 +118,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     marginRight: 8,
     borderRadius: 4,
-    height: 19,
+    height: 16,
     width: 38,
   },
   seller: {

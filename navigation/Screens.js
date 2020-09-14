@@ -31,12 +31,8 @@ const { width } = Dimensions.get("screen");
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const profile = {
-  avatar: Images.Profile,
-  type: "12 meses",
-  plan: "Pro",
-  rating: 4.8,
-};
+import { fakeprofile as miPerfil } from '../constants';
+
 /******************************************************************** */
 function StackInicio(props) {
   return (
@@ -352,7 +348,7 @@ function AppStack(props) {
     <Drawer.Navigator
       style={{ flex: 1 }}
       drawerContent={(props) => (
-        <CustomDrawerContent {...props} profile={profile} />
+        <CustomDrawerContent {...props} profile={miPerfil} />
       )}
       drawerStyle={{
         backgroundColor: "white",

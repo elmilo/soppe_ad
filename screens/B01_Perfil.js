@@ -6,30 +6,34 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Icon } from '../components';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-
 const { width, height } = Dimensions.get('screen');
 const thumbMeasure = (width - 48 - 32) / 3;
 
+import { fakeprofile as miPerfil } from '../constants';
+
 export default class B01_Perfil extends React.Component {
   render() {
+
+    const { profile } = this.props;
+
     return (
       <Block flex style={styles.profile}>
         <Block flex>
           <ImageBackground
-            source={Images.Profile}
+            source={miPerfil.avatar}
             style={styles.profileContainer}
             imageStyle={styles.profileImage}>
             <Block flex style={styles.profileDetails}>
               <Block style={styles.profileTexts}>
-                <Text color="white" size={28} style={{ paddingBottom: 8 }}>Román Lamar</Text>
+                <Text color="white" size={28} style={{ paddingBottom: 8 }}>{miPerfil.name}</Text>
                 <Block row space="between">
                   <Block row>
                     <Block middle style={styles.pro}>
-                      <Text size={16} color="white">Pro</Text>
+                      <Text size={16} color="white">{miPerfil.plan}</Text>
                     </Block>
-                    <Text color="white" size={16} muted style={styles.seller}>12 meses en Soppe</Text>
+                    <Text color="white" size={16} muted style={styles.seller}>{miPerfil.time}</Text>
                     <Text size={16} color={materialTheme.COLORS.WARNING}>
-                    <Icon name="shape-star" family="GalioExtra" size={14} /> 1.2M administrados 
+                    <Icon name="shape-star" family="GalioExtra" size={14} /> {miPerfil.amount} administrados
                     </Text>
                   </Block>
                 </Block>

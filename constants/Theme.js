@@ -3,11 +3,11 @@ export default {
     DEFAULT: '#d2b28c',
     PRIMARY: '#ff7f2a',
     LABEL: '#FE2472',
-    INFO: '#00BCD4',
+    INFO: '#8d5fd3',
     ERROR: '#F44336',
     SUCCESS: '#4CAF50',
     WARNING: '#FF9800',
-    MUTED: '#f5efe6',//979797
+    MUTED: '#979797',//f5efe6
     INPUT: '#9090a9',
     ACTIVE: '#ff7f2a',
     BUTTON_COLOR: '#ff7f2a',

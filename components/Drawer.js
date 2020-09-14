@@ -73,7 +73,7 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case "Settings":
+      case "Tarjetas":
         return (
           <Icon
             size={16}
