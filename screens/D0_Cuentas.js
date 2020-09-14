@@ -27,9 +27,9 @@ export default class D0_Cuentas extends React.Component {
   renderCuentas = () => {
     const { navigation} = this.props;
     let datos = [];
-    cuentas.forEach((cuenta) => {
+    cuentas.forEach((cuenta,index) => {
         datos.push(
-                <Cuenta cuenta ={cuenta} horizontal/>
+                <Cuenta cuenta={cuenta} key={index} horizontal/>
             )
         
     })

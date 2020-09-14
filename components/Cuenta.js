@@ -9,7 +9,7 @@ const { width } = Dimensions.get('screen');
 
 class Cuenta extends React.Component {
   render() {
-    const { navigation, cuenta, horizontal, full, style, priceColor, imageStyle } = this.props;
+    const { navigation, cuenta, horizontal, full, style, saldoColor, imageStyle } = this.props;
     const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
 
     return (
@@ -22,7 +22,7 @@ class Cuenta extends React.Component {
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { cuenta: cuenta })}>
           <Block flex space="between" style={styles.cuentaDescription}>
             <Text size={25} style={styles.cuentaTitle}>{cuenta.title}</Text>
-            <Text size={21} muted={!priceColor} color={priceColor}>${cuenta.price}</Text>
+            <Text size={21} muted={!saldoColor} color={saldoColor}>${cuenta.saldo}</Text>
           </Block>
         </TouchableWithoutFeedback>
         

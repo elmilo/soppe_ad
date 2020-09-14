@@ -6,7 +6,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Product, Header } from '../components';
+import { Icon, Product, Header, Select } from '../components';
+import ModalSelector from 'react-native-modal-selector';
 
 import products from '../constants/products';
 export default class D1_Cuentas extends React.Component {
@@ -22,7 +23,16 @@ export default class D1_Cuentas extends React.Component {
     )
   }
 
-  renderProducts = () => {
+  renderNuevaCuenta = () => {
+    let index = 0;
+    const entidad = [
+        // { key: index++, section: true, label: 'Fruits' },
+        { key: index++, label: 'Banco Galicia' },
+        { key: index++, label: 'Banco Francés' },
+        { key: index++, label: 'Efectivo' },
+        { key: index++, label: 'Ualá' },
+        { key: index++, label: 'Mercado Pago' },
+    ];
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
@@ -41,7 +51,14 @@ export default class D1_Cuentas extends React.Component {
           />
         </Block>
         </Block>
+        <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
+        <ModalSelector
+                    data={entidad}
+                    initValue="Seleccione una entidad"
+                    // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+                    />
 
+        <Block/>
         <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de vencimiento</Text>
 
         <Block flex style={styles.group}>
@@ -78,7 +95,7 @@ export default class D1_Cuentas extends React.Component {
   render() {
     return (
       <Block flex center style={styles.home}>
-        {this.renderProducts()}
+        {this.renderNuevaCuenta()}
       </Block>
     );
   }
