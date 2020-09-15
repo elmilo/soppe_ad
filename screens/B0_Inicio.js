@@ -3,10 +3,38 @@ import { StyleSheet, Dimensions, ScrollView } from "react-native";
 import { Button, Block, Text, Input, theme } from "galio-framework";
 import GraficoAvance from "../components/GraficoAvance";
 import GraficoGastosAcumulados from "../components/GraficoGastosAcumulados";
+import GraficoPresupuesto from "../components/GraficoPresupuesto";
 
 const { width } = Dimensions.get("screen");
 
 export default class B0_Inicio extends React.Component {
+
+  renderGraficoPresupuesto = () =>{
+    return (
+      <Block fluid style={[
+        styles.elementografico,
+        styles.shadow,
+        {space: 'evenly'}
+      ]}>
+      <Block row>
+      <Text size={18} bold>
+   Objetivos del mes
+ </Text></Block>
+    <Block row >
+      <Block >
+      <GraficoPresupuesto avance={15} target={100} categoria={'General'}/>
+      </Block>
+      <Block >
+      <GraficoPresupuesto avance={80} target={60} categoria={'Servicios'}/>
+      </Block>
+      <Block >
+      <GraficoPresupuesto avance={36} target={80} categoria={'Otros'}/>
+      </Block>
+      </Block>
+      </Block>
+      );
+  }
+
   renderGastosAcumulados = () => {
     return (
       <Block
@@ -44,13 +72,22 @@ export default class B0_Inicio extends React.Component {
       </Block>
     );
   };
+/**
+{this.renderGastosAcumulados()}
+{this.renderVencimientosYDisponibles()} 
+
+*/
+
+
 
   render() {
     return (
       <Block flex center>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {this.renderGastosAcumulados()}
-          {this.renderVencimientosYDisponibles()}
+        {this.renderGastosAcumulados()}
+{this.renderVencimientosYDisponibles()} 
+          {this.renderGraficoPresupuesto()}
+          
         </ScrollView>
       </Block>
     );
@@ -109,6 +146,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
-    minHeight: 114,
+    //minHeight: 114,
   },
 });
