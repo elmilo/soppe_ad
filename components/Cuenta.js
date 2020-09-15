@@ -14,17 +14,16 @@ class Cuenta extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={[styles.cuenta, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { cuenta: cuenta })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta: cuenta })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="bank" family="font-awesome" iconColor={theme.COLORS.WHITE} size={115} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+          <Icon name="account-balance-wallet" family="MaterialIcons" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
         </TouchableWithoutFeedback>  
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { cuenta: cuenta })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta: cuenta })}>
           <Block flex space="between" style={styles.cuentaDescription}>
             <Text size={23} style={styles.cuentaEntidad}>{cuenta.entidad}</Text>
-            <Text size={11} muted={!saldoColor} color={saldoColor}>Número de Cuenta: </Text>
-            <Text size={11} style={styles.cuentaOtros}>{cuenta.nroCuenta}</Text>
-            <Text size={11} muted={!saldoColor} color={saldoColor}>Moneda: {cuenta.moneda} </Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Moneda:</Text>
+            <Text size={15} style={styles.cuentaEntidad}>{cuenta.moneda}</Text>
             <Text size={22} style={styles.cuentaEntidad}>${cuenta.saldo}</Text>
           </Block>
         </TouchableWithoutFeedback>
@@ -32,7 +31,8 @@ class Cuenta extends React.Component {
       </Block>
       );
   }
-}
+  }
+
 //<Image source={{ uri: cuenta.image }} style={imageStyles} />
 export default withNavigation(Cuenta);
 
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
-    minHeight: 120,
+    minHeight: 80,
   },
   cuentaEntidad: {
     flex: 2,
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   cuentaDescription: {
-    padding: theme.SIZES.BASE / 6,
+    padding: theme.SIZES.BASE / 15,
   },
   imageContainer: {
     elevation: 1,

@@ -7,9 +7,8 @@ const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Cuenta, Header } from '../components';
-
-
 import cuentas from '../constants/cuentas';
+
 
 export default class D0_Cuentas extends React.Component {
   renderNavigation = () => {

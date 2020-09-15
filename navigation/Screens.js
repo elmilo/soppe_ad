@@ -12,6 +12,7 @@ import B01_Perfil from '../screens/B01_Perfil';
 import C0_Tarjetas from '../screens/C0_Tarjetas';
 import D0_Cuentas from '../screens/D0_Cuentas';
 import D1_Cuentas from '../screens/D1_Cuentas';
+import D2_Cuentas from '../screens/D2_Cuentas';
 import E00_Inversiones from '../screens/E00_Inversiones';
 import F00_Prestamos from '../screens/F00_Prestamos';
 import G00_Presupuestos from '../screens/G00_Presupuestos';
@@ -128,6 +129,30 @@ function StackNuevaCuenta(props) {
           header: ({ navigation, scene }) => (
             <Header
               title="Nueva Cuenta"
+              scene={scene}
+              navigation={navigation}
+            />
+          )
+        }}
+      />
+      
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
+
+
+function StackDescripcionCuenta(props) {
+  return (
+    <Stack.Navigator initialRouteName="Descripcion Cuenta" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="Descripcion Cuenta"
+        component={D2_Cuentas}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Descripcion Cuenta"
               scene={scene}
               navigation={navigation}
             />
@@ -437,6 +462,20 @@ function AppStack(props) {
       <Drawer.Screen
         name="Nueva Cuenta"
         component={StackNuevaCuenta}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          )
+        }}
+      />
+      <Drawer.Screen
+        name="Descripcion Cuenta"
+        component={StackDescripcionCuenta}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon

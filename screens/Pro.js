@@ -31,7 +31,9 @@ export default class Pro extends React.Component {
                 </Block>
                 <Block>
                   <Text color="white" size={60}>Material</Text>
-                </Block>
+                                  </Block>
+                
+          
                 <Block row>
                   <Text color="white" size={60}>Kit</Text>
                   <Block middle style={styles.pro}>
@@ -60,7 +62,9 @@ export default class Pro extends React.Component {
             </Block>
           </Block>
         </Block>
+       
       </Block>
+     
     );
   }
 }
