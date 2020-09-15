@@ -1,6 +1,6 @@
 export default [
   {
-    title: 'Banco',
+    title: 'Banco Galicia',
     image: 'https://i.imgur.com/LXy4hDf.png',
     price: 70000,
     horizontal: true,

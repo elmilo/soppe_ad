@@ -30,6 +30,7 @@ export default class D0_Cuentas extends React.Component {
     cuentas.forEach((cuenta,index) => {
         datos.push(
                 <Cuenta cuenta={cuenta} key={index} horizontal/>
+                
             )
         
     })
@@ -38,8 +39,9 @@ export default class D0_Cuentas extends React.Component {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.cuentas}>
         <Block flex>
-          <Block dense>
+        <Block dense>
               {datos}
+        
           </Block>
           <Button shadowless color="success" style={[styles.button, styles.shadow]} 
            onPress={() => navigation.navigate('Nueva Cuenta')}

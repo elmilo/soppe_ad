@@ -2,7 +2,7 @@ import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
 import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { Block, Text, theme } from 'galio-framework';
-
+import { Icon } from '../components';
 import materialTheme from '../constants/Theme';
 
 const { width } = Dimensions.get('screen');
@@ -16,13 +16,16 @@ class Cuenta extends React.Component {
       <Block row={horizontal} card flex style={[styles.cuenta, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { cuenta: cuenta })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-            <Image source={{ uri: cuenta.image }} style={imageStyles} />
+          <Icon name="bank" family="font-awesome" iconColor={theme.COLORS.WHITE} size={115} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
-        </TouchableWithoutFeedback>
+        </TouchableWithoutFeedback>  
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro', { cuenta: cuenta })}>
           <Block flex space="between" style={styles.cuentaDescription}>
-            <Text size={22} style={styles.cuentaTitle}>{cuenta.title}</Text>
-            <Text size={18} muted={!saldoColor} color={saldoColor}>${cuenta.saldo}</Text>
+            <Text size={23} style={styles.cuentaEntidad}>{cuenta.entidad}</Text>
+            <Text size={11} muted={!saldoColor} color={saldoColor}>Número de Cuenta: </Text>
+            <Text size={11} style={styles.cuentaOtros}>{cuenta.nroCuenta}</Text>
+            <Text size={11} muted={!saldoColor} color={saldoColor}>Moneda: {cuenta.moneda} </Text>
+            <Text size={22} style={styles.cuentaEntidad}>${cuenta.saldo}</Text>
           </Block>
         </TouchableWithoutFeedback>
         
@@ -30,30 +33,37 @@ class Cuenta extends React.Component {
       );
   }
 }
-
+//<Image source={{ uri: cuenta.image }} style={imageStyles} />
 export default withNavigation(Cuenta);
+
+
+//if ({cuenta.entidad}!={"efectivo"}) 
+   
+
+
+
 
 const styles = StyleSheet.create({
   cuenta: {
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
-    minHeight: 114,
+    minHeight: 120,
   },
-  cuentaTitle: {
-    flex: 1,
+  cuentaEntidad: {
+    flex: 2,
     flexWrap: 'wrap',
-    paddingBottom: 6,
+    paddingBottom: 12,
   },
   cuentaDescription: {
-    padding: theme.SIZES.BASE / 2,
+    padding: theme.SIZES.BASE / 6,
   },
   imageContainer: {
     elevation: 1,
   },
   image: {
     borderRadius: 3,
-    marginHorizontal: theme.SIZES.BASE /2,
+    marginHorizontal: theme.SIZES.BASE /1,
     marginTop: 0,
   },
   horizontalImage: {
