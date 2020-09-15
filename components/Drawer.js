@@ -19,57 +19,12 @@ class DrawerItem extends React.Component {
     const { title, focused } = this.props;
 
     switch (title) {
-      case "Home":
+      case "Inicio":
         return (
           <Icon
-            size={16}
-            name="shop"
-            family="GalioExtra"
-            color={focused ? "white" : materialTheme.COLORS.MUTED}
-          />
-        );
-      case "Woman":
-        return (
-          <Icon
-            size={16}
-            name="md-woman"
-            family="ionicon"
-            color={focused ? "white" : materialTheme.COLORS.MUTED}
-          />
-        );
-      case "Man":
-        return (
-          <Icon
-            size={16}
-            name="man"
-            family="entypo"
-            color={focused ? "white" : materialTheme.COLORS.MUTED}
-          />
-        );
-      case "Kids":
-        return (
-          <Icon
-            size={16}
-            name="baby"
-            family="GalioExtra"
-            color={focused ? "white" : materialTheme.COLORS.MUTED}
-          />
-        );
-      case "New Collection":
-        return (
-          <Icon
-            size={16}
-            name="grid-on"
-            family="material"
-            color={focused ? "white" : materialTheme.COLORS.MUTED}
-          />
-        );
-      case "Profile":
-        return (
-          <Icon
-            size={16}
-            name="circle-10"
-            family="GalioExtra"
+            size={20}
+            name="home" //home-sharp - ionicon
+            family="font-awesome"
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
@@ -77,7 +32,52 @@ class DrawerItem extends React.Component {
         return (
           <Icon
             size={16}
-            name="gears"
+            name="credit-card"
+            family="font-awesome"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+        );
+      case "Cuentas":
+        return (
+          <Icon
+            size={16}
+            name="bank"
+            family="font-awesome"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+        );
+      case "Préstamos":
+        return (
+          <Icon
+            size={16}
+            name="leaf"
+            family="font-awesome"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+        );
+      case "Presupuesto":
+        return (
+          <Icon
+            size={16}
+            name="tasks"
+            family="font-awesome"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+        );
+      case "Análisis":
+        return (
+          <Icon
+            size={16}
+            name="dashboard"
+            family="font-awesome"
+            color={focused ? "white" : materialTheme.COLORS.MUTED}
+          />
+        );
+      case "Inversiones":
+        return (
+          <Icon
+            size={16}
+            name="line-chart"
             family="font-awesome"
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
