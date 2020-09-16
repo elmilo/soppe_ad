@@ -269,16 +269,27 @@ function StackAnalisis(props) {
 }
 /************************************************************************** */
 function StackNuevoEgreso(props) {
-  return (
-    <Stack.Navigator
-      initialRouteName="Nuevo Egreso"
-      mode="card"
-      headerMode="screen"
-    >
-      <Stack.Screen
-        name="Nuevo Egreso"
-        component={B1_NuevoEgreso}
-        options={{
+   return (
+     <Stack.Navigator
+       initialRouteName="Nuevo Egreso"
+       mode="card"
+       headerMode="screen"
+     >
+       <Stack.Screen
+         name="Nuevo Egreso"
+         component={B1_NuevoEgreso}
+         options={{
+           header: ({ navigation, scene }) => (
+             <Header
+              back
+               title="Nuevo Egreso"               
+               scene={scene}
+               navigation={navigation}
+             />
+           ),
+         }}
+
+         /*options={{
           header: ({ navigation, scene }) => (
             <Header
               white
@@ -290,10 +301,10 @@ function StackNuevoEgreso(props) {
             />
           ),
           headerTransparent: true,
-        }}
-      />
-    </Stack.Navigator>
-  );
+        }}*/
+       />
+     </Stack.Navigator>
+   );
 }
 
 /************************************************************************** */
@@ -310,15 +321,12 @@ function StackNuevoIngreso(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              white
-              transparent
-              back
-              title="Nuevo Ingreso"
+             back
+              title="Nuevo Ingreso"               
               scene={scene}
               navigation={navigation}
             />
           ),
-          headerTransparent: true,
         }}
       />
     </Stack.Navigator>
