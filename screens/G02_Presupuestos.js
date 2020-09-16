@@ -2,34 +2,31 @@ import React from 'react';
 import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback , StatusBar, Dimensions, Platform } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Icon, Cuenta, Header } from '../components';
+import { Icon, Presupuesto, Header } from '../components';
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import cuentasjs from '../constants/cuentas.js';
+import presupuestos from '../constants/presupuestos.js';
 
-export default class D2_Cuentas extends React.Component {
+export default class G02_Presupuestos extends React.Component {
   render() {
     const { navigation } = this.props;
-    const { cuenta } = this.props;
+    const { presupuesto } = this.props;
     
     return (
       <Block flex style={styles.group}>
       
       <TouchableWithoutFeedback >
-          <Block flex  style={styles.cuentaDescription}>
-          <Text size={18} style={styles.cuentaEntidad}>Número de Cuenta:</Text>
-          <Text size={20} style={styles.cuentaEntidad}>{cuenta}</Text>
-          <Text size={18} style={styles.cuentaEntidad}>Número de Cbu:</Text>
-          <Text size={20} style={styles.cuentaEntidad}>{cuenta}</Text>
-          <Text size={18} style={styles.cuentaEntidad}>Alias:</Text>
-          <Text size={20} style={styles.cuentaEntidad}>{cuenta}</Text>
+          <Block flex  style={styles.presupuestoDescription}>
+          <Text size={18} style={styles.presupuestoRubro}>Fecha de Pago:</Text>
+          <Text size={20} style={styles.presupuestoRubro}>{fechapago}</Text>
+       
           </Block>
         </TouchableWithoutFeedback>
 
                      
         </Block>
-      
+    
     );
   }
 }
