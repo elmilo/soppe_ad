@@ -20,6 +20,10 @@ export default class C2_Tarjetas extends React.Component {
           <Block flex  style={styles.tarejtaDescription}>
           <Text size={18} style={styles.tarjetaEntidad}>Ultimo 4 digitos:</Text>
           <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
+          <Text size={18} style={styles.tarjetaEntidad}>Fecha de cierre:</Text>
+          <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
+          <Text size={18} style={styles.tarjetaEntidad}>Fecha de vencimiento:</Text>
+          <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
           </Block>
         </TouchableWithoutFeedback>
 

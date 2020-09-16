@@ -13,6 +13,7 @@ import presupuestos from '../constants/presupuestos';
 export default class G00_Presupuestos extends React.Component {
   renderNavigation = () => {
     return (
+      
       <Block flex style={styles.group}>
         <Block>
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
@@ -34,6 +35,7 @@ export default class G00_Presupuestos extends React.Component {
         
     })
     return (
+      <Block flex>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.presupuestos}>
@@ -50,6 +52,7 @@ export default class G00_Presupuestos extends React.Component {
           <Text></Text>
          </Block>
         </ScrollView>
+        </Block>
     )
   }
 
@@ -60,6 +63,7 @@ export default class G00_Presupuestos extends React.Component {
       </Block>
     );
   }
+ 
 }
 
 const styles = StyleSheet.create({

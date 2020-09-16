@@ -16,7 +16,7 @@ class Presupuesto extends React.Component {
       <Block row={horizontal} card flex style={[styles.presupuesto, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="account-balance-wallet" family="MaterialIcons" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+          <Icon name="indent-left" family="AntDesign" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
         </TouchableWithoutFeedback>  
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
@@ -24,7 +24,7 @@ class Presupuesto extends React.Component {
             <Text size={15} muted={!saldoColor} color={saldoColor}>Rubro:</Text>
             <Text size={23} style={styles.presupuestoRubro}>{presupuesto.rubro}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Categoria:</Text>
-            <Text size={23} style={styles.presupuestoRubro}>{presupuesto.categotia}</Text>
+            <Text size={23} style={styles.presupuestoRubro}>{presupuesto.categoria}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Descripcion:</Text>
             <Text size={23} style={styles.presupuestoRubro}>{presupuesto.descripcion}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Valor:</Text>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   horizontalImage: {
-    height: 122,
+    height: 80,
     width: 'auto',
   },
   fullImage: {

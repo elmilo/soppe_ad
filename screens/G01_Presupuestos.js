@@ -19,15 +19,16 @@ export default function G01_Presupuestos(props){
         { key: index++, label: 'Luz' },
         { key: index++, label: 'Gas' },
         { key: index++, label: 'Agua' },
-        { key: index++, label: 'Telefonia Fija' },
-        { key: index++, label: 'Telefonia Movil' },
+        { key: index++, label: 'Telefonia' },
+        { key: index++, label: 'Seguro' },
     ];
-    const categoria = [
-        { key: index++, label: 'Luz' },
-        { key: index++, label: 'Gas' },
-        { key: index++, label: 'Agua' },
-        { key: index++, label: 'Telefonia Fija' },
-        { key: index++, label: 'Telefonia Movil' },
+    const categorias= [
+        { key: index++, label: 'Casa' },
+        { key: index++, label: 'Oficina' },
+        { key: index++, label: 'Fija' },
+        { key: index++, label: 'Movil' },
+        { key: index++, label: 'Auto' },
+        { key: index++, label: 'Moto' },
      ];
 
     return (
@@ -44,15 +45,17 @@ export default function G01_Presupuestos(props){
             />
           </Block>
           </Block>
-
-
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.products}>
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Rubro</Text>
           <ModalSelector flex style={styles.group}
           data={rubro}
-          initValue="Seleccione una entidad"
+          initValue="Seleccione un Rubro"
           // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
           />
 

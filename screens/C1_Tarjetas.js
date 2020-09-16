@@ -41,15 +41,17 @@ export default function C1_Tarjetas(props){
           // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
           />
 
-          <Block/>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>últimos 3 digitos</Text>
-          <ModalSelector
-          data={nroTarjeta}
-          initValue="xxxx"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-          />
-          <Block/>
-          <Text></Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>últimos 4 digitos</Text>
+          <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder="Solo Números"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+            />
+          </Block>
+          </Block>
           
           <Block flex>  
                 

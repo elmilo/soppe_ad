@@ -19,7 +19,7 @@ export default class G02_Presupuestos extends React.Component {
       <TouchableWithoutFeedback >
           <Block flex  style={styles.presupuestoDescription}>
           <Text size={18} style={styles.presupuestoRubro}>Fecha de Pago:</Text>
-          <Text size={20} style={styles.presupuestoRubro}>{fechapago}</Text>
+          <Text size={20} style={styles.presupuestoRubro}>{presupuesto}</Text>
        
           </Block>
         </TouchableWithoutFeedback>

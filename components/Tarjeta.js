@@ -16,14 +16,15 @@ class Tarjeta extends React.Component {
       <Block row={horizontal} card flex style={[styles.tarjeta, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Tarjeta', { tarjeta: tarjeta })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="account-balance-wallet" family="MaterialIcons" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+          <Icon name="credit-card" family="Entypo" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
         </TouchableWithoutFeedback>  
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Tarjeta', { tarjeta: tarjeta })}>
           <Block flex space="between" style={styles.tarjetaDescription}>
             <Text size={23} style={styles.tarjetaEntidad}>{tarjeta.entidad}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text>
-            <Text size={15} style={styles.tarjetaEntidad}>{tarjeta.cierre}</Text>
+            <Text size={15} style={styles.tarjetaEntidad}>{tarjeta.nroTarjeta}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Fecha dePago:</Text>
             <Text size={22} style={styles.tarjetaEntidad}>{tarjeta.pago}</Text>
           </Block>
         </TouchableWithoutFeedback>

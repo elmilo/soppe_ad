@@ -34,6 +34,7 @@ export default class C0_Tarjetas extends React.Component {
         
     })
     return (
+      <Block flex>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.tarjetas}>
@@ -50,6 +51,7 @@ export default class C0_Tarjetas extends React.Component {
           <Text></Text>
          </Block>
         </ScrollView>
+        </Block>
     )
   }
 
