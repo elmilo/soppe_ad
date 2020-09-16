@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions, Platform, View} from "react-native";
 import { Block, Input, Text, theme } from "galio-framework";
 import { materialTheme } from "../constants/";
 import { Switch, Icon } from "../components/";
@@ -47,23 +47,29 @@ export default class B1_NuevoEgreso extends React.Component {
   toggleSwitch = (switchId) =>
     this.setState({ [switchId]: !this.state[switchId] });
   
-    renderSwitch = (titulo, id) => {
-    return (
-      <Block row style={[
-         {height: 40 , backgroundColor:'#FFFFFF'}
-      ]}>
-        <Block>
-        <Text size={16}>{titulo}</Text>
+  renderSwitch = (titulo, id) => {
+      return (
+        <Block row style={[
+           {height: 40 , backgroundColor:'#FFFFFF', 
+           paddingTop: theme.SIZES.BASE * 0.5,
+           paddingHorizontal: theme.SIZES.BASE,
+           }
+        ]}>
+          <Block >
+          <Text size={16}>{titulo}</Text>
+          </Block>
+          <Block flex style={[
+           {left: theme.SIZES.BASE
+            }
+        ]}>
+          <Switch
+            value={this.state["switch-"+ id]}
+            onValueChange={() => this.toggleSwitch("switch-"+ id)}
+          />
+          </Block>
         </Block>
-        <Block>
-        <Switch
-          value={this.state["switch-"+ id]}
-          onValueChange={() => this.toggleSwitch("switch-"+ id)}
-        />
-        </Block>
-      </Block>
-    );
-  };
+      );
+    };
 
   renderDropdown = (lista, texto) => {
     return (
@@ -87,7 +93,7 @@ export default class B1_NuevoEgreso extends React.Component {
 
   renderDinero = () => {
     return (
-      <Block style={{ height: 0.1*height}}>
+      <Block style={{ height: 0.1 * height }}>
         <Input
           borderless
           bgColor="#00000000"
@@ -104,6 +110,12 @@ export default class B1_NuevoEgreso extends React.Component {
             />
           }
           style={{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT }}
+        />
+        <View
+          style={{
+            borderBottomColor: "black",
+            borderBottomWidth: StyleSheet.hairlineWidth,
+          }}
         />
       </Block>
     );
