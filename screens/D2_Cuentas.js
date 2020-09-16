@@ -6,6 +6,7 @@ import { Icon, Cuenta, Header } from '../components';
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants/';
 import { HeaderHeight } from "../constants/utils";
+import cuentasjs from '../constants/cuentas.js';
 
 export default class D2_Cuentas extends React.Component {
   render() {
@@ -15,7 +16,7 @@ export default class D2_Cuentas extends React.Component {
     return (
       <Block flex style={styles.group}>
       
-      <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta: cuenta })}>
+      <TouchableWithoutFeedback >
           <Block flex  style={styles.cuentaDescription}>
           <Text size={18} style={styles.cuentaEntidad}>Número de Cuenta:</Text>
           <Text size={20} style={styles.cuentaEntidad}>{cuenta}</Text>

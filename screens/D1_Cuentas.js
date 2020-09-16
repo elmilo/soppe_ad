@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
 import { Block, Button, Text, theme,Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-import DatePicker from '@react-native-community/datetimepicker'
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
@@ -10,9 +9,10 @@ import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 
 import products from '../constants/products';
+
 export default function D1_Cuentas(props){
   //variable para setear fecha
-  const [fecha,setFecha] = useState(new Date());
+ 
   let index = 0;
     const entidad = [
         // { key: index++, section: true, label: 'Fruits' },
@@ -29,78 +29,67 @@ export default function D1_Cuentas(props){
      ];
 
     return (
-      <Block flex style={styles.group}>
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
 
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.products}>
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
           <ModalSelector flex style={styles.group}
-                      data={entidad}
-                      initValue="Seleccione una entidad"
-                      // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-                      />
+          data={entidad}
+          initValue="Seleccione una entidad"
+          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          />
 
           <Block/>
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Moneda</Text>
           <ModalSelector
-                      data={monedas}
-                      initValue="Seleccione una Moneda"
-                      // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-                      />
-
+          data={monedas}
+          initValue="Seleccione una Moneda"
+          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          />
           <Block/>
           <Text></Text>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Últimos 4 dígitos tarjeta de debito</Text>
+          
           <Block flex>  
+                
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cuenta</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
               right
-              placeholder="xxxx"
+              placeholder="Solo Números"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
             />
           </Block>
           </Block>
-        
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de vencimiento</Text>
-
+          
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cbu</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <DatePicker
-            style={{width: 200}}
-            //date="2016-05-01"
-            mode="date"
-            placeholder="Seleccione una fecha"
-            placeholderTextColor={materialTheme.COLORS.DEFAULT}
-            
-            format="YYYY-MM-DD"
-            minDate="2016-05-01"
-            maxDate="2016-06-01"
-            confirmBtnText="Confirm"
-            cancelBtnText="Cancel"
-            value={fecha}
-            onChange={e => setFecha(e.target.value)}
-            customStyles={{
-              dateIcon: {
-                position: 'absolute',
-                left: 0,
-                top: 4,
-                marginLeft: 0
-              },
-              dateInput: {
-                marginLeft: 36
-              }
-              // ... You can check the source to find the other keys.
-            }}
-            //onDateChange={(date) => {this.setState({date: date})}}
+            <Input
+              right
+              placeholder="Solo Números"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
             />
+          </Block>
+          </Block>
 
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Alias</Text>
+          <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder=""
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+            />
           </Block>
           </Block>
+
           <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Saldo</Text>
-
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
@@ -111,24 +100,19 @@ export default function D1_Cuentas(props){
             />
           </Block>
           </Block>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button shadowless color="success" style={[styles.button, styles.shadow]}>
               +
             </Button>
-            <Text></Text>
+            </Block>
+          <Text></Text>
           </Block>
           </ScrollView>
         </Block>
     )
   }
 
-//   render() {
-//     return (
-//       <Block flex center style={styles.home}>
-//         {this.renderNuevaCuenta()}
-//       </Block>
-//     );
-//   }
-// }
+
 
 const styles = StyleSheet.create({
   container: {
