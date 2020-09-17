@@ -6,6 +6,8 @@ import Product from './Product';
 import Cuenta from './Cuenta';
 import Tarjeta from './Tarjeta';
 import Presupuesto from './Presupuesto';
+import Inversion from './Inversion';
+import Prestamo from './Prestamo';
 import Drawer from './Drawer';
 import Header from './Header';
 import Switch from './Switch'; 
@@ -19,6 +21,8 @@ export {
   Cuenta,
   Tarjeta,
   Presupuesto,
+  Inversion,
+  Prestamo,
   Drawer,
   Header,
   Switch,
