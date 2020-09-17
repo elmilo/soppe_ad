@@ -9,6 +9,9 @@ import ComponentsScreen from '../screens/Components';
 
 import B0_Inicio from '../screens/B0_Inicio';
 import B01_Perfil from '../screens/B01_Perfil';
+import B02_Analisis from "../screens/B02_Analisis";
+import B1_NuevoEgreso from "../screens/B1_NuevoEgreso";
+import B1_NuevoIngreso from "../screens/B1_NuevoIngreso";
 import C0_Tarjetas from '../screens/C0_Tarjetas';
 import C1_Tarjetas from '../screens/C1_Tarjetas';
 import C2_Tarjetas from '../screens/C2_Tarjetas';
@@ -117,15 +120,11 @@ function StackCuentas(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              white
-              back
-              transparent
               title="Cuentas"
               scene={scene}
               navigation={navigation}
             />
           ),
-          headerTransparent: true,
         }}
       />
       
@@ -371,7 +370,7 @@ function StackDescripcionPrestamo(props) {
 
 
 /************************************************************************** */
-function StackPresupuesto(props) {
+function StackPresupuestos(props) {
   return (
     <Stack.Navigator
       initialRouteName="Presupuestos"
@@ -640,6 +639,21 @@ function AppStack(props) {
           ),
         }}
       />
+ 
+ <Drawer.Screen
+        name="Inversiones"
+        component={StackInversiones}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />
 
       <Drawer.Screen
         name="Cuentas"
@@ -658,20 +672,6 @@ function AppStack(props) {
       <Drawer.Screen
         name="Préstamos"
         component={StackPrestamos}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="circle-10"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Presupuestos"
-        component={StackPresupuestos}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
@@ -713,7 +713,7 @@ function AppStack(props) {
       />
         <Drawer.Screen
         name="Presupuestos"
-        component={StackPresupuesto}
+        component={StackPresupuestos}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon

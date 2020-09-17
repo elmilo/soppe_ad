@@ -22,10 +22,7 @@ function CustomDrawerContent({
     "Cuentas",
     "Préstamos",
     "Inversiones",
-    "Análisis",
-    "Presupuestos",
-    "Components"
-    
+    "Presupuestos",   
   ];
   return (
     <Block
