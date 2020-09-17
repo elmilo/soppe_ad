@@ -23,7 +23,9 @@ function CustomDrawerContent({
     "Préstamos",
     "Inversiones",
     "Análisis",
+    "Presupuestos",
     "Components"
+    
   ];
   return (
     <Block

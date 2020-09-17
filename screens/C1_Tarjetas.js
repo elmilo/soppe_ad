@@ -10,7 +10,7 @@ import ModalSelector from 'react-native-modal-selector';
 
 import products from '../constants/products';
 
-export default function D1_Cuentas(props){
+export default function C1_Tarjetas(props){
   //variable para setear fecha
  
   let index = 0;
@@ -37,23 +37,25 @@ export default function D1_Cuentas(props){
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
           <ModalSelector flex style={styles.group}
           data={entidad}
-          initValue="Seleccione una entidad"
+          initValue="Entidad Emisora"
           // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
           />
 
-          <Block/>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Moneda</Text>
-          <ModalSelector
-          data={monedas}
-          initValue="Seleccione una Moneda"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-          />
-          <Block/>
-          <Text></Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>últimos 4 digitos</Text>
+          <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder="Solo Números"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+            />
+          </Block>
+          </Block>
           
           <Block flex>  
                 
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cuenta</Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de Vencimiento</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
@@ -65,7 +67,7 @@ export default function D1_Cuentas(props){
           </Block>
           </Block>
           
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cbu</Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de cierre</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
@@ -77,28 +79,18 @@ export default function D1_Cuentas(props){
           </Block>
           </Block>
 
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Alias</Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de pago</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
               right
-              placeholder=""
+              placeholder="Solo Números"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
             />
           </Block>
-          </Block>
+          
 
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Saldo</Text>
-          <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="$"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
-          </Block>
           </Block>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button shadowless color="success" style={[styles.button, styles.shadow]}>

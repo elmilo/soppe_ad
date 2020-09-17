@@ -10,86 +10,31 @@ import ModalSelector from 'react-native-modal-selector';
 
 import products from '../constants/products';
 
-export default function D1_Cuentas(props){
+export default function G01_Presupuestos(props){
   //variable para setear fecha
  
   let index = 0;
-    const entidad = [
+    const rubro = [
         // { key: index++, section: true, label: 'Fruits' },
-        { key: index++, label: 'Banco Galicia' },
-        { key: index++, label: 'Banco Francés' },
-        { key: index++, label: 'Efectivo' },
-        { key: index++, label: 'Ualá' },
-        { key: index++, label: 'Mercado Pago' },
+        { key: index++, label: 'Luz' },
+        { key: index++, label: 'Gas' },
+        { key: index++, label: 'Agua' },
+        { key: index++, label: 'Telefonia' },
+        { key: index++, label: 'Seguro' },
     ];
-    const monedas = [
-      { key: index++, label: 'Pesos Argentinos' },
-      { key: index++, label: 'Dolares' },
-      { key: index++, label: 'Euros' },
+    const categorias= [
+        { key: index++, label: 'Casa' },
+        { key: index++, label: 'Oficina' },
+        { key: index++, label: 'Fija' },
+        { key: index++, label: 'Movil' },
+        { key: index++, label: 'Auto' },
+        { key: index++, label: 'Moto' },
      ];
 
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.products}>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
-          <ModalSelector flex style={styles.group}
-          data={entidad}
-          initValue="Seleccione una entidad"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-          />
-
-          <Block/>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Moneda</Text>
-          <ModalSelector
-          data={monedas}
-          initValue="Seleccione una Moneda"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-          />
-          <Block/>
-          <Text></Text>
-          
-          <Block flex>  
-                
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cuenta</Text>
-          <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="Solo Números"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
-          </Block>
-          </Block>
-          
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cbu</Text>
-          <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="Solo Números"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
-          </Block>
-          </Block>
-
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Alias</Text>
-          <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder=""
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
-          </Block>
-          </Block>
-
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Saldo</Text>
+            <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
@@ -100,6 +45,44 @@ export default function D1_Cuentas(props){
             />
           </Block>
           </Block>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+          <Text></Text>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.products}>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Rubro</Text>
+          <ModalSelector flex style={styles.group}
+          data={rubro}
+          initValue="Seleccione un Rubro"
+          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          />
+
+          <Block/>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Categoria</Text>
+          <ModalSelector
+          data={categorias}
+          initValue="Seleccione una Moneda"
+          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          />
+          <Block/>
+          <Text></Text>
+          
+          <Block flex>  
+                
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Descripción</Text>
+          <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder=""
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+            />
+          </Block>
+          </Block>
+          
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button shadowless color="success" style={[styles.button, styles.shadow]}>
               +

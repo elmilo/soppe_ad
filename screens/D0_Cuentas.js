@@ -6,9 +6,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Product, Header } from '../components';
+import { Icon, Cuenta, Header } from '../components';
+import cuentas from '../constants/cuentas';
 
-import products from '../constants/products';
+
 export default class D0_Cuentas extends React.Component {
   renderNavigation = () => {
     return (
@@ -22,18 +23,31 @@ export default class D0_Cuentas extends React.Component {
     )
   }
 
-  renderProducts = () => {
+  renderCuentas = () => {
+    const { navigation} = this.props;
+    let datos = [];
+    cuentas.forEach((cuenta,index) => {
+        datos.push(
+                <Cuenta cuenta={cuenta} key={index} horizontal/>
+                
+            )
+        
+    })
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.products}>
+        contentContainerStyle={styles.cuentas}>
         <Block flex>
-          <Product product={products[0]} horizontal />
-          <Product product={products[1]} horizontal />
-          <Product product={products[2]} horizontal /> 
-          <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+        <Block dense>
+              {datos}
+        
+          </Block>
+          <Button shadowless color="success" style={[styles.button, styles.shadow]} 
+           onPress={() => navigation.navigate('Nueva Cuenta')}
+          >
              +  Agregar nueva cuenta 
           </Button>
+          <Text></Text>
          </Block>
         </ScrollView>
     )
@@ -42,7 +56,7 @@ export default class D0_Cuentas extends React.Component {
   render() {
     return (
       <Block flex center style={styles.home}>
-        {this.renderProducts()}
+        {this.renderCuentas()}
       </Block>
     );
   }

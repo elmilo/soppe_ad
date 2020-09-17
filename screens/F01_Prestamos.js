@@ -10,7 +10,7 @@ import ModalSelector from 'react-native-modal-selector';
 
 import products from '../constants/products';
 
-export default function D1_Cuentas(props){
+export default function F01_Prestamos(props){
   //variable para setear fecha
  
   let index = 0;
@@ -53,7 +53,7 @@ export default function D1_Cuentas(props){
           
           <Block flex>  
                 
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cuenta</Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Prestamo</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
