@@ -16,7 +16,7 @@ class Tarjeta extends React.Component {
       <Block row={horizontal} card flex style={[styles.tarjeta, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Tarjeta', { tarjeta: tarjeta })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="credit-card" family="Entypo" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+          <Icon name="credit-card" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
         </TouchableWithoutFeedback>  
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Tarjeta', { tarjeta: tarjeta })}>
@@ -24,8 +24,8 @@ class Tarjeta extends React.Component {
             <Text size={23} style={styles.tarjetaEntidad}>{tarjeta.entidad}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text>
             <Text size={15} style={styles.tarjetaEntidad}>{tarjeta.nroTarjeta}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Fecha dePago:</Text>
-            <Text size={22} style={styles.tarjetaEntidad}>{tarjeta.pago}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Fecha del resumen:</Text>
+            <Text size={20} style={styles.tarjetaEntidad}>{tarjeta.pago}</Text>
           </Block>
         </TouchableWithoutFeedback>
         
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   tarjeta: {
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
-    borderWidth: 0,
+    borderWidth: 4,
     minHeight: 80,
   },
   tarjetaEntidad: {
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     shadowColor: theme.COLORS.BLACK,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.9,
     elevation: 2,
   },
 });

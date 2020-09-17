@@ -14,27 +14,33 @@ export default function G01_Presupuestos(props){
   //variable para setear fecha
  
   let index = 0;
-    const rubro = [
-        // { key: index++, section: true, label: 'Fruits' },
-        { key: index++, label: 'Luz' },
-        { key: index++, label: 'Gas' },
-        { key: index++, label: 'Agua' },
-        { key: index++, label: 'Telefonia' },
-        { key: index++, label: 'Seguro' },
-    ];
-    const categorias= [
-        { key: index++, label: 'Casa' },
-        { key: index++, label: 'Oficina' },
-        { key: index++, label: 'Fija' },
-        { key: index++, label: 'Movil' },
-        { key: index++, label: 'Auto' },
-        { key: index++, label: 'Moto' },
+  const rubro = [
+    { key: index++, label: 'Servicios' },
+    { key: index++, label: 'Impuestos' },
+    { key: index++, label: 'Salud' },
+    { key: index++, label: 'Viáticos' },
+    { key: index++, label: 'Comidas' },
+    { key: index++, label: 'Entretenimiento' },
+    { key: index++, label: 'Otros' },
+];
+const categorias= [
+    { key: index++, label: 'Luz' },
+    { key: index++, label: 'Gas' },
+    { key: index++, label: 'Agua' },
+    { key: index++, label: 'Tv por Cable' },
+    { key: index++, label: 'Internet' },
+    { key: index++, label: 'Teléfono Fijo' },
+    { key: index++, label: 'Teléfono Movil' },
+    { key: index++, label: 'Nacional' },
+    { key: index++, label: 'Provincial' },
+    { key: index++, label: 'Municipal' },
+    { key: index++, label: 'Otros' },
      ];
 
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
 
-            <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor</Text>
+            <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor Mensual</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
@@ -56,7 +62,6 @@ export default function G01_Presupuestos(props){
           <ModalSelector flex style={styles.group}
           data={rubro}
           initValue="Seleccione un Rubro"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
           />
 
           <Block/>
@@ -64,7 +69,6 @@ export default function G01_Presupuestos(props){
           <ModalSelector
           data={categorias}
           initValue="Seleccione una Moneda"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
           />
           <Block/>
           <Text></Text>

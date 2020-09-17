@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   cuentaEntidad: {
     flex: 2,
     flexWrap: 'wrap',
-    paddingBottom: 12,
+    paddingBottom: 6,
   },
   cuentaDescription: {
     padding: theme.SIZES.BASE / 15,

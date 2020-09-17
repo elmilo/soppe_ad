@@ -16,20 +16,19 @@ class Presupuesto extends React.Component {
       <Block row={horizontal} card flex style={[styles.presupuesto, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="indent-left" family="AntDesign" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+          <Icon name="indent-left" family="AntDesign" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
         </TouchableWithoutFeedback>  
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
           <Block flex space="between" style={styles.presupuestoDescription}>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Rubro:</Text>
-            <Text size={23} style={styles.presupuestoRubro}>{presupuesto.rubro}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Categoria:</Text>
-            <Text size={23} style={styles.presupuestoRubro}>{presupuesto.categoria}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Descripcion:</Text>
-            <Text size={23} style={styles.presupuestoRubro}>{presupuesto.descripcion}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Valor:</Text>
-            <Text size={23} style={styles.presupuestoRubro}>{presupuesto.valor}</Text>
-          
+            <Text size={13} muted={!saldoColor} color={saldoColor}>Rubro:</Text>
+            <Text size={18} style={styles.presupuestoRubro}>{presupuesto.rubro}</Text>
+            <Text size={13} muted={!saldoColor} color={saldoColor}>Categoria:</Text>
+            <Text size={15} style={styles.presupuestoRubro}>{presupuesto.categoria}</Text>
+            <Text size={13} muted={!saldoColor} color={saldoColor}>Descripción:</Text>
+            <Text size={15} style={styles.presupuestoRubro}>{presupuesto.descripcion}</Text>
+            <Text size={13} muted={!saldoColor} color={saldoColor}>Valor:</Text>
+            <Text size={18} style={styles.presupuestoRubro}>{presupuesto.valor}</Text>
           </Block>
         </TouchableWithoutFeedback>
         
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
   presupuestoRubro: {
     flex: 2,
     flexWrap: 'wrap',
-    paddingBottom: 12,
+    paddingBottom: 6,
   },
   presupuestoDescription: {
     padding: theme.SIZES.BASE / 15,

@@ -17,7 +17,7 @@ export default function C1_Tarjetas(props){
     const entidad = [
         // { key: index++, section: true, label: 'Fruits' },
         { key: index++, label: 'Banco Galicia' },
-        { key: index++, label: 'Banco Francés' },
+        { key: index++, label: 'Banco BBVA' },
         { key: index++, label: 'Efectivo' },
         { key: index++, label: 'Ualá' },
         { key: index++, label: 'Mercado Pago' },
@@ -27,7 +27,13 @@ export default function C1_Tarjetas(props){
       { key: index++, label: 'Dolares' },
       { key: index++, label: 'Euros' },
      ];
-
+     const tipo = [
+      { key: index++, label: 'Débito' },
+      { key: index++, label: 'Crédito' },
+     ];
+     const cuentadebito = [
+      { key: index++, label: 'Banco Galicia 453/5265988' },
+     ];
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
 
@@ -40,7 +46,22 @@ export default function C1_Tarjetas(props){
           initValue="Entidad Emisora"
           // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
           />
-
+          <Text></Text><Text></Text>
+          
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Tipo de tarjeta</Text>
+          <ModalSelector flex style={styles.group}
+          data={tipo}
+          initValue="Tipo"
+          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          />
+          <Text></Text><Text></Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Cuenta a debitar</Text>
+          <ModalSelector flex style={styles.group}
+          data={cuentadebito}
+          initValue="Debito"
+          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          />
+          <Text></Text><Text></Text>
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>últimos 4 digitos</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>

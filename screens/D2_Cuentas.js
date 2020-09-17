@@ -14,8 +14,7 @@ export default class D2_Cuentas extends React.Component {
     const { cuenta } = this.props;
     
     return (
-      <Block flex style={styles.group}>
-      
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <TouchableWithoutFeedback >
           <Block flex  style={styles.cuentaDescription}>
           <Text size={18} style={styles.cuentaEntidad}>Número de Cuenta:</Text>
@@ -25,11 +24,8 @@ export default class D2_Cuentas extends React.Component {
           <Text size={18} style={styles.cuentaEntidad}>Alias:</Text>
           <Text size={20} style={styles.cuentaEntidad}>{cuenta}</Text>
           </Block>
-        </TouchableWithoutFeedback>
-
-                     
-        </Block>
-      
+      </TouchableWithoutFeedback>             
+      </Block>
     );
   }
 }

@@ -3,7 +3,7 @@ export default [
     image: 'https://i.imgur.com/NomEAbu.png',
     entidad: 'Banco Galicia',
     moneda: 'Pesos Argentinos',
-    nroCuenta: '45352/65988',
+    nroCuenta: '453/5265988',
     nroCbu: '545454650000555555888',
     alias: 'Oscarsiño',    
     saldo: '70.000',

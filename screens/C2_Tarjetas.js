@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback , StatusBar, Dimensions, Platform } from 'react-native';
-import { Block, Button, Text, theme } from 'galio-framework';
+import { Block, Button, Text, theme,Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon, Tarjeta, Header } from '../components';
 const { height, width } = Dimensions.get('screen');
@@ -14,21 +14,41 @@ export default class C2_Tarjetas extends React.Component {
     const { tarjeta } = this.props;
     
     return (
-      <Block flex style={styles.group}>
-      
-      <TouchableWithoutFeedback >
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+       <TouchableWithoutFeedback >
           <Block flex  style={styles.tarejtaDescription}>
-          <Text size={18} style={styles.tarjetaEntidad}>Ultimo 4 digitos:</Text>
+          <Text size={18} style={styles.tarjetaEntidad}>últimos 4 dígitos:</Text>
           <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
           <Text size={18} style={styles.tarjetaEntidad}>Fecha de cierre:</Text>
-          <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
-          <Text size={18} style={styles.tarjetaEntidad}>Fecha de vencimiento:</Text>
-          <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
+           <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder="01/10/2020"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+            />
           </Block>
-        </TouchableWithoutFeedback>
-
-                     
-        </Block>
+          </Block>
+          <Text></Text><Text></Text><Text></Text>
+          <Text size={18} style={styles.tarjetaEntidad}>Fecha de vencimiento:</Text>
+          <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder="15/10/2020"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+            />
+            <Text></Text><Text></Text><Text></Text>
+             <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+              Actualizar fechas
+            </Button>
+          </Block>
+          </Block>
+          </Block>
+          </TouchableWithoutFeedback>
+          </Block>
       
     );
   }

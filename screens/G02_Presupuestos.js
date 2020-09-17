@@ -14,11 +14,14 @@ export default class G02_Presupuestos extends React.Component {
     const { presupuesto } = this.props;
     
     return (
-      <Block flex style={styles.group}>
-      
-      <TouchableWithoutFeedback >
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+       <TouchableWithoutFeedback >
           <Block flex  style={styles.presupuestoDescription}>
-          <Text size={18} style={styles.presupuestoRubro}>Fecha de Pago:</Text>
+          <Text size={18} style={styles.presupuestoRubro}>Rubro:</Text>
+          <Text size={20} style={styles.presupuestoRubro}>{presupuesto}</Text>
+          <Text size={18} style={styles.presupuestoRubro}>Valor:</Text>
+          <Text size={20} style={styles.presupuestoRubro}>{presupuesto}</Text>
+          <Text size={18} style={styles.presupuestoRubro}>Descripción:</Text>
           <Text size={20} style={styles.presupuestoRubro}>{presupuesto}</Text>
        
           </Block>
