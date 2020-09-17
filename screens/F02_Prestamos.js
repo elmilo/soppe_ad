@@ -18,15 +18,24 @@ export default class F02_Prestamos extends React.Component {
       
       <TouchableWithoutFeedback >
           <Block flex  style={styles.prestamoDescription}>
-          <Text size={18} style={styles.prestamoEntidad}>Número de Prestamo:</Text>
-          <Text size={20} style={styles.prestamoEntidad}>{prestamo}</Text>
-          <Text size={18} style={styles.prestamoEntidad}>Número de Cbu:</Text>
-          <Text size={20} style={styles.prestamoEntidad}>{prestamo}</Text>
-          <Text size={18} style={styles.prestamoEntidad}>Alias:</Text>
-          <Text size={20} style={styles.prestamoEntidad}>{prestamo}</Text>
+          <Text size={23} style={styles.prestamoEntidad}>{prestamo}</Text>
+            <Text size={15} >Cuenta:</Text>
+            <Text size={22} style={styles.prestamoEntidad}>Banco Galicia ARS</Text>
+            <Text size={15} >Valor de Préstamo:</Text>
+            <Text size={22} style={styles.prestamoEntidad}>$70.000</Text>
+            <Text size={15} >Valor de cuota:</Text>
+            <Text size={22} style={styles.prestamoEntidad}>$12.000</Text>
+            <Text size={15} >Día de vencimiento:</Text>
+            <Text size={22} style={styles.prestamoEntidad}>31 de cada mes</Text>
+            <Text size={15} >Cuotas restantes:</Text>
+            <Text size={22} style={styles.prestamoEntidad}>7</Text>
           </Block>
         </TouchableWithoutFeedback>
-
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+            <Button color="red" style={[styles.button, styles.shadow]}>
+              Eliminar
+            </Button>
+            </Block>
                      
         </Block>
       

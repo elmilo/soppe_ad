@@ -22,10 +22,11 @@ export default function F01_Prestamos(props){
         { key: index++, label: 'Ualá' },
         { key: index++, label: 'Mercado Pago' },
     ];
-    const monedas = [
-      { key: index++, label: 'Pesos Argentinos' },
-      { key: index++, label: 'Dolares' },
-      { key: index++, label: 'Euros' },
+
+     const cuenta = [
+      { key: index++, label: 'Banco Galicia ARS' },
+      { key: index++, label: 'Banco Galicia USD' },
+      { key: index++, label: 'Mercado Pago' },
      ];
 
     return (
@@ -34,50 +35,66 @@ export default function F01_Prestamos(props){
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.products}>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
-          <ModalSelector flex style={styles.group}
-          data={entidad}
-          initValue="Seleccione una entidad"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-          />
-
           <Block/>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Moneda</Text>
-          <ModalSelector
-          data={monedas}
-          initValue="Seleccione una Moneda"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-          />
-          <Block/>
-          <Text></Text>
+                <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Cuenta Origen / Destino</Text>
+                  <ModalSelector flex style={styles.group}
+                  data={cuenta}
+                  initValue="Seleccione una de sus cuentas"
+                  // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+                  />
+                  <Text p style={{fontSize: 15, marginBottom: theme.SIZES.BASE}}>Se utilizará la moneda de esta cuenta</Text>
+          
           
           <Block flex>  
-                
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Prestamo</Text>
+
+          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Valor de Préstamo</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
               right
-              placeholder="Solo Números"
+              placeholder="$"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
             />
           </Block>
           </Block>
-          
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cbu</Text>
+          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Valor de Cuota</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
               right
-              placeholder="Solo Números"
+              placeholder="$"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
             />
           </Block>
           </Block>
 
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Alias</Text>
+          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Día de vencimiento de cuota</Text>
+          <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder="1 al 30 del mes"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+            />
+          </Block>
+          </Block>
+
+          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Cuotas restantes</Text>
+          <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder="Solo números"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+            />
+          </Block>
+          </Block>
+
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Descripción</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
@@ -89,17 +106,6 @@ export default function F01_Prestamos(props){
           </Block>
           </Block>
 
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Saldo</Text>
-          <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="$"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
-          </Block>
-          </Block>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button shadowless color="success" style={[styles.button, styles.shadow]}>
               +

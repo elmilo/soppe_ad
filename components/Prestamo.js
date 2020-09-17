@@ -16,15 +16,21 @@ class Prestamo extends React.Component {
       <Block row={horizontal} card flex style={[styles.prestamo, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="account-balance-wallet" family="MaterialIcons" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+          <Icon name="leaf" family="Entypo" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
         </TouchableWithoutFeedback>  
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })}>
           <Block flex space="between" style={styles.prestamoDescription}>
-            <Text size={23} style={styles.prestamoEntidad}>{prestamo.entidad}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Moneda:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.moneda}</Text>
-            <Text size={22} style={styles.prestamoEntidad}>${prestamo.saldo}</Text>
+            <Text size={20} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuenta}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.valorCuota}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Cuotas restantes:</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Fecha próximo vencimiento:</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.diaVencimiento} de Septiembre</Text>
+            <Text size={15} style={styles.prestamoEntidad}></Text>
           </Block>
         </TouchableWithoutFeedback>
         

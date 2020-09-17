@@ -16,15 +16,20 @@ class Inversion extends React.Component {
       <Block row={horizontal} card flex style={[styles.inversion, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Inversion', { inversion: inversion })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="account-balance-wallet" family="MaterialIcons" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+          <Icon name="area-graph" family="Entypo" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
         </TouchableWithoutFeedback>  
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Inversion', { inversion: inversion })}>
           <Block flex space="between" style={styles.inversionDescription}>
-            <Text size={23} style={styles.inversionEntidad}>{inversion.entidad}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Moneda:</Text>
-            <Text size={15} style={styles.inversionEntidad}>{inversion.moneda}</Text>
-            <Text size={22} style={styles.inversionEntidad}>${inversion.saldo}</Text>
+            <Text size={23} style={styles.inversionEntidad}>{inversion.descripcion}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Tipo:</Text>
+            <Text size={15} style={styles.inversionEntidad}>{inversion.tipo}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
+            <Text size={15} style={styles.inversionEntidad}>{inversion.cuenta}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de venta:</Text>
+            <Text size={22} style={styles.inversionEntidad}>${inversion.valorVenta}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Vencimiento:</Text>
+            <Text size={22} style={styles.inversionEntidad}>{inversion.fechaVencimiento}</Text>
           </Block>
         </TouchableWithoutFeedback>
         

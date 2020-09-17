@@ -18,15 +18,24 @@ export default class D2_Inversiones extends React.Component {
       
       <TouchableWithoutFeedback >
           <Block flex  style={styles.inversionDescription}>
-          <Text size={18} style={styles.inversionEntidad}>Número de Inversion:</Text>
-          <Text size={20} style={styles.inversionEntidad}>{inversion}</Text>
-          <Text size={18} style={styles.inversionEntidad}>Número de Cbu:</Text>
-          <Text size={20} style={styles.inversionEntidad}>{inversion}</Text>
-          <Text size={18} style={styles.inversionEntidad}>Alias:</Text>
-          <Text size={20} style={styles.inversionEntidad}>{inversion}</Text>
+            <Text size={23} style={styles.inversionEntidad}>{inversion}</Text>
+            <Text size={15} >Tipo:</Text>
+            <Text size={22} style={styles.inversionEntidad}>Plazo Fijo</Text>
+            <Text size={15} >Cuenta:</Text>
+            <Text size={22} style={styles.inversionEntidad}>Banco Galicia ARS</Text>
+            <Text size={15} >Valor de compra:</Text>
+            <Text size={22} style={styles.inversionEntidad}>$10.000</Text>
+            <Text size={15} >Valor de venta:</Text>
+            <Text size={22} style={styles.inversionEntidad}>$12.000</Text>
+            <Text size={15} >Vencimiento:</Text>
+            <Text size={22} style={styles.inversionEntidad}>31/12/2020</Text>
           </Block>
         </TouchableWithoutFeedback>
-
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+            <Button color="red" style={[styles.button, styles.shadow]}>
+              Eliminar
+            </Button>
+            </Block>
                      
         </Block>
       

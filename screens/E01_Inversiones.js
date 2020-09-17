@@ -14,14 +14,18 @@ export default function E01_Inversiones(props){
   //variable para setear fecha
  
   let index = 0;
-    const entidad = [
+    const tipo = [
         // { key: index++, section: true, label: 'Fruits' },
-        { key: index++, label: 'Banco Galicia' },
-        { key: index++, label: 'Banco Francés' },
-        { key: index++, label: 'Efectivo' },
-        { key: index++, label: 'Ualá' },
-        { key: index++, label: 'Mercado Pago' },
+        { key: index++, label: 'Plazo Fijo' },
+        { key: index++, label: 'Compra Título' },
+        { key: index++, label: 'Compra Acción' },
     ];
+    const cuenta = [
+      { key: index++, label: 'Banco Galicia ARS' },
+      { key: index++, label: 'Banco Galicia USD' },
+      { key: index++, label: 'Mercado Pago' },
+     ];
+
     const monedas = [
       { key: index++, label: 'Pesos Argentinos' },
       { key: index++, label: 'Dolares' },
@@ -34,50 +38,63 @@ export default function E01_Inversiones(props){
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.products}>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
-          <ModalSelector flex style={styles.group}
-          data={entidad}
-          initValue="Seleccione una entidad"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-          />
 
+            <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Tipo de Inversion</Text>
+              <ModalSelector flex style={styles.group}
+              data={tipo}
+              initValue="Seleccione un tipo"
+              // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+              />
           <Block/>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Moneda</Text>
-          <ModalSelector
-          data={monedas}
-          initValue="Seleccione una Moneda"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-          />
-          <Block/>
-          <Text></Text>
+
+            <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de Vencimiento</Text>
+            <Block flex style={styles.group}>
+              <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+                <Input
+                  right
+                  placeholder="Ingrese una fecha"
+                  placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                  style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                />
+              </Block>
+          
+              <Block/>
+                <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Cuenta Origen / Destino</Text>
+                  <ModalSelector flex style={styles.group}
+                  data={cuenta}
+                  initValue="Seleccione una de sus cuentas"
+                  // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+                  />
+                  <Text p style={{fontSize: 15, marginBottom: theme.SIZES.BASE}}>Se utilizará la moneda de esta cuenta</Text>
+          </Block>
           
           <Block flex>  
-                
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Inversion</Text>
-          <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="Solo Números"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
-          </Block>
-          </Block>
-          
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cbu</Text>
-          <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="Solo Números"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
-          </Block>
-          </Block>
 
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Alias</Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor invertido a debitar</Text>
+            <Block flex style={styles.group}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="$"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
+            </Block>
+          
+            <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor de venta</Text>
+            <Block flex style={styles.group}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="$"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
+            </Block>
+
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Descripción</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
@@ -89,17 +106,6 @@ export default function E01_Inversiones(props){
           </Block>
           </Block>
 
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Saldo</Text>
-          <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="$"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
-          </Block>
-          </Block>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button shadowless color="success" style={[styles.button, styles.shadow]}>
               +

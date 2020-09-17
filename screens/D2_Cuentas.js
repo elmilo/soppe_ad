@@ -24,7 +24,7 @@ export default class D2_Cuentas extends React.Component {
           <Text size={18} style={styles.cuentaEntidad}>Alias:</Text>
           <Text size={20} style={styles.cuentaEntidad}>{cuenta}</Text>
           </Block>
-      </TouchableWithoutFeedback>             
+      </TouchableWithoutFeedback>           
       </Block>
     );
   }

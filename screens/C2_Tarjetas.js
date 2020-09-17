@@ -48,7 +48,8 @@ export default class C2_Tarjetas extends React.Component {
           </Block>
           </Block>
           </TouchableWithoutFeedback>
-          </Block>
+                     
+        </Block>
       
     );
   }

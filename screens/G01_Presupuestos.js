@@ -68,7 +68,7 @@ const categorias= [
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Categoria</Text>
           <ModalSelector
           data={categorias}
-          initValue="Seleccione una Moneda"
+          initValue="Seleccione una Categoría"
           />
           <Block/>
           <Text></Text>
