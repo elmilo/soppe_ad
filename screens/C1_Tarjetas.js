@@ -76,7 +76,7 @@ export default function C1_Tarjetas(props){
           
           <Block flex>  
                 
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de Vencimiento</Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de vencimiento</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
@@ -100,7 +100,7 @@ export default function C1_Tarjetas(props){
           </Block>
           </Block>
 
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de pago</Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Fecha de vencimiento de resumen</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input

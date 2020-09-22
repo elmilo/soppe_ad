@@ -26,6 +26,10 @@ export default class G02_Presupuestos extends React.Component {
        
           </Block>
         </TouchableWithoutFeedback>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button color="red" style={[styles.button, styles.shadow]}>
               Eliminar

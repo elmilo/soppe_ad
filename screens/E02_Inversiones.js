@@ -14,7 +14,7 @@ export default class D2_Inversiones extends React.Component {
     const { inversion } = this.props;
     
     return (
-      <Block flex style={styles.group}>
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       
       <TouchableWithoutFeedback >
           <Block flex  style={styles.inversionDescription}>
@@ -31,8 +31,12 @@ export default class D2_Inversiones extends React.Component {
             <Text size={22} style={styles.inversionEntidad}>31/12/2020</Text>
           </Block>
         </TouchableWithoutFeedback>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button color="red" style={[styles.button, styles.shadow]}>
+        <Button shadowless color="red" style={[styles.button, styles.shadow]}>
               Eliminar
             </Button>
             </Block>

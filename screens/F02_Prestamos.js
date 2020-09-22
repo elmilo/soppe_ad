@@ -14,7 +14,7 @@ export default class F02_Prestamos extends React.Component {
     const { prestamo } = this.props;
     
     return (
-      <Block flex style={styles.group}>
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       
       <TouchableWithoutFeedback >
           <Block flex  style={styles.prestamoDescription}>
@@ -31,8 +31,13 @@ export default class F02_Prestamos extends React.Component {
             <Text size={22} style={styles.prestamoEntidad}>7</Text>
           </Block>
         </TouchableWithoutFeedback>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text>
+       
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button color="red" style={[styles.button, styles.shadow]}>
+        <Button shadowless color="red" style={[styles.button, styles.shadow]}>
               Eliminar
             </Button>
             </Block>
