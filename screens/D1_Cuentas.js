@@ -9,9 +9,18 @@ import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 
 import products from '../constants/products';
+import * as SQLite from 'expo-sqlite';
+
 
 export default function D1_Cuentas(props){
   //variable para setear fecha
+  const [entity, setEntity] = useState("");
+  const [currency, setCurrency] = useState("");
+  const [accNumber, setAccNumber] = useState("");
+  const [cbu, setCbu] = useState(0);
+  const [alias, setAlias] = useState("");
+  const [saldo, setSaldo] = useState(0.0);
+  const navigation = props.navigation;
  
   let index = 0;
     const entidad = [
@@ -28,7 +37,22 @@ export default function D1_Cuentas(props){
       { key: index++, label: 'Euros' },
      ];
 
+     saveAccount = () => {
+      const db = SQLite.openDatabase("db.db");
+      db.transaction(
+        tx => {
+          tx.executeSql(
+            "insert into accounts (cbu, user, entity, currency, accNumber, alias, saldo) values (?, ?, ?, ?, ?, ?, ?)", [cbu, 1, entity, currency, accNumber, alias, saldo]
+          );
+        },
+        null,
+        null
+      );
+      navigation.navigate('Cuentas');
+     }
+
     return (
+      
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
 
         <ScrollView
@@ -38,7 +62,7 @@ export default function D1_Cuentas(props){
           <ModalSelector flex style={styles.group}
           data={entidad}
           initValue="Seleccione una entidad"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          onChange={(option)=>{ setEntity(option.label) }} 
           />
 
           <Block/>
@@ -46,7 +70,7 @@ export default function D1_Cuentas(props){
           <ModalSelector
           data={monedas}
           initValue="Seleccione una Moneda"
-          // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          onChange={(option)=>{ setCurrency(option.label) }} 
           />
           <Block/>
           <Text></Text>
@@ -61,6 +85,7 @@ export default function D1_Cuentas(props){
               placeholder="Solo Números"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setAccNumber(text)}}
             />
           </Block>
           </Block>
@@ -73,6 +98,7 @@ export default function D1_Cuentas(props){
               placeholder="Solo Números"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setCbu(text)}}
             />
           </Block>
           </Block>
@@ -85,6 +111,7 @@ export default function D1_Cuentas(props){
               placeholder=""
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setAlias(text)}}
             />
           </Block>
           </Block>
@@ -97,11 +124,12 @@ export default function D1_Cuentas(props){
               placeholder="$"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setSaldo(text)}}
             />
           </Block>
           </Block>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+            <Button shadowless color="success" style={[styles.button, styles.shadow]} onPress={() => {saveAccount()}}>
               +
             </Button>
             </Block>

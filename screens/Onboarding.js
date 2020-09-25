@@ -6,8 +6,25 @@ const { height, width } = Dimensions.get('screen');
 
 import materialTheme from '../constants/Theme';
 import Images from '../constants/Images';
+import * as SQLite from 'expo-sqlite';
+
 
 export default class Onboarding extends React.Component {
+  
+  componentDidMount(){
+    const db = SQLite.openDatabase("db.db");
+    db.transaction(tx => {
+      
+      tx.executeSql(
+        "create table if not exists accounts (id integer primary key not null, cbu integer, user integer, entity text, currency text, accNumber text, alias text, saldo float);"
+      );
+
+      //tx.executeSql(
+//        "insert into accounts (cbu, user, entity, currency, accNumber, alias, saldo) values (?, ?, ?, ?, ?, ?, ?)", [123546, 1, 'galicia', 'pesos', '1123/231', 'pepe', 1000.323]
+  //    )
+    });
+  }
+
   render() {
     const { navigation } = this.props;
 

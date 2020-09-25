@@ -14,16 +14,16 @@ class Cuenta extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={[styles.cuenta, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta: cuenta })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
           <Icon name="account-balance-wallet" family="MaterialIcons" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
           </Block>
         </TouchableWithoutFeedback>  
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta: cuenta })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta })}>
           <Block flex space="between" style={styles.cuentaDescription}>
-            <Text size={23} style={styles.cuentaEntidad}>{cuenta.entidad}</Text>
+          <Text size={23} style={styles.cuentaEntidad}>{cuenta.entity}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Moneda:</Text>
-            <Text size={15} style={styles.cuentaEntidad}>{cuenta.moneda}</Text>
+            <Text size={15} style={styles.cuentaEntidad}>{cuenta.currency}</Text>
             <Text size={22} style={styles.cuentaEntidad}>${cuenta.saldo}</Text>
           </Block>
         </TouchableWithoutFeedback>
