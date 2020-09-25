@@ -4,7 +4,6 @@ import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-n
 import { Block, Text, theme } from 'galio-framework';
 import { Icon } from '../components';
 import materialTheme from '../constants/Theme';
-
 const { width } = Dimensions.get('screen');
 
 class Inversion extends React.Component {
@@ -16,9 +15,11 @@ class Inversion extends React.Component {
       <Block row={horizontal} card flex style={[styles.inversion, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Inversion', { inversion: inversion })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="area-graph" family="Entypo" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+              <Icon name="area-graph" family="Entypo" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+            </Block>
           </Block>
-        </TouchableWithoutFeedback>  
+        </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Inversion', { inversion: inversion })}>
           <Block flex space="between" style={styles.inversionDescription}>
             <Text size={23} style={styles.inversionEntidad}>{inversion.descripcion}</Text>
@@ -32,21 +33,15 @@ class Inversion extends React.Component {
             <Text size={22} style={styles.inversionEntidad}>{inversion.fechaVencimiento}</Text>
           </Block>
         </TouchableWithoutFeedback>
-        
       </Block>
-      );
+    );
   }
-  }
+}
 
 //<Image source={{ uri: inversion.image }} style={imageStyles} />
 export default withNavigation(Inversion);
 
-
 //if ({inversion.entidad}!={"efectivo"}) 
-   
-
-
-
 
 const styles = StyleSheet.create({
   inversion: {
@@ -68,7 +63,7 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 3,
-    marginHorizontal: theme.SIZES.BASE /1,
+    marginHorizontal: theme.SIZES.BASE / 1,
     marginTop: 0,
   },
   horizontalImage: {

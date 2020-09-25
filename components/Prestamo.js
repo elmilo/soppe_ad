@@ -4,7 +4,6 @@ import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-n
 import { Block, Text, theme } from 'galio-framework';
 import { Icon } from '../components';
 import materialTheme from '../constants/Theme';
-
 const { width } = Dimensions.get('screen');
 
 class Prestamo extends React.Component {
@@ -16,9 +15,11 @@ class Prestamo extends React.Component {
       <Block row={horizontal} card flex style={[styles.prestamo, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="leaf" family="Entypo" iconColor={theme.COLORS.WHITE} size={120} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2, paddingVertical: theme.SIZES.BASE }}>
+              <Icon name="leaf" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+            </Block>
           </Block>
-        </TouchableWithoutFeedback>  
+        </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })}>
           <Block flex space="between" style={styles.prestamoDescription}>
             <Text size={20} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
@@ -33,21 +34,14 @@ class Prestamo extends React.Component {
             <Text size={15} style={styles.prestamoEntidad}></Text>
           </Block>
         </TouchableWithoutFeedback>
-        
       </Block>
-      );
+    );
   }
-  }
-
+}
 //<Image source={{ uri: prestamo.image }} style={imageStyles} />
 export default withNavigation(Prestamo);
 
-
 //if ({prestamo.entidad}!={"efectivo"}) 
-   
-
-
-
 
 const styles = StyleSheet.create({
   prestamo: {
@@ -69,7 +63,7 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 3,
-    marginHorizontal: theme.SIZES.BASE /1,
+    marginHorizontal: theme.SIZES.BASE / 1,
     marginTop: 0,
   },
   horizontalImage: {

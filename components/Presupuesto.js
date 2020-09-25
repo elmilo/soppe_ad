@@ -4,7 +4,6 @@ import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-n
 import { Block, Text, theme } from 'galio-framework';
 import { Icon } from '../components';
 import materialTheme from '../constants/Theme';
-
 const { width } = Dimensions.get('screen');
 
 class Presupuesto extends React.Component {
@@ -16,9 +15,11 @@ class Presupuesto extends React.Component {
       <Block row={horizontal} card flex style={[styles.presupuesto, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="indent-left" family="AntDesign" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2.5, paddingVertical: theme.SIZES.BASE }}>
+              <Icon name="indent-left" family="AntDesign" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+            </Block>
           </Block>
-        </TouchableWithoutFeedback>  
+        </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
           <Block flex space="between" style={styles.presupuestoDescription}>
             <Text size={13} muted={!saldoColor} color={saldoColor}>Rubro:</Text>
@@ -31,17 +32,14 @@ class Presupuesto extends React.Component {
             <Text size={18} style={styles.presupuestoRubro}>{presupuesto.valor}</Text>
           </Block>
         </TouchableWithoutFeedback>
-        
       </Block>
-      );
+    );
   }
-  }
-
-
+}
 export default withNavigation(Presupuesto);
 
 const styles = StyleSheet.create({
-    presupuesto: {
+  presupuesto: {
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
     borderWidth: 0,
@@ -60,7 +58,7 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 3,
-    marginHorizontal: theme.SIZES.BASE /1,
+    marginHorizontal: theme.SIZES.BASE / 1,
     marginTop: 0,
   },
   horizontalImage: {

@@ -4,7 +4,6 @@ import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-n
 import { Block, Text, theme } from 'galio-framework';
 import { Icon } from '.';
 import materialTheme from '../constants/Theme';
-
 const { width } = Dimensions.get('screen');
 
 class Tarjeta extends React.Component {
@@ -15,30 +14,34 @@ class Tarjeta extends React.Component {
     return (
       <Block row={horizontal} card flex style={[styles.tarjeta, styles.shadow, style]}>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Tarjeta', { tarjeta: tarjeta })}>
-          <Block flex style={[styles.imageContainer, styles.shadow]}>
-          <Icon name="credit-card" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+          <Block flex space="between" style={styles.tarjetaDescription}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2, paddingVertical: theme.SIZES.BASE }}>
+              <Icon name="credit-card" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+              <Text></Text><Text></Text>
+              <Text size={20} muted={!saldoColor} color={saldoColor}>Saldo:</Text>
+              <Text size={23} style={styles.tarjetaEntidad}>{tarjeta.saldo}</Text>
+            </Block>
           </Block>
-        </TouchableWithoutFeedback>  
+        </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Tarjeta', { tarjeta: tarjeta })}>
           <Block flex space="between" style={styles.tarjetaDescription}>
             <Text size={23} style={styles.tarjetaEntidad}>{tarjeta.entidad}</Text>
+            <Text size={20} style={styles.tarjetaEntidad}>{tarjeta.emisor}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text>
             <Text size={15} style={styles.tarjetaEntidad}>{tarjeta.nroTarjeta}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Fecha del resumen:</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Vencimiento del resumen:</Text>
             <Text size={20} style={styles.tarjetaEntidad}>{tarjeta.pago}</Text>
           </Block>
         </TouchableWithoutFeedback>
-        
       </Block>
-      );
+    );
   }
-  }
+}
 
 
 export default withNavigation(Tarjeta);
 
 
-   
 
 
 
@@ -47,13 +50,13 @@ const styles = StyleSheet.create({
   tarjeta: {
     backgroundColor: theme.COLORS.WHITE,
     marginVertical: theme.SIZES.BASE,
-    borderWidth: 4,
+    borderWidth: 2,
     minHeight: 80,
   },
   tarjetaEntidad: {
     flex: 2,
     flexWrap: 'wrap',
-    paddingBottom: 12,
+    paddingBottom: 2,
   },
   tarjetaDescription: {
     padding: theme.SIZES.BASE / 15,
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
   },
   image: {
     borderRadius: 3,
-    marginHorizontal: theme.SIZES.BASE /1,
+    marginHorizontal: theme.SIZES.BASE / 1,
     marginTop: 0,
   },
   horizontalImage: {
