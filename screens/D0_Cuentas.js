@@ -8,9 +8,33 @@ import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Cuenta, Header } from '../components';
 import cuentas from '../constants/cuentas';
+import * as SQLite from 'expo-sqlite';
+
 
 
 export default class D0_Cuentas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      accounts: []
+    };
+  }
+
+  componentDidMount(){
+    this.focusListener = this.props.navigation.addListener("focus", () => {
+    const db = SQLite.openDatabase("db.db");   
+    db.transaction(
+      tx => {
+        tx.executeSql("select * from accounts", [], (_, { rows}) => this.setState({accounts: rows._array})
+        );
+      }, {}, );
+    });
+  }
+
+  componentWillUnmount() {
+    this.focusListener.remove();
+  }
+
   renderNavigation = () => {
     return (
       <Block flex style={styles.group}>
@@ -25,14 +49,11 @@ export default class D0_Cuentas extends React.Component {
 
   renderCuentas = () => {
     const { navigation} = this.props;
-    let datos = [];
-    cuentas.forEach((cuenta,index) => {
-        datos.push(
-                <Cuenta cuenta={cuenta} key={index} horizontal/>
-                
-            )
-        
+    var datos = []; 
+    this.state.accounts.forEach((cuenta, index) => {
+      datos.push(<Cuenta cuenta={cuenta} key={index} horizontal/>);
     })
+
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
