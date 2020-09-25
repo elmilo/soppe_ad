@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
-import { Block, Button, Text, theme,Input } from 'galio-framework';
+import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, View, Switch, ScrollView } from 'react-native';
+import { Block, Button, Text, theme, Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
@@ -10,113 +10,114 @@ import ModalSelector from 'react-native-modal-selector';
 
 import products from '../constants/products';
 
-export default function F01_Prestamos(props){
+export default function F01_Prestamos(props) {
   //variable para setear fecha
- 
   let index = 0;
-    const entidad = [
-        // { key: index++, section: true, label: 'Fruits' },
-        { key: index++, label: 'Banco Galicia' },
-        { key: index++, label: 'Banco Francés' },
-        { key: index++, label: 'Efectivo' },
-        { key: index++, label: 'Ualá' },
-        { key: index++, label: 'Mercado Pago' },
-    ];
+  const entidad = [
+    // { key: index++, section: true, label: 'Fruits' },
+    { key: index++, label: 'Banco Galicia' },
+    { key: index++, label: 'Banco Francés' },
+    { key: index++, label: 'Efectivo' },
+    { key: index++, label: 'Ualá' },
+    { key: index++, label: 'Mercado Pago' },
+  ];
 
-     const cuenta = [
-      { key: index++, label: 'Banco Galicia ARS' },
-      { key: index++, label: 'Banco Galicia USD' },
-      { key: index++, label: 'Mercado Pago' },
-     ];
+  const cuenta = [
+    { key: index++, label: 'Banco Galicia ARS' },
+    { key: index++, label: 'Banco Galicia USD' },
+    { key: index++, label: 'Mercado Pago' },
+  ];
 
-    return (
-      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+  const [isEnabled, setIsEnabled] = useState(false);
+  const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.products}>
-          <Block/>
-                <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Cuenta Origen / Destino</Text>
-                  <ModalSelector flex style={styles.group}
-                  data={cuenta}
-                  initValue="Seleccione una de sus cuentas"
-                  // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-                  />
-                  <Text p style={{fontSize: 15, marginBottom: theme.SIZES.BASE}}>Se utilizará la moneda de esta cuenta</Text>
-          
-          
-          <Block flex>  
-
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Valor de Préstamo</Text>
+  return (
+    <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.products}>
+        <Text p style={[styles.text, { textAlign: 'right' }]}>Tomado / Otorgado</Text>
+        <Switch
+          trackColor={{ false: "#767577", true: "#FF8000" }}
+          thumbColor={isEnabled ? "#FF8000" : "#f4f3f4"}
+          onValueChange={toggleSwitch}
+          value={isEnabled}
+        />
+        <Block />
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
+        <ModalSelector flex style={styles.group}
+          data={cuenta}
+          initValue="Seleccione una de sus cuentas"
+        // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+        />
+        <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
+        <Block flex>
+          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de Préstamo</Text>
           <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="$"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="$"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
           </Block>
-          </Block>
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Valor de Cuota</Text>
+          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de Cuota</Text>
           <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="$"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="$"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
           </Block>
-          </Block>
-
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Día de vencimiento de cuota</Text>
+          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Día de vencimiento de cuota</Text>
           <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="1 al 30 del mes"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="1 al 30 del mes"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
           </Block>
-          </Block>
-
-          <Text h5 style={{marginBottom: theme.SIZES.BASE / 2}}>Cuotas restantes</Text>
+          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuotas restantes</Text>
           <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="Solo números"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="Solo números"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
           </Block>
-          </Block>
-
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Descripción</Text>
+          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Descripción</Text>
           <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder=""
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder=""
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
           </Block>
-          </Block>
-
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button shadowless color="success" style={[styles.button, styles.shadow]}>
               +
             </Button>
-            </Block>
-          <Text></Text>
           </Block>
-          </ScrollView>
+          <Text></Text>
         </Block>
-    )
-  }
+      </ScrollView>
+    </Block>
+  )
+}
 
 
 
