@@ -8,9 +8,18 @@ import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Tarjeta, Header } from '../components';
 import tarjetas from '../constants/tarjetas';
+import * as SQLite from 'expo-sqlite';
+
 
 
 export default class C0_Tarjetas extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cards: []
+    };
+  }
+
   renderNavigation = () => {
     return (
       <Block flex style={styles.group}>
@@ -22,16 +31,29 @@ export default class C0_Tarjetas extends React.Component {
       </Block>
     )
   }
+  
+  componentDidMount(){
+    this.focusListener = this.props.navigation.addListener("focus", () => {
+    const db = SQLite.openDatabase("db.db");   
+    db.transaction(
+      tx => {
+        tx.executeSql("select * from cards", [], (_, { rows}) => this.setState({cards: rows._array})
+        );
+      }, {}, );
+    });
+  }
+
+  componentWillUnmount() {
+    this.focusListener.remove();
+  }
 
   renderTarjetas = () => {
     const { navigation} = this.props;
     let datos = [];
-    tarjetas.forEach((tarjeta,index) => {
-        datos.push(
-                <Tarjeta tarjeta={tarjeta} key={index} horizontal/>
-                
-            )
-        
+    this.state.cards.forEach((card, index) => {
+      datos.push(
+        <Tarjeta tarjeta={card} key={index} horizontal/>
+      )
     })
     return (
       <Block flex>
