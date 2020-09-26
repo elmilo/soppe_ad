@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
 import { Block, Button, Text, theme, Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -9,8 +9,21 @@ import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import products from '../constants/products';
 
+import * as SQLite from 'expo-sqlite';
+
+const db = SQLite.openDatabase("db.db");
+
 export default function C1_Tarjetas(props) {
   //variable para setear fecha
+  const [cuentaSeleccionada, setCuentaSeleccionada] = useState(0);
+  const [entidadEmisora, setEntidadEmisora] = useState("");
+  const [tipoTarjeta, setTipoTarjeta] = useState("");
+  const [ultimos4Digitos, setUltimos4Digitos] = useState();
+  const [fechaCierre, setFechaCierre] = useState("");
+  const [fechaVenc, setFechaVenc] = useState("");
+  const [saldo, setSaldo] = useState(0);
+  const navigation = props.navigation;
+
   let index = 0;
   const entidad = [
     // { key: index++, section: true, label: 'Fruits' },
@@ -43,6 +56,41 @@ export default function C1_Tarjetas(props) {
   const cuentadebito = [
     { key: index++, label: 'Banco Galicia 453/5265988' },
   ];
+  const [cuentas, setCuentas] = useState([]);
+  
+  useEffect(() => {
+    db.transaction(
+      tx => {
+        tx.executeSql("select * from accounts where user=?", [1],
+          (txObj, {rows: { _array } }) => setCuentas(_array),
+          (txObj, error) => console.log("error levantando las cuentas " + error))
+    });
+  })
+
+  buildCuentas = () => {
+    let cuentasFormatted = [];
+    for(let i = 0; i < cuentas.length; i++){
+      let cuenta = {};
+      cuenta.key = cuentas[i].id;
+      cuenta.label = cuentas[i].accNumber;
+      cuentasFormatted.push(cuenta);
+    }
+    return cuentasFormatted;
+  }
+
+  saveCard = () => {
+    db.transaction(
+      tx => {
+        //"create table if not exists cards (id integer primary key not null, user integer, emisor text, tipo text, ultimosDigitos integer, accountId integer, fechaCierre text, fechaVenc text, saldo float);"
+        tx.executeSql(
+          "insert into cards (user, emisor, tipo, ultimosDigitos, accountId, fechaCierre, fechaVenc, saldo) values (?, ?, ?, ?, ?, ?, ?, ?)", [1, entidadEmisora, tipoTarjeta, ultimos4Digitos, cuentaSeleccionada, fechaCierre, fechaVenc, saldo] 
+        );
+      },
+      () => console.log("error guardando la tarjeta"),
+      () => navigation.navigate('Tarjetas')
+    );
+    //this.navigation.navigate('Tarjetas')
+  }
 
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
@@ -60,21 +108,21 @@ export default function C1_Tarjetas(props) {
         <ModalSelector flex style={styles.group}
           data={emisor}
           initValue="Emisor"
-        // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          onChange={(option)=>{ setEntidadEmisora(option.label) }} 
         />
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de tarjeta</Text>
         <ModalSelector flex style={styles.group}
           data={tipo}
           initValue="Tipo"
-        // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          onChange={(option)=>{ setTipoTarjeta(option.label) }} 
         />
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta a debitar</Text>
         <ModalSelector flex style={styles.group}
-          data={cuentadebito}
+          data={buildCuentas()}
           initValue="Debito"
-        // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+          onChange={(option)=>{ setCuentaSeleccionada(option.key)}  }
         />
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>últimos 4 digitos</Text>
@@ -85,6 +133,7 @@ export default function C1_Tarjetas(props) {
               placeholder="Solo Números"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => setUltimos4Digitos(text)}
             />
           </Block>
         </Block>
@@ -97,6 +146,7 @@ export default function C1_Tarjetas(props) {
                 placeholder="Solo Números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => setFechaVenc(text)}
               />
             </Block>
           </Block>
@@ -108,6 +158,7 @@ export default function C1_Tarjetas(props) {
                 placeholder="Solo Números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => setFechaCierre(text)}
               />
             </Block>
           </Block>
@@ -135,7 +186,7 @@ export default function C1_Tarjetas(props) {
           </Block>
 
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+            <Button shadowless color="success" style={[styles.button, styles.shadow]} onPress={() => saveCard()}>
               +
             </Button>
           </Block>

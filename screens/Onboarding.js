@@ -19,6 +19,10 @@ export default class Onboarding extends React.Component {
         "create table if not exists accounts (id integer primary key not null, cbu integer, user integer, entity text, currency text, accNumber text, alias text, saldo float);"
       );
 
+      tx.executeSql(
+        "create table if not exists cards (id integer primary key not null, user integer, emisor text, tipo text, ultimosDigitos integer, accountId integer, fechaCierre text, fechaVenc text, saldo float);"
+      )
+
       //tx.executeSql(
 //        "insert into accounts (cbu, user, entity, currency, accNumber, alias, saldo) values (?, ?, ?, ?, ?, ?, ?)", [123546, 1, 'galicia', 'pesos', '1123/231', 'pepe', 1000.323]
   //    )
