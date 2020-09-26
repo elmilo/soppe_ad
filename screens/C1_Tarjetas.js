@@ -122,6 +122,18 @@ export default function C1_Tarjetas(props) {
               />
             </Block>
           </Block>
+          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Saldo</Text>
+          <Block flex style={styles.group}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="$"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
+          </Block>
+
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button shadowless color="success" style={[styles.button, styles.shadow]}>
               +
