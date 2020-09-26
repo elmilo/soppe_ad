@@ -6,6 +6,7 @@ import { Switch, Icon } from "../components/";
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import { FloatingAction } from "react-native-floating-action";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import CamaraPersonalizada from '../components/CamaraPersonalizada';
 
 
 const { height, width } = Dimensions.get("screen");
@@ -156,6 +157,9 @@ export default class B1_NuevoEgreso extends React.Component {
           {this.renderSwitch("Para siempre", 2)}
           {this.renderInputBox("numeric", "Cuotas restantes")}
         </Block>
+<Block>
+        <CamaraPersonalizada />
+        </Block>
         <Block
           style={{ marginTop: 0.2 * height, marginBottom: theme.SIZES.BASE }}
         />
@@ -167,6 +171,7 @@ export default class B1_NuevoEgreso extends React.Component {
             }}
           />
       </Block>
+      
       
     );
   }

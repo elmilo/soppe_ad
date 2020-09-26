@@ -44,7 +44,9 @@
     "react-native-svg": "11.0.1",
     "react-native-svg-charts": "^5.4.0",
     "react-native-vector-icons": "^7.1.0",
-    "@react-native-community/datetimepicker": "2.2.2"
+    "@react-native-community/datetimepicker": "2.2.2",
+    "expo-camera": "~8.2.0",
+    "expo-image-picker": "~8.1.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^8.2.1",

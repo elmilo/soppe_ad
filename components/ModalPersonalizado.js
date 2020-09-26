@@ -53,7 +53,6 @@ general: {
         borderRadius:    BORDER_RADIUS,
         flexShrink:      1,
         marginBottom:    8,
-        color: ''
         padding:         PADDING,
         backgroundColor: '#FFFFFF',
     },
