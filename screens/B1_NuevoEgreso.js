@@ -1,31 +1,32 @@
-import React from "react";
-import { StyleSheet, Dimensions, Platform, View} from "react-native";
+import React, {useState} from 'react';
+import { View, StyleSheet, Dimensions, Platform} from "react-native";
 import { Block, Input, Text, theme } from "galio-framework";
 import { materialTheme } from "../constants/";
 import { Switch, Icon } from "../components/";
-import DropDownPicker from "react-native-dropdown-picker";
+import ModalPersonalizado from '../components/ModalPersonalizado';
 import { FloatingAction } from "react-native-floating-action";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 const { height, width } = Dimensions.get("screen");
 
 
 const arrayCuentas = [
-  { value: 1, label: "Cuenta Bancaria ARS" },
-  { value: 2, label: "Efectivo" },
-  { value: 3, label: "Cuenta Bancaria ARS 2" },
-  { value: 4, label: "Cuenta Bancaria USD" },
+  { key: 1, label: "Cuenta Bancaria ARS" },
+  { key: 2, label: "Efectivo" },
+  { key: 3, label: "Cuenta Bancaria ARS 2" },
+  { key: 4, label: "Cuenta Bancaria USD" },
 ];
 
 const arrayCategorias = [
-  { value: 1, label: "Servicios" },
-  { value: 2, label: "Alquileres" },
-  { value: 3, label: "Comidas" },
-  { value: 4, label: "Farmacia" },
+  { key: 1, label: "Servicios" },
+  { key: 2, label: "Alquileres" },
+  { key: 3, label: "Comidas" },
+  { key: 4, label: "Farmacia" },
 ];
 
 export default class B1_NuevoEgreso extends React.Component {
-
+  
   actions = [
     {
       text: "Con recursividad",
@@ -73,21 +74,10 @@ export default class B1_NuevoEgreso extends React.Component {
 
   renderDropdown = (lista, texto) => {
     return (
-      <DropDownPicker
-        items={lista}
-        containerStyle={{ height: 40 }}
-        style={{ backgroundColor: "#FFFFFF" }}
-        itemStyle={{
-          justifyContent: "flex-start",
-        }}
-        dropDownStyle={{ backgroundColor: "#FFFFFF" }}
-        placeholder={texto}
-        onChangeItem={(item) =>
-          this.setState({
-            seleccionado: item.value,
-          })
-        }
-      />
+      <ModalPersonalizado
+      data={lista}
+      initValue={texto}
+      />    
     );
   };
 
@@ -182,44 +172,8 @@ export default class B1_NuevoEgreso extends React.Component {
   }
 }
 
-/*
- <ScrollView
-        showsVerticalScrollIndicator={false}>
-           {this.renderDinero()}
-          {this.renderDropdown()}
-      </ScrollView>
 
-      */
-/**
- 
-        <StatusBar barStyle="light-content" />
-        <Block flex>
-          <Block space="between" style={styles.padded}>
-            <Block>
-              <Block>
-                              <Block>{this.renderDropdown()}</Block>
-                <Block>
-                  <Text color="white" size={60}>
-                    Nuevo Egreso
-                  </Text>
-                </Block>
-              </Block>
-              <Text size={16} color="rgba(255,255,255,0.6)">
-                Acá van los egresos
-              </Text>
-              <Button
-                shadowless
-                style={styles.button}
-                color={materialTheme.COLORS.BUTTON_COLOR}
-                onPress={() => navigation.navigate("Home")}
-              >
-                Agregar
-              </Button>
-            </Block>
-          </Block>
-        </Block>
 
- */
 const styles = StyleSheet.create({
   components: {
     paddingVertical: theme.SIZES.BASE,
@@ -262,3 +216,5 @@ const styles = StyleSheet.create({
     height: 66,
   },
 });
+
+

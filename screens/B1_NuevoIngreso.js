@@ -3,7 +3,7 @@ import { StyleSheet, Dimensions, Platform, View } from "react-native";
 import { Block, Input, Text, theme } from "galio-framework";
 import { materialTheme } from "../constants/";
 import { Switch, Icon } from "../components/";
-import DropDownPicker from "react-native-dropdown-picker";
+import ModalSelector from 'react-native-modal-selector';
 import { FloatingAction } from "react-native-floating-action";
 
 
@@ -75,20 +75,10 @@ export default class B1_NuevoIngreso extends React.Component {
 
   renderDropdown = (lista, texto) => {
     return (
-      <DropDownPicker
-        items={lista}
-        containerStyle={{ height: 40 }}
-        style={{ backgroundColor: "#FFFFFF" }}
-        itemStyle={{
-          justifyContent: "flex-start",
-        }}
-        dropDownStyle={{ backgroundColor: "#FFFFFF" }}
-        placeholder={texto}
-        onChangeItem={(item) =>
-          this.setState({
-            seleccionado: item.value,
-          })
-        }
+      <ModalSelector
+      data={lista}
+      initValue={texto}
+      // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
       />
     );
   };
