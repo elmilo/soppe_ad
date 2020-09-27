@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback , StatusBar, Dimensions, Platform } from 'react-native';
-import { Block, Button, Text, theme } from 'galio-framework';
+import { Block, Button, Text, theme,Input  } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon, Inversion, Header } from '../components';
 const { height, width } = Dimensions.get('screen');
@@ -20,24 +20,41 @@ export default class D2_Inversiones extends React.Component {
           <Block flex  style={styles.inversionDescription}>
             <Text size={23} style={styles.inversionEntidad}>{inversion}</Text>
             <Text size={15} >Tipo:</Text>
-            <Text size={22} style={styles.inversionEntidad}>Plazo Fijo</Text>
+            <Text size={22} style={styles.inversionEntidad}></Text>
             <Text size={15} >Cuenta:</Text>
-            <Text size={22} style={styles.inversionEntidad}>Banco Galicia ARS</Text>
+            <Text size={22} style={styles.inversionEntidad}></Text>
             <Text size={15} >Valor de compra:</Text>
-            <Text size={22} style={styles.inversionEntidad}>$10.000</Text>
+            <Text size={22} style={styles.inversionEntidad}></Text>
             <Text size={15} >Valor de venta:</Text>
-            <Text size={22} style={styles.inversionEntidad}>$12.000</Text>
+            <Text size={22} style={styles.inversionEntidad}></Text>
             <Text size={15} >Vencimiento:</Text>
-            <Text size={22} style={styles.inversionEntidad}>31/12/2020</Text>
+            <Text size={22} style={styles.inversionEntidad}></Text>
+            <Text size={15} >Valor de venta:</Text>
+            <Block flex style={styles.group}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="$"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
+            </Block>
+            
+
           </Block>
         </TouchableWithoutFeedback>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+        <Button shadowless color="green" style={[styles.button, styles.shadow]}>
+              Actualizar
+            </Button>
+            <Text></Text>
         <Button shadowless color="red" style={[styles.button, styles.shadow]}>
-              Eliminar
+              Vender y Eliminar
             </Button>
             </Block>
                      

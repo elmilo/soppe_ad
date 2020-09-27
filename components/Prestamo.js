@@ -17,6 +17,9 @@ class Prestamo extends React.Component {
           <Block flex style={[styles.imageContainer, styles.shadow]}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2, paddingVertical: theme.SIZES.BASE }}>
               <Icon name="leaf" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+              <Text></Text><Text></Text><Text></Text>
+              <Text size={15} muted={!saldoColor} color={saldoColor}>Prestamo:</Text>
+              <Text size={20} style={styles.prestamoEntidad}>{prestamo.tipo}</Text>
             </Block>
           </Block>
         </TouchableWithoutFeedback>
@@ -30,8 +33,7 @@ class Prestamo extends React.Component {
             <Text size={15} muted={!saldoColor} color={saldoColor}>Cuotas restantes:</Text>
             <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Fecha próximo vencimiento:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.diaVencimiento} de Septiembre</Text>
-            <Text size={15} style={styles.prestamoEntidad}></Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.diaVencimiento}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   prestamoEntidad: {
     flex: 2,
     flexWrap: 'wrap',
-    paddingBottom: 12,
+    paddingBottom: 18,
   },
   prestamoDescription: {
     padding: theme.SIZES.BASE / 15,
