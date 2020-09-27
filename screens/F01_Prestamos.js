@@ -7,6 +7,7 @@ import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
+import ModalPersonalizado from '../components/ModalPersonalizado';
 
 import products from '../constants/products';
 

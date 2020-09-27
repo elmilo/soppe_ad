@@ -8,8 +8,8 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
-
 import products from '../constants/products';
+
 const arrayCategoriasIngreso = [
   { value: 1, label: "Luz" },
   { value: 2, label: "Gas" },
@@ -19,8 +19,8 @@ const arrayCategoriasIngreso = [
   { value: 6, label: "Teléfono Fijo" },
   { value: 7, label: "Teléfono Movil" },
   { value: 8, label: "Otros" },
-
 ];
+
 const arrayRubrosIngreso = [
   { value: 1, label: "Servicios" },
   { value: 2, label: "Impuestos" },
