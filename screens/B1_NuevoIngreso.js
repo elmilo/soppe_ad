@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useState} from 'react';
 import { StyleSheet, Dimensions, Platform, View } from "react-native";
 import { Block, Input, Text, theme } from "galio-framework";
 import { materialTheme } from "../constants/";
 import { Switch, Icon } from "../components/";
-import DropDownPicker from "react-native-dropdown-picker";
+import ModalPersonalizado from '../components/ModalPersonalizado';
 import { FloatingAction } from "react-native-floating-action";
 
 
@@ -25,8 +25,14 @@ const arrayCategoriasIngreso = [
   { value: 4, label: "Rentas" },
 ];
 
-export default class B1_NuevoIngreso extends React.Component {
-  actions = [
+export default function B1_NuevoIngreso(props){
+  const { navigation } = props.navigation;
+  const [isEnabled, setIsEnabled] = useState(false);
+  const togglePeriodico = () => setIsEnabled(previousState => !previousState);
+  const [cuenta, SetCuenta] = useState('');
+  const [categoria, SetCategoria] = useState('');
+
+  const actions = [
     {
       text: "Con recursividad",
       name: "bt_accessibility",
@@ -39,15 +45,7 @@ export default class B1_NuevoIngreso extends React.Component {
     },
   ];
 
-  state = {
-    "switch-1": false,
-    "switch-2": false,
-    "switch-3": false,
-  };
-  toggleSwitch = (switchId) =>
-    this.setState({ [switchId]: !this.state[switchId] });
-
-  renderSwitch = (titulo, id) => {
+  function SwitchPeriodico (props){
     return (
       <Block
         row
@@ -61,39 +59,43 @@ export default class B1_NuevoIngreso extends React.Component {
         ]}
       >
         <Block>
-          <Text size={16}>{titulo}</Text>
+          <Text size={16}>Periódico</Text>
         </Block>
         <Block flex style={[{ left: theme.SIZES.BASE }]}>
           <Switch
-            value={this.state["switch-" + id]}
-            onValueChange={() => this.toggleSwitch("switch-" + id)}
+            onValueChange={togglePeriodico}
+            value={isEnabled}
           />
         </Block>
       </Block>
     );
   };
 
-  renderDropdown = (lista, texto) => {
+  function DropdownCuentas (props){
     return (
-      <DropDownPicker
-        items={lista}
-        containerStyle={{ height: 40 }}
-        style={{ backgroundColor: "#FFFFFF" }}
-        itemStyle={{
-          justifyContent: "flex-start",
-        }}
-        dropDownStyle={{ backgroundColor: "#FFFFFF" }}
-        placeholder={texto}
-        onChangeItem={(item) =>
-          this.setState({
-            seleccionado: item.value,
-          })
-        }
+      <ModalPersonalizado
+      data={arrayCuentas}
+      initValue="Destino de Fondos"
+      value={cuenta}
+      onChange={e => SetCuenta(e.target.value)}
+      // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
       />
     );
   };
 
-  renderDinero = () => {
+  function DropdownCategorias (props){
+    return (
+      <ModalPersonalizado
+      data={arrayCategoriasIngreso}
+      initValue="Categoría"
+      value={categoria}
+      onChange={e => SetCategoria(e.target.value)}
+      // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+      />
+    );
+  };
+
+  function Dinero (props){
     return (
       <Block style={{ height: 0.1 * height }}>
         <Input
@@ -123,14 +125,14 @@ export default class B1_NuevoIngreso extends React.Component {
     );
   };
 
-  renderInputBox = (tipo, texto) => {
+  function InputDia (props){
     return (
       <Block>
         <Input
           borderless
           bgColor="#FFFFFFFF"
-          type={tipo}
-          placeholder={texto}
+          type="numeric"
+          placeholder="Cuotas restantes"
           fontSize={16}
           placeholderTextColor={materialTheme.COLORS.DEFAULT}
           style={{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT }}
@@ -139,7 +141,7 @@ export default class B1_NuevoIngreso extends React.Component {
     );
   };
 
-  renderCuotasRestantes = () => {
+  function CuotasRestantes (props){
     return (
       <Block>
         <Input
@@ -155,22 +157,22 @@ export default class B1_NuevoIngreso extends React.Component {
     );
   };
 
-  render() {
-    const { navigation } = this.props;
-    return (
+return (
       <Block>
-        <Block center>{this.renderDinero()}</Block>
+        <Block center>
+          <Dinero/>
+        </Block>
         <Block>
-          {this.renderDropdown(arrayCategoriasIngreso, "Categoría")}
-          {this.renderSwitch("Periódico", 1)}
-          {this.renderInputBox("numeric", "Día del mes")}
-          {this.renderDropdown(arrayCuentas, "Destino de fondos")}
+          <DropdownCategorias/>
+          <SwitchPeriodico/>
+          <InputDia/>
+          <DropdownCuentas/>
         </Block>
         <Block
           style={{ marginTop: 0.2 * height, marginBottom: theme.SIZES.BASE }}
         />
         <FloatingAction
-          actions={this.actions}
+          actions={actions}
           color={theme.COLORS.DEFAULT}
           onPressItem={(name) => {
             console.log("selected button: " + name);
@@ -178,7 +180,6 @@ export default class B1_NuevoIngreso extends React.Component {
         />
       </Block>
     );
-  }
 }
 
 const styles = StyleSheet.create({
