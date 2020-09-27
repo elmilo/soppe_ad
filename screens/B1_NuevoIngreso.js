@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import { StyleSheet, Dimensions, Platform, View } from "react-native";
 import { Block, Input, Text, theme } from "galio-framework";
 import { materialTheme } from "../constants/";
-import { Switch, Icon } from "../components/";
+import { Icon } from "../components/";
+import SwitchPersonalizado from "../components/SwitchPersonalizado";
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import { FloatingAction } from "react-native-floating-action";
 
@@ -22,7 +23,7 @@ const arrayCategoriasIngreso = [
   { value: 2, label: "Venta" },
   { value: 3, label: "Otros conceptos" },
   { value: 4, label: "Aguinaldo" },
-  { value: 4, label: "Rentas" },
+  { value: 5, label: "Rentas" },
 ];
 
 export default function B1_NuevoIngreso(props){
@@ -45,29 +46,13 @@ export default function B1_NuevoIngreso(props){
     },
   ];
 
-  function SwitchPeriodico (props){
+  function SwitchPeriodico (){
     return (
-      <Block
-        row
-        style={[
-          {
-            height: 40,
-            backgroundColor: "#FFFFFF",
-            paddingTop: theme.SIZES.BASE * 0.5,
-            paddingHorizontal: theme.SIZES.BASE,
-          },
-        ]}
-      >
-        <Block>
-          <Text size={16}>Periódico</Text>
-        </Block>
-        <Block flex style={[{ left: theme.SIZES.BASE }]}>
-          <Switch
-            onValueChange={togglePeriodico}
-            value={isEnabled}
-          />
-        </Block>
-      </Block>
+      <SwitchPersonalizado
+        titulo={"Periódico"}
+        initialValue={isEnabled}
+        toggle={togglePeriodico}
+      />
     );
   };
 

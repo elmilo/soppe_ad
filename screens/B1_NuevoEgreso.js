@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
-import { View, StyleSheet, Dimensions, Platform} from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Dimensions, Platform } from "react-native";
 import { Block, Input, Text, theme } from "galio-framework";
 import { materialTheme } from "../constants/";
-import { Switch, Icon } from "../components/";
-import ModalPersonalizado from '../components/ModalPersonalizado';
+import { Icon } from "../components/";
+import SwitchPersonalizado from "../components/SwitchPersonalizado";
+import ModalPersonalizado from "../components/ModalPersonalizado";
 import { FloatingAction } from "react-native-floating-action";
-import DateTimePicker from '@react-native-community/datetimepicker';
-import CamaraPersonalizada from '../components/CamaraPersonalizada';
-
+import CamaraPersonalizada from "../components/CamaraPersonalizada";
+import { block } from "react-native-reanimated";
 
 const { height, width } = Dimensions.get("screen");
-
 
 const arrayCuentas = [
   { key: 1, label: "Cuenta Bancaria ARS" },
@@ -26,9 +25,21 @@ const arrayCategorias = [
   { key: 4, label: "Farmacia" },
 ];
 
-export default class B1_NuevoEgreso extends React.Component {
-  
-  actions = [
+export default function B1_NuevoEgreso(props) {
+  const { navigation } = props.navigation;
+
+  const [isEnabledPeriodico, setIsEnabledPeriodico] = useState(false);
+  const togglePeriodico = () =>
+    setIsEnabledPeriodico((previousState) => !previousState);
+
+  const [isEnabledParaSiempre, setIsEnabledParaSiempre] = useState(false);
+  const toggleParaSiempre = () =>
+    setIsEnabledParaSiempre((previousState) => !previousState);
+
+  const [cuenta, SetCuenta] = useState("");
+  const [categoria, SetCategoria] = useState("");
+
+  /*const actions = [
     {
       text: "Con recursividad",
       name: "bt_accessibility",
@@ -39,50 +50,13 @@ export default class B1_NuevoEgreso extends React.Component {
       name: "bt_language",
       position: 1
     }
-  ];
+  ];*/
 
-  state = {
-    "switch-1": false,
-    "switch-2": false,
-    "switch-3": false,
-  };
-  toggleSwitch = (switchId) =>
-    this.setState({ [switchId]: !this.state[switchId] });
-  
-  renderSwitch = (titulo, id) => {
-      return (
-        <Block row style={[
-           {height: 40 , backgroundColor:'#FFFFFF', 
-           paddingTop: theme.SIZES.BASE * 0.5,
-           paddingHorizontal: theme.SIZES.BASE,
-           }
-        ]}>
-          <Block >
-          <Text size={16}>{titulo}</Text>
-          </Block>
-          <Block flex style={[
-           {left: theme.SIZES.BASE
-            }
-        ]}>
-          <Switch
-            value={this.state["switch-"+ id]}
-            onValueChange={() => this.toggleSwitch("switch-"+ id)}
-          />
-          </Block>
-        </Block>
-      );
-    };
+  function renderDropdown(lista, texto) {
+    return <ModalPersonalizado data={lista} initValue={texto} />;
+  }
 
-  renderDropdown = (lista, texto) => {
-    return (
-      <ModalPersonalizado
-      data={lista}
-      initValue={texto}
-      />    
-    );
-  };
-
-  renderDinero = () => {
+  function renderDinero() {
     return (
       <Block style={{ height: 0.1 * height }}>
         <Input
@@ -110,9 +84,9 @@ export default class B1_NuevoEgreso extends React.Component {
         />
       </Block>
     );
-  };
+  }
 
-  renderInputBox = (tipo, texto) => {
+  function renderInputBox(tipo, texto) {
     return (
       <Block>
         <Input
@@ -126,43 +100,47 @@ export default class B1_NuevoEgreso extends React.Component {
         />
       </Block>
     );
-  };
+  }
 
-  renderCuotasRestantes = () => {
+  function renderSwitchParaSiempre() {
     return (
-      <Block>
-        <Input
-          borderless
-          bgColor="#FFFFFFFF"
-          type="default"
-          placeholder="Descripción"
-          fontSize={16}
-          placeholderTextColor={materialTheme.COLORS.DEFAULT}
-          style={{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT }}
-        />
-      </Block>
+      <SwitchPersonalizado
+        titulo={"Para siempre"}
+        initialValue={isEnabledParaSiempre}
+        toggle={toggleParaSiempre}
+      />
     );
-  };
+  }
 
-  render() {
-    const { navigation } = this.props;
-    return (
+  return (
+    <Block>
+      <Block center>{renderDinero()}</Block>
       <Block>
-        <Block center>{this.renderDinero()}</Block>
-        <Block>
-          {this.renderDropdown(arrayCategorias, "Destino")}
-          {this.renderInputBox("default", "Descripción")}
-          {this.renderDropdown(arrayCuentas, "Origen de fondos")}
-          {this.renderSwitch("Periódico mensual", 1)}
-          {this.renderSwitch("Para siempre", 2)}
-          {this.renderInputBox("numeric", "Cuotas restantes")}
-        </Block>
-        <Block>
+        {renderDropdown(arrayCategorias, "Destino")}
+        {renderInputBox("default", "Descripción")}
+        {renderDropdown(arrayCuentas, "Origen de fondos")}
+      </Block>
+      <SwitchPersonalizado
+        titulo={"Periódico mensual"}
+        initialValue={isEnabledPeriodico}
+        toggle={togglePeriodico}
+      />
+      {isEnabledPeriodico ? renderSwitchParaSiempre() : null}
+      {isEnabledPeriodico && !isEnabledParaSiempre
+        ? renderInputBox("numeric", "Cuotas restantes")
+        : null}
+
+      <Block>
         <CamaraPersonalizada />
-        </Block>
-        <Block
-          style={{ marginTop: 0.2 * height, marginBottom: theme.SIZES.BASE }}
-        />
+      </Block>
+      <Block
+        style={{ marginTop: 0.2 * height, marginBottom: theme.SIZES.BASE }}
+      />
+    </Block>
+  );
+}
+
+/*
          <FloatingAction
             actions={this.actions}
             color={theme.COLORS.DEFAULT}
@@ -170,14 +148,7 @@ export default class B1_NuevoEgreso extends React.Component {
               console.log("selected button: " + name);
             }}
           />
-      </Block>
-      
-      
-    );
-  }
-}
-
-
+          */
 
 const styles = StyleSheet.create({
   components: {
@@ -221,5 +192,3 @@ const styles = StyleSheet.create({
     height: 66,
   },
 });
-
-
