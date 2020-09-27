@@ -11,27 +11,33 @@ import ModalPersonalizado from '../components/ModalPersonalizado';
 
 import products from '../constants/products';
 
+const arrayCuentaIngreso = [
+  { value: 1, label: "Banco Galicia ARS" },
+  { value: 2, label: "Banco Galicia USD" },
+  { value: 3, label: "Mercado Pago" },
+  { value: 4, label: "BBVA ARS" },
+];
+
 export default function F01_Prestamos(props) {
-  //variable para setear fecha
-  let index = 0;
-  const entidad = [
-    // { key: index++, section: true, label: 'Fruits' },
-    { key: index++, label: 'Banco Galicia' },
-    { key: index++, label: 'Banco Francés' },
-    { key: index++, label: 'Efectivo' },
-    { key: index++, label: 'Ualá' },
-    { key: index++, label: 'Mercado Pago' },
-  ];
-
-  const cuenta = [
-    { key: index++, label: 'Banco Galicia ARS' },
-    { key: index++, label: 'Banco Galicia USD' },
-    { key: index++, label: 'Mercado Pago' },
-  ];
-
+  const [cuenta, SetCuenta] = useState('');
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  let index = 0;
 
+  function renderDropdown(lista, texto) {
+    return <ModalPersonalizado data={lista} initValue={texto} />;
+  }
+
+  function DropdownCuenta(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayCuentaIngreso}
+        initValue="Seleccione una Cuenta"
+        value={cuenta}
+        onChange={e => SetCuenta(e.target.value)}
+      />
+    );
+  };
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <ScrollView
@@ -46,11 +52,7 @@ export default function F01_Prestamos(props) {
         />
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
-        <ModalSelector flex style={styles.group}
-          data={cuenta}
-          initValue="Seleccione una de sus cuentas"
-        // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-        />
+        <DropdownCuenta />
         <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
         <Block flex>
           <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de Préstamo</Text>
