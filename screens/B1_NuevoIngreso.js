@@ -28,10 +28,23 @@ const arrayCategoriasIngreso = [
 
 export default function B1_NuevoIngreso(props){
   const { navigation } = props.navigation;
+  
   const [isEnabled, setIsEnabled] = useState(false);
   const togglePeriodico = () => setIsEnabled(previousState => !previousState);
+  
   const [cuenta, SetCuenta] = useState('');
   const [categoria, SetCategoria] = useState('');
+
+
+  function handleOnChangeCuenta (unaCuenta){
+    console.log('handleOnChangeCuenta: ' + unaCuenta);
+    SetCuenta(unaCuenta);
+  }
+
+  function handleOnChangeCategoria (unaCategoria){
+    console.log('handleOnChangeCategoria: ' + unaCategoria);
+    SetCategoria(unaCategoria);
+  }
 
   const actions = [
     {
@@ -46,41 +59,31 @@ export default function B1_NuevoIngreso(props){
     },
   ];
 
-  function SwitchPeriodico (){
-    return (
-      <SwitchPersonalizado
-        titulo={"Periódico"}
-        initialValue={isEnabled}
-        toggle={togglePeriodico}
-      />
-    );
-  };
+ 
 
-  function DropdownCuentas (props){
+
+
+  function DropdownCuentas (){
     return (
       <ModalPersonalizado
       data={arrayCuentas}
       initValue="Destino de Fondos"
-      value={cuenta}
-      onChange={e => SetCuenta(e.target.value)}
-      // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+      onSelected={handleOnChangeCuenta}
       />
     );
   };
 
-  function DropdownCategorias (props){
+  function DropdownCategorias (){
     return (
       <ModalPersonalizado
       data={arrayCategoriasIngreso}
       initValue="Categoría"
-      value={categoria}
-      onChange={e => SetCategoria(e.target.value)}
-      // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+      onSelected={handleOnChangeCategoria}
       />
     );
   };
 
-  function Dinero (props){
+  function Dinero (){
     return (
       <Block style={{ height: 0.1 * height }}>
         <Input
@@ -110,7 +113,7 @@ export default function B1_NuevoIngreso(props){
     );
   };
 
-  function InputDia (props){
+  function InputDia (){
     return (
       <Block>
         <Input
@@ -126,7 +129,7 @@ export default function B1_NuevoIngreso(props){
     );
   };
 
-  function CuotasRestantes (props){
+  function CuotasRestantes (){
     return (
       <Block>
         <Input
@@ -145,28 +148,34 @@ export default function B1_NuevoIngreso(props){
 return (
       <Block>
         <Block center>
-          <Dinero/>
+        {Dinero()}
         </Block>
         <Block>
-          <DropdownCategorias/>
-          <SwitchPeriodico/>
-          <InputDia/>
-          <DropdownCuentas/>
+        {DropdownCategorias()}
+        <SwitchPersonalizado
+        titulo={"Periódico"}
+        initialValue={isEnabled}
+        toggle={togglePeriodico}
+      />
+          {InputDia()}
+          {DropdownCuentas()}
         </Block>
         <Block
           style={{ marginTop: 0.2 * height, marginBottom: theme.SIZES.BASE }}
         />
-        <FloatingAction
+
+      </Block>
+    );
+}
+
+/*        <FloatingAction
           actions={actions}
           color={theme.COLORS.DEFAULT}
           onPressItem={(name) => {
             console.log("selected button: " + name);
           }}
         />
-      </Block>
-    );
-}
-
+        */
 const styles = StyleSheet.create({
   components: {
     paddingVertical: theme.SIZES.BASE,

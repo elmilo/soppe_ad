@@ -5,14 +5,13 @@ import { materialTheme } from "../constants/";
 import { theme } from "galio-framework";
 
 export default function ModalPersonalizado(props){
-    const [value, SetValue] = useState('');
-    const [initValue, SetInitValue] = useState(props.initValue);
-    const [data, SetData] = useState(props.data);
-    
+    const initValue = props.initValue;
+    const data = props.data;
+    const onSelected = props.onSelected;
+
 
     return (
       <ModalSelector
-        value={value}
         data={data}
         initValue={initValue}
         style={miModalStyle.general}
@@ -21,11 +20,14 @@ export default function ModalPersonalizado(props){
         initValueTextStyle={miModalStyle.initValueTextStyle}
         optionContainerStyle={miModalStyle.optionContainerStyle}
         cancelText={'Cancelar'}
-      // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
+        onChange={(option)=>{ onSelected(option.label) }} 
       />
     );
 
 }
+
+//=>{ alert(`${option.label} (${option.key}) nom nom nom`) }
+
 //overlayStyle={miModalStyle.overlayStyle}
 //      optionContainerStyle={miModalStyle.optionContainerStyle}
 const PADDING = theme.SIZES.BASE;

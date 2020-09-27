@@ -15,7 +15,7 @@ const { height, width } = Dimensions.get("screen");
 import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Cuenta, Header } from "../components";
-import { getAccounts } from "./DataBase";
+import { getAccounts } from "../Database/Database";
 
 export default function D0_Cuentas(props) {
   const [datos, setDatos] = React.useState(null);
