@@ -25,8 +25,6 @@ export default class D2_Inversiones extends React.Component {
             <Text size={22} style={styles.inversionEntidad}></Text>
             <Text size={15} >Valor de compra:</Text>
             <Text size={22} style={styles.inversionEntidad}></Text>
-            <Text size={15} >Valor de venta:</Text>
-            <Text size={22} style={styles.inversionEntidad}></Text>
             <Text size={15} >Vencimiento:</Text>
             <Text size={22} style={styles.inversionEntidad}></Text>
             <Text size={15} >Valor de venta:</Text>
@@ -47,7 +45,7 @@ export default class D2_Inversiones extends React.Component {
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text><Text></Text>
+        <Text></Text>
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
         <Button shadowless color="green" style={[styles.button, styles.shadow]}>
               Actualizar

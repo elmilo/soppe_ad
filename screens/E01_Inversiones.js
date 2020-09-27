@@ -70,7 +70,7 @@ export default function E01_Inversiones(props){
           
           <Block flex>  
 
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor invertido a debitar</Text>
+          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor invertido</Text>
             <Block flex style={styles.group}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
               <Input
@@ -82,18 +82,6 @@ export default function E01_Inversiones(props){
             </Block>
             </Block>
           
-            <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor de venta</Text>
-            <Block flex style={styles.group}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
-                right
-                placeholder="$"
-                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-              />
-            </Block>
-            </Block>
-
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Descripción</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
@@ -119,6 +107,7 @@ export default function E01_Inversiones(props){
   }
 
 
+ 
 
 const styles = StyleSheet.create({
   container: {

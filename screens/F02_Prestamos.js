@@ -39,7 +39,7 @@ export default class F02_Prestamos extends React.Component {
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text>
        
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
         <Button shadowless color="green" style={[styles.button, styles.shadow]}>
