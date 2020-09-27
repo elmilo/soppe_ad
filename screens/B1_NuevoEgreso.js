@@ -157,7 +157,7 @@ export default class B1_NuevoEgreso extends React.Component {
           {this.renderSwitch("Para siempre", 2)}
           {this.renderInputBox("numeric", "Cuotas restantes")}
         </Block>
-<Block>
+        <Block>
         <CamaraPersonalizada />
         </Block>
         <Block

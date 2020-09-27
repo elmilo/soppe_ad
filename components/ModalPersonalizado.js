@@ -4,12 +4,15 @@ import ModalSelector from 'react-native-modal-selector';
 import { materialTheme } from "../constants/";
 import { theme } from "galio-framework";
 
-export default class ModalPersonalizado extends React.Component {
-  render() {
-    const { data, initValue, ...props } = this.props;
+export default function ModalPersonalizado(props){
+    const [value, SetValue] = useState('');
+    const [initValue, SetInitValue] = useState(props.initValue);
+    const [data, SetData] = useState(props.data);
+    
 
     return (
       <ModalSelector
+        value={value}
         data={data}
         initValue={initValue}
         style={miModalStyle.general}
@@ -22,7 +25,6 @@ export default class ModalPersonalizado extends React.Component {
       />
     );
 
-  }
 }
 //overlayStyle={miModalStyle.overlayStyle}
 //      optionContainerStyle={miModalStyle.optionContainerStyle}
@@ -107,7 +109,7 @@ general: {
     },
     
     initValueTextStyle: {
-      textAlign: 'left',
+      textAlign: 'center',
       fontSize:  FONT_SIZE,
       color:     materialTheme.COLORS.PRIMARY,
   },
