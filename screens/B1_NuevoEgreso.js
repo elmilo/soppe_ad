@@ -39,6 +39,14 @@ export default function B1_NuevoEgreso(props) {
   const [cuenta, SetCuenta] = useState("");
   const [categoria, SetCategoria] = useState("");
 
+  function handleOnChangeCuenta(unaCuenta) {
+    SetCuenta(unaCuenta);
+  }
+
+  function handleOnChangeCategoria(unaCategoria) {
+    SetCategoria(unaCategoria);
+  }
+
   /*const actions = [
     {
       text: "Con recursividad",
@@ -52,8 +60,12 @@ export default function B1_NuevoEgreso(props) {
     }
   ];*/
 
-  function renderDropdown(lista, texto) {
-    return <ModalPersonalizado data={lista} initValue={texto} />;
+  function renderDropdown(lista, texto, handle) {
+    return <ModalPersonalizado 
+    data={lista} 
+    initValue={texto}
+    onSelected={handle}    
+    />;
   }
 
   function renderDinero() {
@@ -116,9 +128,9 @@ export default function B1_NuevoEgreso(props) {
     <Block>
       <Block center>{renderDinero()}</Block>
       <Block>
-        {renderDropdown(arrayCategorias, "Destino")}
+        {renderDropdown(arrayCategorias, "Destino", handleOnChangeCategoria)}
         {renderInputBox("default", "Descripción")}
-        {renderDropdown(arrayCuentas, "Origen de fondos")}
+        {renderDropdown(arrayCuentas, "Origen de fondos", handleOnChangeCuenta)}
       </Block>
       <SwitchPersonalizado
         titulo={"Periódico mensual"}
