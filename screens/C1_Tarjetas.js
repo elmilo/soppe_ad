@@ -12,16 +12,36 @@ import products from '../constants/products';
 import * as SQLite from 'expo-sqlite';
 const db = SQLite.openDatabase("db.db");
 
-const arrayCuentaIngreso = [
-  { value: 1, label: "Banco Galicia ARS" },
-  { value: 2, label: "Banco Galicia USD" },
-  { value: 3, label: "Mercado Pago" },
+const arrayEntidadIngreso = [
+  { value: 1, label: "Banco Galicia" },
+  { value: 2, label: "Banco Patagonia" },
+  { value: 3, label: "Banco Provincia" },
   { value: 4, label: "BBVA ARS" },
 ];
 
+const arrayEmisorIngreso = [
+  { value: 1, label: "Visa" },
+  { value: 2, label: "Mastercard" },
+  { value: 3, label: "Cabal" },
+  { value: 4, label: "American Express" },
+  { value: 5, label: "CMR" },
+  { value: 6, label: "Maestro" },
+  { value: 7, label: "Visa Electrón" },
+  { value: 8, label: "Mercado Pago" },
+];
+const arrayTipoTarjeta1Ingreso = [
+  { value: 1, label: "Débito" },
+  { value: 2, label: "Crédito" },
+];
+const arrayCuentaDebitoIngreso = [
+  { value: 1, label: "Banco Galicia 453/5265988" },
+];
 
 export default function C1_Tarjetas(props) {
-  //variable para setear fecha
+  const [entidad, SetEntidad] = useState('');
+  const [emisor, SetEmisor] = useState('');
+  const [tipoTarjeta1, SetTipoTarjeta1] = useState('');
+  const [cuentaDebito, SetCuentaDebito] = useState('');
   const [cuentaSeleccionada, setCuentaSeleccionada] = useState(0);
   const [entidadEmisora, setEntidadEmisora] = useState("");
   const [tipoTarjeta, setTipoTarjeta] = useState("");
@@ -32,72 +52,52 @@ export default function C1_Tarjetas(props) {
   const navigation = props.navigation;
 
   let index = 0;
-  const entidad = [
-    // { key: index++, section: true, label: 'Fruits' },
-    { key: index++, label: 'Banco Galicia' },
-    { key: index++, label: 'Banco BBVA' },
-    { key: index++, label: 'Ualá' },
-
-  ];
-  const emisor = [
-    // { key: index++, section: true, label: 'Fruits' },
-    { key: index++, label: 'Visa' },
-    { key: index++, label: 'Mastercard' },
-    { key: index++, label: 'Cabal' },
-    { key: index++, label: 'American Express' },
-    { key: index++, label: 'CMR' },
-    { key: index++, label: 'Maestro' },
-    { key: index++, label: 'Visa Electrón' },
-    { key: index++, label: 'Mercado Pago' },
-
-  ];
-  const monedas = [
-    { key: index++, label: 'Pesos Argentinos' },
-    { key: index++, label: 'Dolares' },
-    { key: index++, label: 'Euros' },
-  ];
-  const tipo = [
-    { key: index++, label: 'Débito' },
-    { key: index++, label: 'Crédito' },
-  ];
-  const cuentadebito = [
-    { key: index++, label: 'Banco Galicia 453/5265988' },
-  ];
   const [cuentas, setCuentas] = useState([]);
   
-  useEffect(() => {
-    db.transaction(
-      tx => {
-        tx.executeSql("select * from accounts where user=?", [1],
-          (txObj, {rows: { _array } }) => setCuentas(_array),
-          (txObj, error) => console.log("error levantando las cuentas " + error))
-    });
-  })
-
-  buildCuentas = () => {
-    let cuentasFormatted = [];
-    for(let i = 0; i < cuentas.length; i++){
-      let cuenta = {};
-      cuenta.key = cuentas[i].id;
-      cuenta.label = cuentas[i].accNumber;
-      cuentasFormatted.push(cuenta);
-    }
-    return cuentasFormatted;
+  function renderDropdown(lista, texto) {
+    return <ModalPersonalizado data={lista} initValue={texto} />;
   }
 
-  saveCard = () => {
-    db.transaction(
-      tx => {
-        //"create table if not exists cards (id integer primary key not null, user integer, emisor text, tipo text, ultimosDigitos integer, accountId integer, fechaCierre text, fechaVenc text, saldo float);"
-        tx.executeSql(
-          "insert into cards (user, emisor, tipo, ultimosDigitos, accountId, fechaCierre, fechaVenc, saldo) values (?, ?, ?, ?, ?, ?, ?, ?)", [1, entidadEmisora, tipoTarjeta, ultimos4Digitos, cuentaSeleccionada, fechaCierre, fechaVenc, saldo] 
-        );
-      },
-      () => console.log("error guardando la tarjeta"),
-      () => navigation.navigate('Tarjetas')
+  function DropdownEmisor(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayEmisorIngreso}
+        initValue="Seleccione un Emisor"
+        value={emisor}
+        onChange={e => SetEmisor(e.target.value)}
+      />
     );
-    //this.navigation.navigate('Tarjetas')
-  }
+  };
+
+  function DropdownEntidad(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayEntidadIngreso}
+        initValue="Seleccione una Entidad"
+        value={entidad}
+        onChange={e => SetEntidad(e.target.value)}
+      />
+    );
+  };
+  function DropdownTipoTarjeta1(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayTipoTarjeta1Ingreso}
+        initValue="Seleccione un Tipo de Tarjeta"
+        value={tipoTarjeta1}
+        onChange={e => setTipoTarjeta1(e.target.value)}
+      />
+    );
+  };function DropdownCuentaDebito(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayCuentaDebitoIngreso}
+        initValue="Seleccione una cuenta"
+        value={cuentaDebito}
+        onChange={e => SetCuentaDebiro(e.target.value)}
+      />
+    );
+  };
 
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
@@ -105,32 +105,16 @@ export default function C1_Tarjetas(props) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Entidad</Text>
-        <ModalSelector flex style={styles.group}
-          data={entidad}
-          initValue="Entidad Emisora"
-        // onChange={(option)=>{ alert(`${option.label} (${option.key}) nom nom nom`) }} 
-        />
+        <DropdownEntidad/>
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Emisor</Text>
-        <ModalSelector flex style={styles.group}
-          data={emisor}
-          initValue="Emisor"
-          onChange={(option)=>{ setEntidadEmisora(option.label) }} 
-        />
+        <DropdownEmisor/>
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de tarjeta</Text>
-        <ModalSelector flex style={styles.group}
-          data={tipo}
-          initValue="Tipo"
-          onChange={(option)=>{ setTipoTarjeta(option.label) }} 
-        />
+        <DropdownTipoTarjeta1/>
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta a debitar</Text>
-        <ModalSelector flex style={styles.group}
-          data={buildCuentas()}
-          initValue="Debito"
-          onChange={(option)=>{ setCuentaSeleccionada(option.key)}  }
-        />
+        <DropdownCuentaDebito />
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>últimos 4 digitos</Text>
         <Block flex style={styles.group}>
@@ -193,7 +177,7 @@ export default function C1_Tarjetas(props) {
           </Block>
 
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]} onPress={() => saveCard()}>
+            <Button shadowless color="success" style={[styles.button, styles.shadow]} >
               +
             </Button>
           </Block>
