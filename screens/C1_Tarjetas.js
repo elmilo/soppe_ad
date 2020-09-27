@@ -9,10 +9,16 @@ import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
-
 import * as SQLite from 'expo-sqlite';
-
 const db = SQLite.openDatabase("db.db");
+
+const arrayCuentaIngreso = [
+  { value: 1, label: "Banco Galicia ARS" },
+  { value: 2, label: "Banco Galicia USD" },
+  { value: 3, label: "Mercado Pago" },
+  { value: 4, label: "BBVA ARS" },
+];
+
 
 export default function C1_Tarjetas(props) {
   //variable para setear fecha

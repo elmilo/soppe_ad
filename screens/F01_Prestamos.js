@@ -8,7 +8,6 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
-
 import products from '../constants/products';
 
 const arrayCuentaIngreso = [
@@ -77,7 +76,7 @@ export default function F01_Prestamos(props) {
               />
             </Block>
           </Block>
-          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Día de vencimiento de cuota</Text>
+          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha próxima cuota</Text>
           <Block flex style={styles.group}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
               <Input

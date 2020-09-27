@@ -12,9 +12,23 @@ import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
 import * as SQLite from 'expo-sqlite';
 
+const arrayCuentaIngreso = [
+  { value: 1, label: "Banco Galicia ARS" },
+  { value: 2, label: "Banco Galicia USD" },
+  { value: 3, label: "Mercado Pago" },
+  { value: 4, label: "BBVA ARS" },
+];
+
+const arrayMonedaIngreso = [
+  { value: 1, label: "Pesos Argentinos" },
+  { value: 2, label: "Dolares" },
+  { value: 3, label: "Euros" },
+  { value: 4, label: "CNY" },
+];
 
 export default function D1_Cuentas(props){
-  //variable para setear fecha
+  const [cuenta, SetCuenta] = useState('');
+  const [moneda, SetMoneda] = useState('');
   const [entity, setEntity] = useState("");
   const [currency, setCurrency] = useState("");
   const [accNumber, setAccNumber] = useState("");
@@ -24,20 +38,7 @@ export default function D1_Cuentas(props){
   const navigation = props.navigation;
  
   let index = 0;
-    const entidad = [
-        // { key: index++, section: true, label: 'Fruits' },
-        { key: index++, label: 'Banco Galicia' },
-        { key: index++, label: 'Banco Francés' },
-        { key: index++, label: 'Efectivo' },
-        { key: index++, label: 'Ualá' },
-        { key: index++, label: 'Mercado Pago' },
-    ];
-    const monedas = [
-      { key: index++, label: 'Pesos Argentinos' },
-      { key: index++, label: 'Dolares' },
-      { key: index++, label: 'Euros' },
-     ];
-
+  
      saveAccount = () => {
       const db = SQLite.openDatabase("db.db");
       db.transaction(
@@ -52,6 +53,31 @@ export default function D1_Cuentas(props){
       navigation.navigate('Cuentas');
      }
 
+     function renderDropdown(lista, texto) {
+      return <ModalPersonalizado data={lista} initValue={texto} />;
+    }
+  
+    function DropdownCuenta(props) {
+      return (
+        <ModalPersonalizado
+          data={arrayCuentaIngreso}
+          initValue="Seleccione una Cuenta"
+          value={cuenta}
+          onChange={e => SetCuenta(e.target.value)}
+        />
+      );
+    };
+
+    function DropdownMoneda(props) {
+      return (
+        <ModalPersonalizado
+          data={arrayMonedaIngreso}
+          initValue="Seleccione una Moneda"
+          value={moneda}
+          onChange={e => SetMoneda(e.target.value)}
+        />
+      );
+    };
     return (
       
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
@@ -60,24 +86,16 @@ export default function D1_Cuentas(props){
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.products}>
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
-          <ModalSelector flex style={styles.group}
-          data={entidad}
-          initValue="Seleccione una entidad"
-          onChange={(option)=>{ setEntity(option.label) }} 
-          />
+          <DropdownCuenta />
 
           <Block/>
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Moneda</Text>
-          <ModalSelector
-          data={monedas}
-          initValue="Seleccione una Moneda"
-          onChange={(option)=>{ setCurrency(option.label) }} 
-          />
+          <DropdownMoneda />
           <Block/>
           <Text></Text>
           
           <Block flex>  
-                
+          
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Número de Cuenta</Text>
           <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
