@@ -1,47 +1,83 @@
 import React, { useState } from 'react';
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
-import { Block, Button, Text, theme,Input } from 'galio-framework';
+import { Block, Button, Text, theme, Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
+import ModalPersonalizado from '../components/ModalPersonalizado';
 
 import products from '../constants/products';
+const arrayCategoriasIngreso = [
+  { value: 1, label: "Luz" },
+  { value: 2, label: "Gas" },
+  { value: 3, label: "Aguas" },
+  { value: 4, label: "Tv por Cable" },
+  { value: 5, label: "Internet" },
+  { value: 6, label: "Teléfono Fijo" },
+  { value: 7, label: "Teléfono Movil" },
+  { value: 8, label: "Otros" },
 
-export default function G01_Presupuestos(props){
-  //variable para setear fecha
- 
-  let index = 0;
-  const rubro = [
-    { key: index++, label: 'Servicios' },
-    { key: index++, label: 'Impuestos' },
-    { key: index++, label: 'Salud' },
-    { key: index++, label: 'Viáticos' },
-    { key: index++, label: 'Comidas' },
-    { key: index++, label: 'Entretenimiento' },
-    { key: index++, label: 'Otros' },
 ];
-const categorias= [
-    { key: index++, label: 'Luz' },
-    { key: index++, label: 'Gas' },
-    { key: index++, label: 'Agua' },
-    { key: index++, label: 'Tv por Cable' },
-    { key: index++, label: 'Internet' },
-    { key: index++, label: 'Teléfono Fijo' },
-    { key: index++, label: 'Teléfono Movil' },
-    { key: index++, label: 'Nacional' },
-    { key: index++, label: 'Provincial' },
-    { key: index++, label: 'Municipal' },
-    { key: index++, label: 'Otros' },
-     ];
+const arrayRubrosIngreso = [
+  { value: 1, label: "Servicios" },
+  { value: 2, label: "Impuestos" },
+  { value: 3, label: "Salud" },
+  { value: 4, label: "Viaticos" },
+  { value: 5, label: "Comidas" },
+  { value: 6, label: "Entretenimiento" },
+  { value: 7, label: "Vacaciones" },
+  { value: 8, label: "Otros" },
 
+];
+
+
+export default function G01_Presupuestos(props) {
+  //variable para setear fecha
+  const [rubro, SetRubro] = useState('');
+  const [categoria, SetCategoria] = useState('');
+  let index = 0;
+
+  function renderDropdown(lista, texto) {
+    return <ModalPersonalizado data={lista} initValue={texto} />;
+  }
+  function DropdownCategorias(props) {
     return (
-      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+      <ModalPersonalizado
+        data={arrayCategoriasIngreso}
+        initValue="Seleccione una Categoria"
+        value={categoria}
+        onChange={e => SetCategoria(e.target.value)}
+      />
+    );
+  };
 
-            <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Valor Mensual</Text>
-          <Block flex style={styles.group}>
+  function DropdownRubros(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayRubrosIngreso}
+        initValue="Seleccione un Rubro"
+        value={rubro}
+        onChange={e => SetRubro(e.target.value)}
+      />
+    );
+  };
+
+  return (
+    <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.products}>
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Rubro</Text>
+        <DropdownRubros />
+        <Block />
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Categoria</Text>
+        <DropdownCategorias />
+        <Block />
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor Mensual</Text>
+        <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
               right
@@ -50,54 +86,33 @@ const categorias= [
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
             />
           </Block>
-          </Block>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-          <Text></Text>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.products}>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Rubro</Text>
-          <ModalSelector flex style={styles.group}
-          data={rubro}
-          initValue="Seleccione un Rubro"
-          />
-
-          <Block/>
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Categoria</Text>
-          <ModalSelector
-          data={categorias}
-          initValue="Seleccione una Categoría"
-          />
-          <Block/>
-          <Text></Text>
-          
-          <Block flex>  
-                
-          <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Descripción</Text>
+        </Block>
+        <Text></Text>
+        <Block flex>
+          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Descripción</Text>
           <Block flex style={styles.group}>
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder=""
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-            />
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder=""
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              />
+            </Block>
           </Block>
-          </Block>
-          
+
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
             <Button shadowless color="success" style={[styles.button, styles.shadow]}>
               +
             </Button>
-            </Block>
-          <Text></Text>
           </Block>
-          </ScrollView>
+          <Text></Text>
         </Block>
-    )
-  }
+      </ScrollView>
+    </Block>
+  )
+}
+
 
 
 
