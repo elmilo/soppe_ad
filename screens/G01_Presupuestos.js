@@ -9,6 +9,7 @@ import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
+import { setPresupuesto} from "../Database/Database";
 
 const arrayCategoriasIngreso = [
   { value: 1, label: "Luz" },
@@ -35,21 +36,40 @@ const arrayRubrosIngreso = [
 
 
 export default function G01_Presupuestos(props) {
-  //variable para setear fecha
-  const [rubro, SetRubro] = useState('');
-  const [categoria, SetCategoria] = useState('');
+  
+  const [categoria, SetCategoria] = useState("");
+  const [rubro, SetRubro] = useState("");
+  const [valorMensual, setValorMensual] = useState(0.0);
+  const [descripcion, setDescripcion] = useState("");
+
+  const navigation = props.navigation;
   let index = 0;
+
+  function handleOnChangeCategoria(unaCategoria) {
+    SetCategoria(unaCategoria);
+  }
+
+  function handleOnChangeRubro(rubro) {
+    SetRubro(rubro);
+  }
+
+  function savePresupuesto() {
+    setPresupuesto(rubro, categoria,valorMensual,descripcion);
+    navigation.navigate("Presupuestos");
+  }
+  
 
   function renderDropdown(lista, texto) {
     return <ModalPersonalizado data={lista} initValue={texto} />;
   }
+
   function DropdownCategorias(props) {
     return (
       <ModalPersonalizado
         data={arrayCategoriasIngreso}
         initValue="Seleccione una Categoria"
         value={categoria}
-        onChange={e => SetCategoria(e.target.value)}
+        onSelected={handleOnChangeCategoria}
       />
     );
   };
@@ -60,11 +80,11 @@ export default function G01_Presupuestos(props) {
         data={arrayRubrosIngreso}
         initValue="Seleccione un Rubro"
         value={rubro}
-        onChange={e => SetRubro(e.target.value)}
+        onSelected={handleOnChangeRubro}
       />
     );
   };
-
+ 
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <ScrollView
@@ -84,6 +104,7 @@ export default function G01_Presupuestos(props) {
               placeholder="$"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setValorMensual(text); }}
             />
           </Block>
         </Block>
@@ -97,12 +118,15 @@ export default function G01_Presupuestos(props) {
                 placeholder=""
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setDescripcion(text); }}
               />
             </Block>
           </Block>
 
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+            <Button shadowless color="success" style={[styles.button, styles.shadow]} onPress={() => {
+                savePresupuesto();
+              }}>
               +
             </Button>
           </Block>

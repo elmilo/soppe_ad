@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFocusEffect } from '@react-navigation/native'
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -10,60 +11,55 @@ import { Icon, Presupuesto, Header } from '../components';
 import presupuestos from '../constants/presupuestos';
 import {getPresupuestos }from "../Database/Database";
 
-export default class G00_Presupuestos extends React.Component {
+export default function G00_Presupuestos (props) {
+  
+  const [datos, setDatos] = React.useState(null);
 
-  renderNavigation = () => {
-    return (
+  function successCallback(rows) {
+    var datosTemporales = [];
+    rows.forEach((presupuesto, index) => {
+      datosTemporales.push(<Presupuesto presupuesto={presupuesto} key={index} horizontal />);
+    });
 
-      <Block flex style={styles.group}>
-        <Block>
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header back title="Title" navigation={this.props.navigation} />
-          </Block>
-        </Block>
-      </Block>
-    )
+    setDatos(datosTemporales);
   }
+  useFocusEffect(() => {
+    getPresupuestos(successCallback);
+  })
 
-  renderPresupuestos = () => {
-    const { navigation } = this.props;
-    let datos = [];
-    presupuestos.forEach((presupuesto, index) => {
-      datos.push(
-        <Presupuesto presupuesto={presupuesto} key={index} horizontal />
-      )
-    })
+  const renderPresupuestos = () => {
+
+    
     return (
-      <Block flex>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.presupuestos}>
-          <Block flex>
-            <Block dense>
-              {datos}
-
-            </Block>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]}
-              onPress={() => navigation.navigate('Nuevo Presupuesto')}
-            >
-              +  Agregar nuevo presupuesto
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.cuentas}
+      >
+        <Block flex>
+        <Text></Text>
+          <Block dense>{datos}</Block>
+          <Button
+            shadowless
+            color="success"
+            style={[styles.button, styles.shadow]}
+            onPress={() => props.navigation.navigate("Nuevo Presupuesto")}
+          >
+            + Agregar nuevo presupuesto
           </Button>
-            <Text></Text>
-          </Block>
-        </ScrollView>
-      </Block>
-    )
-  }
-
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderPresupuestos()}
-      </Block>
+          <Text></Text>
+        </Block>
+      </ScrollView>
     );
-  }
+  };
 
+  return (
+    <Block flex center style={styles.home}>
+      {renderPresupuestos()}
+    </Block>
+  );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

@@ -40,12 +40,10 @@ export default function D1_Cuentas(props) {
   const [cbu, setCbu] = useState(0);
   const [alias, setAlias] = useState("");
   const [saldo, setSaldo] = useState(0.0);
-  const navigation = props.navigation;
-
-  let index = 0;
-
   const [cuenta, SetCuenta] = useState("");
   const [moneda, SetMoneda] = useState("");
+  const navigation = props.navigation;
+  let index = 0;
 
   function handleOnChangeCuenta(unaCuenta) {
     SetCuenta(unaCuenta);
