@@ -4,6 +4,7 @@ import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-n
 import { Block, Text, theme } from 'galio-framework';
 import { Icon } from '../components';
 import materialTheme from '../constants/Theme';
+import { setCuentaUnica } from '../Database/Database';
 const { width } = Dimensions.get('screen');
 
 class Cuenta extends React.Component {
@@ -22,9 +23,8 @@ class Cuenta extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta: cuenta })}>
           <Block flex space="between" style={styles.cuentaDescription}>
-          <Text size={23} style={styles.cuentaEntidad}>{cuenta.entity}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Moneda:</Text>
-            <Text size={15} style={styles.cuentaEntidad}>{cuenta.currency}</Text>
+          <Text size={22} style={styles.cuentaEntidad}>{cuenta.entidad_id}</Text>
+            <Text size={15} style={styles.cuentaEntidad}>{cuenta.moneda}</Text>
             <Text size={22} style={styles.cuentaEntidad}>${cuenta.saldo}</Text>
           </Block>
         </TouchableWithoutFeedback>
