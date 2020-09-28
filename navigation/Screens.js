@@ -7,6 +7,7 @@ import { Block, Text, theme } from "galio-framework";
 
 import ComponentsScreen from '../screens/Components';
 
+import A0_Login from "../screens/A0_Login";
 import B0_Inicio from '../screens/B0_Inicio';
 import B01_Perfil from '../screens/B01_Perfil';
 import B02_Analisis from "../screens/B02_Analisis";
@@ -43,6 +44,7 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 import { fakeprofile as miPerfil } from '../constants';
+
 
 /******************************************************************** */
 function StackInicio(props) {
@@ -100,6 +102,31 @@ function StackTarjetas(props) {
           header: ({ navigation, scene }) => (
             <Header
               title="Tarjetas"
+              scene={scene}
+              navigation={navigation}
+            />
+          )
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
+function StackLogin(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="Login"
+      mode="card"
+      headerMode="screen"
+    >
+      <Stack.Screen
+        name="Login"
+        component={A0_Login}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Login"
               scene={scene}
               navigation={navigation}
             />
@@ -618,6 +645,21 @@ function AppStack(props) {
             <Icon
               size={16}
               name="shop"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />
+
+      <Drawer.Screen
+        name="Login"
+        component={StackLogin}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
               family="GalioExtra"
               color={focused ? "white" : materialTheme.COLORS.MUTED}
             />

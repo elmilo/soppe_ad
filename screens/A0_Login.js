@@ -6,7 +6,7 @@ import { Icon, Product } from '../components';
 
 const { width } = Dimensions.get('screen');
 import products from '../constants/products';
-import AsyncStorage from "@react-native-community/async-storage";
+//import AsyncStorage from "@react-native-community/async-storage";
 
 export default class A0_Login extends React.Component {
   constructor(props) {
@@ -33,28 +33,10 @@ export default class A0_Login extends React.Component {
       }
     }
 
-    async function saveUser(user) {
-      try {
-        await AsyncStorage.setItem(USER_STORAGE, user);
-        console.log("saved user" + user);
-        Alert.alert(
-          "User Created",
-          "User" + user + " has been created. Reload app or press login to go to dashboard",
-          [
-            {
-              text: "Cancel",
-            },
-            { text: "OK", }
-          ],
-          { cancelable: false }
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    }
+    
 
     if(loadUser()){
-      navigation.navigate("App")
+     // navigation.navigate("App")
     }
 
     return (
@@ -91,7 +73,7 @@ export default class A0_Login extends React.Component {
             shadowless
             style={styles.button}
             color={materialTheme.COLORS.INFO}
-            onPress={() => saveUser(this.state.username)}
+            onPress={() => console.log("go to register")}
           >
             Register
           </Button>
