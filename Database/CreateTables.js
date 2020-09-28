@@ -95,7 +95,7 @@ var createPresupuestos =
     + "user_id" 		  + " INT NULL,"
     + "rubro_id"		  + " INT NULL,"
     + "categoria_id" 	+ " INT NULL,"
-    + "monto_mensual"	+ " VARCHAR(45) NULL"
+    + "monto_mensual"	+ " VARCHAR(45) NULL,"
     + "descripcion" 	+ " VARCHAR(128) NULL"
     + ")";
 
