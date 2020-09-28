@@ -284,14 +284,14 @@ export function getInversionDetalle(id) {
   });
 }
 
-export function updateVenderInversion(id) {
+export function updateVenderInversion(id, ventaMonto) {
   console.log("updateVenderInversion");
-  console.log(id);
+  console.log(id, ventaMonto);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Inversiones set terminado = 'true' where id = ?",
-        [id],
+        "update Inversiones set venta_monto = ? terminado = 'true' where id = ?",
+        [ventaMonto, id],
       );
     },
     null,
@@ -365,8 +365,8 @@ export function getPrestamoDetalle(id) {
   });
 }
 
-export function updateVenderPrestamo(id) {
-  console.log("updateVenderPrestamo");
+export function updateTerminarPrestamo(id) {
+  console.log("updateTerminarPrestamo");
   console.log(id);
   db.transaction(
     (tx) => {
