@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
-
+import { Images, materialTheme } from '../constants';
 import { Icon, Product } from '../components';
 
 const { width } = Dimensions.get('screen');
@@ -19,7 +19,7 @@ export default class A0_Login extends React.Component {
 
 
   render() {
-    const { navigation } = this.props;
+    /*const { navigation } = this.props;
     const USER_STORAGE = 'USER_STORAGE';
     async function loadUser() {
       try {
@@ -38,11 +38,12 @@ export default class A0_Login extends React.Component {
     if(loadUser()){
      // navigation.navigate("App")
     }
-
+*/
     return (
       <Block flex space="evenly" style={styles.container}>
+        <Text>Super login</Text>
         <Block style={styles.padded}>
-          <TextInput
+          <Input
             value={this.username}
             style={styles.textInput}
             placeholder="Username"
@@ -51,7 +52,7 @@ export default class A0_Login extends React.Component {
           />
         </Block>
         <Block style={styles.padded}>
-          <TextInput
+          <Input
             style={styles.textInput}
             placeholder="Password"
             secureTextEntry={true}

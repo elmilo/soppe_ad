@@ -8,6 +8,7 @@ import { Block, Text, theme } from "galio-framework";
 import ComponentsScreen from '../screens/Components';
 
 import A0_Login from "../screens/A0_Login";
+import A1_Registrarse from "../screens/A1_Registrarse";
 import B0_Inicio from '../screens/B0_Inicio';
 import B01_Perfil from '../screens/B01_Perfil';
 import B02_Analisis from "../screens/B02_Analisis";
@@ -131,7 +132,9 @@ function StackLogin(props) {
               navigation={navigation}
             />
           )
-        }}
+        },
+        {headerTransparent: true}
+      }
       />
     </Stack.Navigator>
   );
@@ -635,37 +638,11 @@ function AppStack(props) {
           fontWeight: "normal",
         },
       }}
-      initialRouteName="Inicio"
+      initialRouteName="Login"
     >
-      <Drawer.Screen
-        name="Inicio"
-        component={StackInicio}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="shop"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-        }}
-      />
+ 
 
-      <Drawer.Screen
-        name="Login"
-        component={StackLogin}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="circle-10"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-        }}
-      />
+
 
       <Drawer.Screen
         name="Tarjetas"
@@ -789,6 +766,21 @@ function AppStack(props) {
       <Drawer.Screen
         name="Perfil"
         component={StackPerfil}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />
+     
+      <Drawer.Screen
+        name="Login"
+        component={StackLogin}
         options={{
           drawerIcon: ({ focused }) => (
             <Icon
