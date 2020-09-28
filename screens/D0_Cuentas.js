@@ -15,7 +15,7 @@ const { height, width } = Dimensions.get("screen");
 import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Cuenta, Header } from "../components";
-import { getAccounts } from "../Database/Database";
+import { getCuentas } from "../Database/Database";
 
 export default function D0_Cuentas(props) {
   const [datos, setDatos] = React.useState(null);
@@ -30,11 +30,11 @@ export default function D0_Cuentas(props) {
   }
 
   useEffect(() => {
-    getAccounts(successCallback);
+    getCuentas(successCallback);
   });
 
   const renderCuentas = () => {
-    getAccounts(successCallback);
+    getCuentas(successCallback);
 
     return (
       <ScrollView

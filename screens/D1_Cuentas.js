@@ -8,7 +8,7 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
-
+import { setCuentaUnica , get2Cuentas} from "../Database/Database";
 import products from '../constants/products';
 import * as SQLite from 'expo-sqlite';
 
@@ -38,32 +38,36 @@ export default function D1_Cuentas(props){
   const navigation = props.navigation;
  
   let index = 0;
+
   
-     saveAccount = () => {
-      const db = SQLite.openDatabase("db.db");
-      db.transaction(
-        tx => {
-          tx.executeSql(
-            "insert into accounts (cbu, user, entity, currency, accNumber, alias, saldo) values (?, ?, ?, ?, ?, ?, ?)", [cbu, 1, entity, currency, accNumber, alias, saldo]
-          );
-        },
-        null,
-        null
-      );
+    const [cuentaD, SetCuentaD] = useState("");
+    const [monedaD, SetMonedaD] = useState("");
+  
+    function handleOnChangeCuenta(unaCuenta) {
+      SetCuentaD(unaCuenta);
+    }
+  
+    function handleOnChangeMoneda(unaMoneda) {
+      SetMonedaD(unaMoneda);
+    }
+       
+    function saveAccount() {
+      //console.log(cbu, entity, currency, accNumber, alias, saldo);
+      setCuentaUnica(cbu, entity, currency, accNumber, alias, saldo);
+      //console.log('Saveaccount');
+      
+      get2Cuentas();
       navigation.navigate('Cuentas');
+      
      }
 
-     function renderDropdown(lista, texto) {
-      return <ModalPersonalizado data={lista} initValue={texto} />;
-    }
   
     function DropdownCuenta(props) {
       return (
         <ModalPersonalizado
           data={arrayCuentaIngreso}
           initValue="Seleccione una Cuenta"
-          value={cuenta}
-          onChange={e => SetCuenta(e.target.value)}
+          onSelected={handleOnChangeCuenta}
         />
       );
     };
@@ -73,11 +77,11 @@ export default function D1_Cuentas(props){
         <ModalPersonalizado
           data={arrayMonedaIngreso}
           initValue="Seleccione una Moneda"
-          value={moneda}
-          onChange={e => SetMoneda(e.target.value)}
+          onSelected={handleOnChangeMoneda}
         />
       );
     };
+
     return (
       
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
@@ -86,11 +90,11 @@ export default function D1_Cuentas(props){
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.products}>
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Entidad</Text>
-          <DropdownCuenta />
+          {DropdownCuenta()}
 
           <Block/>
           <Text p style={{marginBottom: theme.SIZES.BASE / 2}}>Moneda</Text>
-          <DropdownMoneda />
+          {DropdownMoneda()}
           <Block/>
           <Text></Text>
           
