@@ -47,3 +47,36 @@ export function setCuentaUnica(cbu, entity, currency, accNumber, alias, saldo) {
     })
   })*/
 }
+
+
+export function getPresupuestos(successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Presupuestos",
+      [],
+      (_, { rows }) => {
+        //console.log('Success getCuentas: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function setPresupuesto(rubro, categoria, monto) {
+  console.log("SetPresupuesto");
+  console.log(rubro, categoria, monto);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual) values (?, ?, ?, ?)",
+        [1, rubro, categoria, monto]
+      );
+    },
+    null,
+    () => console.log("el presupuesto se guardó correctamente")
+  );
+}
