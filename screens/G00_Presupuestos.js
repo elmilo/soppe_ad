@@ -8,12 +8,13 @@ import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Presupuesto, Header } from '../components';
 import presupuestos from '../constants/presupuestos';
-
+import {getPresupuestos }from "../Database/Database";
 
 export default class G00_Presupuestos extends React.Component {
+
   renderNavigation = () => {
     return (
-      
+
       <Block flex style={styles.group}>
         <Block>
           <Block style={{ marginBottom: theme.SIZES.BASE }}>
@@ -25,34 +26,32 @@ export default class G00_Presupuestos extends React.Component {
   }
 
   renderPresupuestos = () => {
-    const { navigation} = this.props;
+    const { navigation } = this.props;
     let datos = [];
-    presupuestos.forEach((presupuesto,index) => {
-        datos.push(
-                <Presupuesto presupuesto={presupuesto} key={index} horizontal/>
-                
-            )
-        
+    presupuestos.forEach((presupuesto, index) => {
+      datos.push(
+        <Presupuesto presupuesto={presupuesto} key={index} horizontal />
+      )
     })
     return (
       <Block flex>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.presupuestos}>
-        <Block flex>
-        <Block dense>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.presupuestos}>
+          <Block flex>
+            <Block dense>
               {datos}
-        
-          </Block>
-          <Button shadowless color="success" style={[styles.button, styles.shadow]} 
-           onPress={() => navigation.navigate('Nuevo Presupuesto')}
-          >
-             +  Agregar nuevo presupuesto
+
+            </Block>
+            <Button shadowless color="success" style={[styles.button, styles.shadow]}
+              onPress={() => navigation.navigate('Nuevo Presupuesto')}
+            >
+              +  Agregar nuevo presupuesto
           </Button>
-          <Text></Text>
-         </Block>
+            <Text></Text>
+          </Block>
         </ScrollView>
-        </Block>
+      </Block>
     )
   }
 
@@ -63,7 +62,7 @@ export default class G00_Presupuestos extends React.Component {
       </Block>
     );
   }
- 
+
 }
 
 const styles = StyleSheet.create({
