@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native'
 import {
   ImageBackground,
   Image,
@@ -28,13 +29,11 @@ export default function D0_Cuentas(props) {
 
     setDatos(datosTemporales);
   }
-
-  useEffect(() => {
+  useFocusEffect(() => {
     getCuentas(successCallback);
-  });
+  })
 
   const renderCuentas = () => {
-    getCuentas(successCallback);
 
     return (
       <ScrollView
