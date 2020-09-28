@@ -1,47 +1,50 @@
-/*import * as SQLite from 'expo-sqlite';
+import * as SQLite from 'expo-sqlite';
 const db = SQLite.openDatabase("db.db");  
 
-const arrayCreates = [
-    {"CREATE TABLE IF NOT EXISTS `mydb`.`Cuentas` (
-        `id` INT NOT NULL,
-        `cbu` INT NULL,
-        `user_id` INT NULL,
-        `entidad_id` INT NULL,
-        `moneda` VARCHAR(45) NULL,
-        `alias` VARCHAR(60) NULL,
-        `saldo_dttm` DATETIME NULL,
-        `descripción` VARCHAR(80) NULL,
-        `saldo` DECIMAL NULL,
-        PRIMARY KEY (`id`),
-        INDEX `fk_user_id_idx` (`user_id` ASC) VISIBLE,
-        INDEX `fk_entidad_idx` (`entidad_id` ASC) VISIBLE,
-        CONSTRAINT `fk_user_id`
-          FOREIGN KEY (`user_id`)
-          REFERENCES `mydb`.`Usuarios` (`id`)
-          ON DELETE NO ACTION
-          ON UPDATE NO ACTION,
-        CONSTRAINT `fk_entidad`
-          FOREIGN KEY (`entidad_id`)
-          REFERENCES `mydb`.`Entidades` (`id`)
-          ON DELETE NO ACTION
-          ON UPDATE NO ACTION)"}
-]
 
-export function createsTables ()
-arrayCreates.forEach(
-    crea
-)
+var createUsuarios =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Usuarios " 
+    + " ( " 
+    + "id"        + " INTEGER PRIMARY KEY,"
+    + "email"     + " VARCHAR(128) NOT NULL,"
+    + "nombre"    + " VARCHAR(128) NULL,"
+    + "apellido"  + " VARCHAR(128) NULL,"
+    + "password"  + " VARCHAR(256) NOT NULL" 
+    + ")";
 
-function createTable (query){
-        db.transaction( tx => {
-            tx.executeSql(query, [], 
-            (_, { rows})  => {
-            //console.log('Success getAccounts: ', rows._array);
-              successCallback (rows._array);
-            },
-            (_, error) => {
-                //console.log('error getAccounts');
-              errorCallback(error); 
-            })
-          })
-        };*/
+    
+var createCuentas =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Cuentas " 
+    + " ( " 
+    + "id"            + " INTEGER PRIMARY KEY,"
+    + "cbu"           + " INTEGER,"
+    + "entidad_id"    + " INTEGER,"
+    + "moneda"        + " VARCHAR(45),"
+    + "alias"         + " VARCHAR(60)," 
+    + "saldo_dttm"    + " DATETIME NULL," 
+    + "descripción"   + " VARCHAR(80) NULL," 
+    + "saldo"         + " NUMERIC(10, 2) NULL" 
+    + ")";
+       
+    
+
+
+function createTable(query){
+  db.transaction( tx => {
+    tx.executeSql(query, null,
+    (_, { rows})  => {
+    console.log("Se creó la tabla correctamente.")
+    },
+    (_, error) => {
+      console.log("ERROR - La tabla no pudo ser creada.  " + error); 
+    })
+  })
+};
+
+export function createAll() {
+  createTable(createCuentas);
+  createTable(createUsuarios);
+};
+
