@@ -103,14 +103,14 @@ export function getPresupuestos(successCallback) {
   });
 }
 
-export function setPresupuesto(rubro, categoria, monto) {
+export function setPresupuesto(rubro, categoria, monto, descripcion) {
   console.log("SetPresupuesto");
   console.log(rubro, categoria, monto);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual) values (?, ?, ?, ?)",
-        [1, rubro, categoria, monto]
+        "insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual, descripcion) values (?, ?, ?, ?, ?)",
+        [1, rubro, categoria, monto, descripcion]
       );
     },
     null,
