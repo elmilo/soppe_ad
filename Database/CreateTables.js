@@ -90,6 +90,7 @@ var createPresupuestos =
     "CREATE TABLE IF NOT EXISTS "
     + " Presupuestos "
     + " ( "
+    + "id" 		    	  + " INT NOT NULL,"
     + "user_id" 		  + " INT NULL,"
     + "rubro_id"		  + " INT NULL,"
     + "categoria_id" 	+ " INT NULL,"
@@ -188,3 +189,70 @@ export function createAll() {
   //12 tablas
 };
 
+//DROPS
+
+var dropUsuarios = 
+"DROP TABLE Usuarios;";
+
+var dropEntidades = 
+"DROP TABLE Entidades;";
+
+var dropCuentas = 
+"DROP TABLE Cuentas;";
+
+var dropTarjetas = 
+"DROP TABLE Tarjetas;";
+
+var dropPrestamos = 
+"DROP TABLE Prestamos;";
+
+var dropRubros = 
+"DROP TABLE Rubros;";
+
+var dropCategorias = 
+"DROP TABLE Categorias;";
+
+var dropPresupuestos = 
+"DROP TABLE Presupuestos;";
+
+var dropInversiones = 
+"DROP TABLE Inversiones;";
+
+var dropIngresos = 
+"DROP TABLE Ingresos;";
+
+var dropEgresos = 
+"DROP TABLE Egresos;";
+
+var dropNotificaciones = 
+"DROP TABLE Notificaciones;";
+
+
+function dropTable(query){
+  db.transaction( tx => {
+    tx.executeSql(query, null,
+    (_, { rows})  => {
+    console.log("Se dropeó la tabla correctamente.")
+    },
+    (_, error) => {
+      console.log("ERROR - La tabla no pudo ser dropeada.  " + error); 
+    })
+  })
+};
+
+
+export function dropAll() {
+  dropTable(dropUsuarios);
+  dropTable(dropEntidades);
+  dropTable(dropCuentas);
+  dropTable(dropTarjetas);
+  dropTable(dropPrestamos);
+  dropTable(dropRubros);
+  dropTable(dropCategorias);
+  dropTable(dropPresupuestos);
+  dropTable(dropInversiones);
+  dropTable(dropIngresos);
+  dropTable(dropEgresos);
+  dropTable(dropNotificaciones);
+  //12 tablas
+};
