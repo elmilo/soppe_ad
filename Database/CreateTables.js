@@ -14,6 +14,14 @@ var createUsuarios =
     + ")";
 
     
+var createEntidades =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Entidades "
+    + " ( "
+    + "id" 			      + " INTEGER PRIMARY KEY,"
+    + "descripcion" 	+ " VARCHAR(128) NULL"
+    + ")";
+    
 var createCuentas =
     "CREATE TABLE IF NOT EXISTS "
     + " Cuentas " 
@@ -29,9 +37,127 @@ var createCuentas =
     + "descripción"   + " VARCHAR(80) NULL," 
     + "saldo"         + " NUMERIC(10, 2) NULL" 
     + ")";
-       
-    
 
+var createTarjetas =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Tarjetas "
+    + " ( "
+    + "id" 						            + " INT NOT NULL,"
+    + "user_id" 					        + " INT NOT NULL,"
+    + "cuenta_id" 				        + " INT NULL,"
+    + "ultimos_4_digitos" 	    	+ " INT NULL,"
+    + "emisor" 				           	+ " VARCHAR(45) NULL,"
+    + "tipo" 						          + " VARCHAR(45) NULL,"
+    + "fecha_cierre_resumen" 		  + " DATETIME NULL,"
+    + "fecha_vencimiento_resumen" + " DATETIME NULL"
+    + ")";
+
+var createPrestamos =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Prestamos "
+    + " ( "
+    + "id" 								          	    + " INT NOT NULL,"
+    + "user_id" 							          	+ " INT NULL,"
+    + "cuenta_id"							      	    + " INT NULL,"
+    + "tipo" 								        	    + " INT NULL,"
+    + "prestamo_a_tercero_descripcion"    + " VARCHAR(128) NULL,"
+    + "cuotas_monto" 							        + " DECIMAL NULL,"
+    + "cuotas_fecha_proximo_vencimiento"  + " DATETIME NULL,"
+    + "cuotas_restantes" 					    	  + " INT NULL,"
+    + "prestamo_monto" 					       	  + " DECIMAL NULL,"
+    + "descripcion" 						        	+ " VARCHAR(128) NULL,"
+    + "tomado" 							            	+ " TINYINT NULL,"
+    + "terminado" 							         	+ " TINYINT NULL"
+    + ")";
+
+var createRubros =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Rubros "
+    + " ( "
+    + "id" 			      + " INT NOT NULL,"
+    + "descripcion" 	+ " VARCHAR(128) NULL"
+    + ")";
+
+var createCategorias =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Categorias "
+    + " ( "
+    + "id" 			      + " INT NOT NULL,"
+    + "descripcion" 	+ " VARCHAR(128) NULL"
+    + ")";
+
+var createPresupuestos =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Presupuestos "
+    + " ( "
+    + "user_id" 		  + " INT NULL,"
+    + "rubro_id"		  + " INT NULL,"
+    + "categoria_id" 	+ " INT NULL,"
+    + "monto_mensual"	+ " VARCHAR(45) NULL"
+    + ")";
+
+var createInversiones =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Inversiones "
+    + " ( "
+    + "id" 				        + " INT NOT NULL,"
+    + "cuenta_id" 		    + " INT NULL,"
+    + "user_id" 			    + " INT NULL,"
+    + "tipo" 				      + " VARCHAR(45) NULL,"
+    + "fecha_vencimiento" + " DATETIME NULL,"
+    + "compra_monto"		  + " DECIMAL NULL,"
+    + "venta_monto"		    + " DECIMAL NULL,"
+    + "descripcion" 	  	+ " VARCHAR(128) NULL,"
+    + "terminado"			    + " TINYINT NULL"
+    + ")";
+
+var createIngresos =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Ingresos "
+    + " ( "
+    + "id" 		    	  + " INT NOT NULL,"
+    + "user_id" 		  + " INT NULL,"
+    + "cuenta_id" 	  + " INT NULL,"
+    + "rubro_id" 		  + " INT NULL,"
+    + "categoria_id" 	+ " INT NULL,"
+    + "monto" 	    	+ " DECIMAL NULL,"
+    + "cuotas_fechas" + " INT NULL,"
+    + "id_externa" 	  + " INT NULL,"
+    + "tabla_externa" + " VARCHAR(45) NULL,"
+    + "descripcion" 	+ " VARCHAR(128) NULL,"
+    + "auto_manual" 	+ " VARCHAR(45) NULL,"
+    + "add_dttm" 		  + " DATETIME NULL"
+    + ")";
+
+var createEgresos =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Egresos "
+    + " ( "
+    + "id" 					      + " INT NOT NULL,"
+    + "user_id" 		  	  + " INT NULL,"
+    + "cuenta_id" 			  + " INT NULL,"
+    + "rubro_id" 		  	  + " INT NULL,"
+    + "categoria_id" 	  	+ " INT NULL,"
+    + "medio_de_pago" 	  + " VARCHAR(45) NULL,"
+    + "monto" 				    + " DECIMAL NULL,"
+    + "cuotas_fechas" 	  + " INT NULL,"
+    + "cuotas_restantes"	+ " INT NULL,"
+    + "id_externa" 			  + " INT NULL,"
+    + "tabla_externa" 		+ " VARCHAR(45) NULL,"
+    + "descripcion" 		  + " VARCHAR(128) NULL,"
+    + "auto_manual" 	  	+ " VARCHAR(45) NULL,"
+    + "add_dttm" 		    	+ " DATETIME NULL"
+    + ")";
+
+var createNotificaciones =
+    "CREATE TABLE IF NOT EXISTS "
+    + " Notificaciones "
+    + " ( "
+    + "id_externa" 		    + " INT NOT NULL,"
+    + "tabla_externa" 		+ " VARCHAR(45) NULL,"
+    + "user_id" 			    + " INT NULL,"
+    + "notificado_dttm"	  + " DATETIME NULL"
+    + ")";
 
 function createTable(query){
   db.transaction( tx => {
@@ -46,7 +172,18 @@ function createTable(query){
 };
 
 export function createAll() {
-  createTable(createCuentas);
   createTable(createUsuarios);
+  createTable(createEntidades);
+  createTable(createCuentas);
+  createTable(createTarjetas);
+  createTable(createPrestamos);
+  createTable(createRubros);
+  createTable(createCategorias);
+  createTable(createPresupuestos);
+  createTable(createInversiones);
+  createTable(createIngresos);
+  createTable(createEgresos);
+  createTable(createNotificaciones);
+  //12 tablas
 };
 
