@@ -35,10 +35,7 @@ const arrayMonedaIngreso = [
 ];
 
 export default function D1_Cuentas(props) {
-  const [cuenta, SetCuenta] = useState("");
-  const [moneda, SetMoneda] = useState("");
   const [entity, setEntity] = useState("");
-  const [currency, setCurrency] = useState("");
   const [accNumber, setAccNumber] = useState("");
   const [cbu, setCbu] = useState(0);
   const [alias, setAlias] = useState("");
@@ -47,19 +44,19 @@ export default function D1_Cuentas(props) {
 
   let index = 0;
 
-  const [cuentaD, SetCuentaD] = useState("");
-  const [monedaD, SetMonedaD] = useState("");
+  const [cuenta, SetCuenta] = useState("");
+  const [moneda, SetMoneda] = useState("");
 
   function handleOnChangeCuenta(unaCuenta) {
-    SetCuentaD(unaCuenta);
+    SetCuenta(unaCuenta);
   }
 
   function handleOnChangeMoneda(unaMoneda) {
-    SetMonedaD(unaMoneda);
+    SetMoneda(unaMoneda);
   }
 
   function saveAccount() {
-    setCuentaUnica(cbu, "Galicia", "Dolares", accNumber, alias, saldo);
+    setCuentaUnica(cbu, cuenta, moneda, accNumber, alias, saldo);
     navigation.navigate("Cuentas");
   }
 
