@@ -192,9 +192,7 @@ export default function D1_Cuentas(props) {
               shadowless
               color="success"
               style={[styles.button, styles.shadow]}
-              onPress={() => {
-                saveAccount();
-              }}
+              onPress={() => {saveAccount();}}
             >
               +
             </Button>

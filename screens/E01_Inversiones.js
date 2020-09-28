@@ -9,6 +9,7 @@ import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
+import { setInversion} from "../Database/Database";
 
 const arrayTipoIngreso = [
   { value: 1, label: "Plazo Fijo" },
@@ -26,9 +27,15 @@ const arrayCuentaIngreso = [
 
 
 export default function E01_Inversiones(props) {
-  const [tipo, SetTipo] = useState('');
-  const [cuenta, SetCuenta] = useState('');
+  const navigation = props.navigation;
   let index = 0;
+
+  const [tipo, SetTipo] = useState('');
+  const [cuentaIn, SetCuentaIn] = useState('');
+  const [vencimiento, setVencimiento] = useState(0.0);
+  const [valorInv, setValorInv] = useState(0.0);
+  const [descripcion, setDescripcion] = useState("");
+ 
 
   function renderDropdown(lista, texto) {
     return <ModalPersonalizado data={lista} initValue={texto} />;
@@ -40,7 +47,7 @@ export default function E01_Inversiones(props) {
         data={arrayTipoIngreso}
         initValue="Seleccione un Tipo de Inversion"
         value={tipo}
-        onChange={e => SetTipo(e.target.value)}
+        onSelected={handleOnChangeTipo}
       />
     );
   };
@@ -50,11 +57,25 @@ export default function E01_Inversiones(props) {
       <ModalPersonalizado
         data={arrayCuentaIngreso}
         initValue="Seleccione una Cuenta"
-        value={cuenta}
-        onChange={e => SetCuenta(e.target.value)}
+        value={cuentaIn}
+        onSelected={handleOnChangeCuenta}
       />
     );
   };
+
+  function handleOnChangeTipo(unTipo) {
+    SetTipo(unTipo);
+  }
+
+  function handleOnChangeCuenta(unaCuentaIn) {
+    SetCuentaIn(unaCuentaIn);
+  }
+
+  function saveInversion() {
+    setInversion(tipo, vencimiento, cuentaIn ,valorInv,descripcion);
+    navigation.navigate("Inversiones");
+  }
+    
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <ScrollView
@@ -71,6 +92,7 @@ export default function E01_Inversiones(props) {
               placeholder="Ingrese una fecha"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setVencimiento(text); }}
             />
           </Block>
           <Block />
@@ -87,6 +109,7 @@ export default function E01_Inversiones(props) {
                 placeholder="$"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setValorInv(text); }}
               />
             </Block>
           </Block>
@@ -98,11 +121,14 @@ export default function E01_Inversiones(props) {
                 placeholder=""
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setDescripcion(text); }}
               />
             </Block>
           </Block>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+            <Button shadowless color="success" style={[styles.button, styles.shadow]}onPress={() => {
+                saveInversion();
+              }}>
               +
             </Button>
           </Block>

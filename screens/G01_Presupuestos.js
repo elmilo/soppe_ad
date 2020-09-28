@@ -14,7 +14,7 @@ import { setPresupuesto} from "../Database/Database";
 const arrayCategoriasIngreso = [
   { value: 1, label: "Luz" },
   { value: 2, label: "Gas" },
-  { value: 3, label: "Aguas" },
+  { value: 3, label: "Agua" },
   { value: 4, label: "Tv por Cable" },
   { value: 5, label: "Internet" },
   { value: 6, label: "Teléfono Fijo" },
@@ -72,7 +72,7 @@ export default function G01_Presupuestos(props) {
         onSelected={handleOnChangeCategoria}
       />
     );
-  };
+  }
 
   function DropdownRubros(props) {
     return (
@@ -83,7 +83,9 @@ export default function G01_Presupuestos(props) {
         onSelected={handleOnChangeRubro}
       />
     );
-  };
+  }
+
+ 
  
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
@@ -91,7 +93,8 @@ export default function G01_Presupuestos(props) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Rubro</Text>
-        <DropdownRubros />
+       <DropdownRubros />
+        
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Categoria</Text>
         <DropdownCategorias />
