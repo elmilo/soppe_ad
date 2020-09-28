@@ -9,7 +9,7 @@ import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import * as SQLite from "expo-sqlite";
 import { getCuentas } from "../Database/Database";
-import { Cuenta } from "../components";
+
 
 export default function D2_Cuentas (props) {
   const [datos, setDatos] = React.useState(null);

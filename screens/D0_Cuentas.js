@@ -41,6 +41,7 @@ export default function D0_Cuentas(props) {
         contentContainerStyle={styles.cuentas}
       >
         <Block flex>
+        <Text></Text>
           <Block dense>{datos}</Block>
           <Button
             shadowless

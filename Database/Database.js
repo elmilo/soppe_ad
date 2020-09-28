@@ -105,7 +105,7 @@ export function getPresupuestos(successCallback) {
 
 export function setPresupuesto(rubro, categoria, monto, descripcion) {
   console.log("SetPresupuesto");
-  console.log(rubro, categoria, monto);
+  console.log(rubro, categoria, monto, descripcion);
   db.transaction(
     (tx) => {
       tx.executeSql(
