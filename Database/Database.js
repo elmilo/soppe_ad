@@ -149,3 +149,249 @@ export function deletePresupuesto(id) {
     () => console.log("el presupuesto se borró correctamente")
   );
 }
+
+//*******TARJETAS************
+
+export function getTarjetas(successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Tarjetas",
+      [],
+      (_, { rows }) => {
+        //console.log('Success getCuentas: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function setTarjeta(cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen) {
+  console.log("SetTarjeta");
+  console.log(cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "insert into Tarjetas (user_id, cuenta_id, ultimos_4_digitos, emisor, tipo, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen) values (?, ?, ?, ?, ?, ?, ?, ?)",
+        [1, cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen]
+      );
+    },
+    null,
+    () => console.log("la Tarjeta se guardó correctamente")
+  );
+}
+
+export function getTarjetaDetalle(id) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Tarjetas where id = ?",
+      [id],
+      (_, { rows }) => {
+        //console.log('Success getCuentas: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function updateFechasTarjeta(id, fechaCierre, fechaVencimientoResumen, ) {
+  console.log("updateFechasTarjeta");
+  console.log(fechaCierre, fechaVencimientoResumen, id);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "update Tarjetas set fecha_cierre_resumen = ?, fecha_vencimiento_resumen = ? where id = ?",
+        [fechaCierre, fechaVencimientoResumen, id],
+      );
+    },
+    null,
+    () => console.log("las fechas de la Tarjeta se actualizaron correctamente")
+  );
+}
+
+
+export function deleteTarjeta(id) {
+  console.log("deleteTarjeta");
+  console.log(cbu);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "delete from Tarjetas where id = ?",
+        [id]
+      );
+    },
+    null,
+    () => console.log("la Tarjeta se borró correctamente")
+  );
+}
+
+
+//*******INVERSIONES************
+
+export function getInversiones(successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Inversiones",
+      [],
+      (_, { rows }) => {
+        //console.log('Success getCuentas: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function setInversion(cuenta, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion) {
+  console.log("SetInversion");
+  console.log(cuenta, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "insert into Inversiones (cuenta_id, user_id, tipo, fecha_vencimiento, compra_monto, venta_monto, descripcion) values (?, ?, ?, ?, ?, ?, ?)",
+        [cuenta, 1, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion]
+      );
+    },
+    null,
+    () => console.log("la Inversion se guardó correctamente")
+  );
+}
+
+export function getInversionDetalle(id) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Inversiones where id = ?",
+      [id],
+      (_, { rows }) => {
+        //console.log('Success getCuentas: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function updateVenderInversion(id) {
+  console.log("updateVenderInversion");
+  console.log(id);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "update Inversiones set terminado = 'true' where id = ?",
+        [id],
+      );
+    },
+    null,
+    () => console.log("la inversion se ha actualizado a status terminado")
+  );
+}
+
+export function deleteInversion(id) {
+  console.log("deleteInversion");
+  console.log(cbu);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "delete from Inversiones where id = ?",
+        [id]
+      );
+    },
+    null,
+    () => console.log("la Inversion se borró correctamente")
+  );
+}
+
+//*******PRESTAMOS************
+
+export function getPrestamos(successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Prestamos",
+      [],
+      (_, { rows }) => {
+        //console.log('Success getCuentas: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function setPrestamo(cuenta, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion) {
+  console.log("SetPrestamo");
+  console.log(cuenta, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "insert into Prestamos (cuenta_id, user_id, tipo, fecha_vencimiento, compra_monto, venta_monto, descripcion) values (?, ?, ?, ?, ?, ?, ?)",
+        [cuenta, 1, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion]
+      );
+    },
+    null,
+    () => console.log("la Prestamo se guardó correctamente")
+  );
+}
+
+export function getPrestamoDetalle(id) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Prestamos where id = ?",
+      [id],
+      (_, { rows }) => {
+        //console.log('Success getCuentas: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function updateVenderPrestamo(id) {
+  console.log("updateVenderPrestamo");
+  console.log(id);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "update Prestamos set terminado = 'true' where id = ?",
+        [id],
+      );
+    },
+    null,
+    () => console.log("el Prestamo se ha actualizado a status terminado")
+  );
+}
+
+export function deletePrestamo(id) {
+  console.log("deletePrestamo");
+  console.log(cbu);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "delete from Prestamos where id = ?",
+        [id]
+      );
+    },
+    null,
+    () => console.log("el Prestamo se borró correctamente")
+  );
+}
+

@@ -48,6 +48,7 @@ var createTarjetas =
     + "ultimos_4_digitos" 	    	+ " INT NULL,"
     + "emisor" 				           	+ " VARCHAR(45) NULL,"
     + "tipo" 						          + " VARCHAR(45) NULL,"
+    + "fecha_vencimiento_tarjeta" + " DATETIME NULL,"
     + "fecha_cierre_resumen" 		  + " DATETIME NULL,"
     + "fecha_vencimiento_resumen" + " DATETIME NULL"
     + ")";
