@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { useFocusEffect } from '@react-navigation/native'
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-
-const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Presupuesto, Header } from '../components';
 import presupuestos from '../constants/presupuestos';
-import {getPresupuestos }from "../Database/Database";
+import { getPresupuestos } from "../Database/Database";
+const { height, width } = Dimensions.get('screen');
 
-export default function G00_Presupuestos (props) {
-  
-  const [datos, setDatos] = React.useState(null);
+export default function G00_Presupuestos(props) {
+
+  const [datosPresup, setDatos] = React.useState(null);
 
   function successCallback(rows) {
     var datosTemporales = [];
@@ -29,15 +28,15 @@ export default function G00_Presupuestos (props) {
 
   const renderPresupuestos = () => {
 
-    
+
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.cuentas}
       >
         <Block flex>
-        <Text></Text>
-          <Block dense>{datos}</Block>
+          <Text></Text>
+          <Block dense>{datosPresup}</Block>
           <Button
             shadowless
             color="success"

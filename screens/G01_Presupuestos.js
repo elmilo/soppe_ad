@@ -14,7 +14,7 @@ import { setPresupuesto} from "../Database/Database";
 const arrayCategoriasIngreso = [
   { value: 1, label: "Luz" },
   { value: 2, label: "Gas" },
-  { value: 3, label: "Aguas" },
+  { value: 3, label: "Agua" },
   { value: 4, label: "Tv por Cable" },
   { value: 5, label: "Internet" },
   { value: 6, label: "Teléfono Fijo" },
@@ -58,32 +58,27 @@ export default function G01_Presupuestos(props) {
     navigation.navigate("Presupuestos");
   }
   
-
-  function renderDropdown(lista, texto) {
-    return <ModalPersonalizado data={lista} initValue={texto} />;
-  }
-
   function DropdownCategorias(props) {
     return (
       <ModalPersonalizado
         data={arrayCategoriasIngreso}
         initValue="Seleccione una Categoria"
-        value={categoria}
         onSelected={handleOnChangeCategoria}
       />
     );
-  };
+  }
 
   function DropdownRubros(props) {
     return (
       <ModalPersonalizado
         data={arrayRubrosIngreso}
         initValue="Seleccione un Rubro"
-        value={rubro}
         onSelected={handleOnChangeRubro}
       />
     );
-  };
+  }
+
+ 
  
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
@@ -91,7 +86,8 @@ export default function G01_Presupuestos(props) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Rubro</Text>
-        <DropdownRubros />
+       <DropdownRubros />
+        
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Categoria</Text>
         <DropdownCategorias />
@@ -136,7 +132,6 @@ export default function G01_Presupuestos(props) {
     </Block>
   )
 }
-
 
 
 

@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 import { LinearGradient } from "expo-linear-gradient";
-
 const { height, width } = Dimensions.get("screen");
 import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";

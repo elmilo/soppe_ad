@@ -4,6 +4,7 @@ import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-n
 import { Block, Text, theme } from 'galio-framework';
 import { Icon } from '../components';
 import materialTheme from '../constants/Theme';
+import { inversiones } from '../constants';
 const { width } = Dimensions.get('screen');
 
 class Inversion extends React.Component {
@@ -26,11 +27,11 @@ class Inversion extends React.Component {
             <Text size={15} muted={!saldoColor} color={saldoColor}>Tipo:</Text>
             <Text size={15} style={styles.inversionEntidad}>{inversion.tipo}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
-            <Text size={15} style={styles.inversionEntidad}>{inversion.cuenta}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de venta:</Text>
-            <Text size={22} style={styles.inversionEntidad}>${inversion.valorVenta}</Text>
+            <Text size={15} style={styles.inversionEntidad}>{inversion.cuenta_id}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de compra:</Text>
+            <Text size={22} style={styles.inversionEntidad}>${inversion.compra_monto}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Vencimiento:</Text>
-            <Text size={22} style={styles.inversionEntidad}>{inversion.fechaVencimiento}</Text>
+            <Text size={22} style={styles.inversionEntidad}>{inversion.fecha_vencimiento}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
