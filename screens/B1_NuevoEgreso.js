@@ -65,10 +65,12 @@ export default function B1_NuevoEgreso(props) {
     if (medioDePago == "Consumo Cuenta") {
       getCuentas(id_usuario, successArrayCuentas);
       setMedio_de_pago("Consumo Cuenta");
+      setTarjeta(null);
     }
     if (medioDePago == "Tarjeta de crédito") {
       getTarjetas(id_usuario, successArrayTarjetas);
       setMedio_de_pago("Tarjeta de crédito");
+      setCuenta(null);
     }
 
     return true;
@@ -175,9 +177,10 @@ export default function B1_NuevoEgreso(props) {
           placeholder="0.00"
           fontSize={40}
           placeholderTextColor={materialTheme.COLORS.DEFAULT}
+          onChangeText={(texto) => {setMonto(texto);}}
           iconContent={
             <Icon
-              size={50}
+              size={45}
               color={theme.COLORS.ICON}
               name="attach-money"
               family="MaterialIcons"
