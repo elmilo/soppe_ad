@@ -14,9 +14,7 @@ import { insertMaestros } from '../Database/InsertMaestros';
 
 export default class Onboarding extends React.Component {
   
-  /*componentDidMount(){
-    createAll();    
-  }*/
+  //componentDidMount(){createAll();}
 
   render() {
     const { navigation } = this.props;
@@ -44,7 +42,7 @@ export default class Onboarding extends React.Component {
                 color={materialTheme.COLORS.BUTTON_COLOR}
                 onPress={() => 
                   {navigation.navigate('App');
-                  //insertMaestros();
+                  insertMaestros();
                   }
                 
                 }>

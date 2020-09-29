@@ -144,7 +144,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
-                placeholder="Solo Números"
+                placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
                   borderRadius: 1,
@@ -159,7 +159,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
-                placeholder="Solo Números"
+                placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
                   borderRadius: 1,
@@ -174,7 +174,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
-                placeholder="Solo Números"
+                placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
                   borderRadius: 1,

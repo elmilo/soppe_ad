@@ -270,7 +270,7 @@ function createTable(query) {
 }
 
 export function createAll() {
-  //dropAll();
+  dropAll();
   const arrayCreates = [
     createRubros,
     createUsuarios,
@@ -288,7 +288,7 @@ export function createAll() {
 
   arrayCreates.forEach((unaQuery) => createTable(unaQuery));
 
-  //insertMaestros();
+  insertMaestros();
 }
 
 //DROPS

@@ -78,14 +78,14 @@ export default function E01_Inversiones(props) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de Inversion</Text>
-        <DropdownTipo />
+        {DropdownTipo()}
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha de Vencimiento</Text>
         <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
               right
-              placeholder="Ingrese una fecha"
+              placeholder="Solo números ej 25052020"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
               onChangeText={(text) => {setVencimiento(text); }}
@@ -93,7 +93,7 @@ export default function E01_Inversiones(props) {
           </Block>
           <Block />
           <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
-          <DropdownCuenta />
+          {DropdownCuenta()}
           <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
         </Block>
         <Block flex>

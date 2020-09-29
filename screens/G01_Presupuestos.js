@@ -86,11 +86,11 @@ export default function G01_Presupuestos(props) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Rubro</Text>
-       <DropdownRubros />
+       {DropdownRubros()}
         
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Categoria</Text>
-        <DropdownCategorias />
+        {DropdownCategorias()}
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor Mensual</Text>
         <Block flex style={styles.group}>
