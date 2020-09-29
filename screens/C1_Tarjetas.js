@@ -10,6 +10,7 @@ import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
 import * as SQLite from 'expo-sqlite';
+import { setTarjeta } from '../Database/Database';
 const db = SQLite.openDatabase("db.db");
 
 const arrayEntidadIngreso = [
@@ -40,61 +41,71 @@ const arrayCuentaDebitoIngreso = [
 export default function C1_Tarjetas(props) {
   const [entidad, SetEntidad] = useState('');
   const [emisor, SetEmisor] = useState('');
-  const [tipoTarjeta1, SetTipoTarjeta1] = useState('');
   const [cuentaDebito, SetCuentaDebito] = useState('');
-  const [cuentaSeleccionada, setCuentaSeleccionada] = useState(0);
-  const [entidadEmisora, setEntidadEmisora] = useState("");
   const [tipoTarjeta, setTipoTarjeta] = useState("");
   const [ultimos4Digitos, setUltimos4Digitos] = useState();
-  const [fechaCierre, setFechaCierre] = useState("");
-  const [fechaVenc, setFechaVenc] = useState("");
+  const [fechaVencePlastico, setFechaVencePlastico] = useState("");
+  const [fechaVenceResumen, setFechaVenceResumen] = useState("");
   const [saldo, setSaldo] = useState(0);
   const navigation = props.navigation;
-
   let index = 0;
-  const [cuentas, setCuentas] = useState([]);
-  
-  function renderDropdown(lista, texto) {
-    return <ModalPersonalizado data={lista} initValue={texto} />;
+       
+  function handleOnChangeEntidad(unaEntidad) {
+    SetEntidad(unaEntidad);
+  }
+  function handleOnChangeEmisor(unEmisor) {
+    SetEmisor(unEmisor);
+  }
+  function handleOnChangeTipo(unTipo) {
+    setTipoTarjeta(unTipo);
+  }
+  function handleOnChangeCuentaDebito(unaCuentaDebito) {
+    SetCuentaDebito(unaCuentaDebito);
   }
 
-  function DropdownEmisor(props) {
-    return (
-      <ModalPersonalizado
-        data={arrayEmisorIngreso}
-        initValue="Seleccione un Emisor"
-        value={emisor}
-        onChange={e => SetEmisor(e.target.value)}
-      />
-    );
-  };
+  function saveTarjeta() {
+    setTarjeta(entidad,cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico,fechaVenceResumen, saldo);
+    navigation.navigate("Tarjetas");
+  }
+
 
   function DropdownEntidad(props) {
     return (
       <ModalPersonalizado
         data={arrayEntidadIngreso}
         initValue="Seleccione una Entidad"
-        value={entidad}
-        onChange={e => SetEntidad(e.target.value)}
+        onSelected={handleOnChangeEntidad}
       />
     );
   };
-  function DropdownTipoTarjeta1(props) {
+
+  function DropdownEmisor(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayEmisorIngreso}
+        initValue="Seleccione un Emisor"
+        onSelected={handleOnChangeEmisor}
+      />
+    );
+  };
+
+  function DropdownTipoTarjeta(props) {
     return (
       <ModalPersonalizado
         data={arrayTipoTarjeta1Ingreso}
         initValue="Seleccione un Tipo de Tarjeta"
-        value={tipoTarjeta1}
-        onChange={e => setTipoTarjeta1(e.target.value)}
+        onSelected={handleOnChangeTipo}
       />
     );
-  };function DropdownCuentaDebito(props) {
+  };
+  
+
+  function DropdownCuentaDebito(props) {
     return (
       <ModalPersonalizado
         data={arrayCuentaDebitoIngreso}
         initValue="Seleccione una cuenta"
-        value={cuentaDebito}
-        onChange={e => SetCuentaDebiro(e.target.value)}
+        onSelected={handleOnChangeCuentaDebito}
       />
     );
   };
@@ -111,7 +122,7 @@ export default function C1_Tarjetas(props) {
         <DropdownEmisor/>
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de tarjeta</Text>
-        <DropdownTipoTarjeta1/>
+        <DropdownTipoTarjeta/>
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta a debitar</Text>
         <DropdownCuentaDebito />
@@ -119,65 +130,88 @@ export default function C1_Tarjetas(props) {
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>últimos 4 digitos</Text>
         <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-              right
-              placeholder="Solo Números"
-              placeholderTextColor={materialTheme.COLORS.DEFAULT}
-              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-              onChangeText={(text) => setUltimos4Digitos(text)}
-            />
-          </Block>
-        </Block>
-        <Block flex>
-          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha de vencimiento</Text>
-          <Block flex style={styles.group}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
+          <Input
                 right
                 placeholder="Solo Números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-                onChangeText={(text) => setFechaVenc(text)}
+                style={{
+                  borderRadius: 1,
+                  borderColor: materialTheme.COLORS.INPUT,
+                }}
+                onChangeText={(text) => {setUltimos4Digitos(text);}}
+              />
+          </Block>
+        </Block>
+        <Block flex>
+          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha de vencimiento plástico</Text>
+          <Block flex style={styles.group}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+                right
+                placeholder="Solo Números"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{
+                  borderRadius: 1,
+                  borderColor: materialTheme.COLORS.INPUT,
+                }}
+                onChangeText={(text) => {setFechaVencePlastico(text);}}
               />
             </Block>
           </Block>
           <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha de cierre</Text>
           <Block flex style={styles.group}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
+            <Input
                 right
                 placeholder="Solo Números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-                onChangeText={(text) => setFechaCierre(text)}
+                style={{
+                  borderRadius: 1,
+                  borderColor: materialTheme.COLORS.INPUT,
+                }}
+                onChangeText={(text) => {setFechaVenceResumen(text);}}
               />
-            </Block>
+           </Block>
           </Block>
           <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha de vencimiento de resumen</Text>
           <Block flex style={styles.group}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
+            <Input
                 right
                 placeholder="Solo Números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                style={{
+                  borderRadius: 1,
+                  borderColor: materialTheme.COLORS.INPUT,
+                }}
+                onChangeText={(text) => {setFechaVenceResumen(text);}}
               />
+             
             </Block>
           </Block>
           <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Saldo</Text>
           <Block flex style={styles.group}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
+            <Input
                 right
-                placeholder="$"
+                placeholder="Solo Números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                style={{
+                  borderRadius: 1,
+                  borderColor: materialTheme.COLORS.INPUT,
+                }}
+                onChangeText={(text) => {setSaldo(text);}}
               />
             </Block>
           </Block>
 
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]} >
+          <Button
+              shadowless
+              color="success"
+              style={[styles.button, styles.shadow]}
+              onPress={() => {saveTarjeta();}}
+            >
               +
             </Button>
           </Block>

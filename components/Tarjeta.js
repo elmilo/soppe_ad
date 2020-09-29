@@ -26,9 +26,9 @@ class Tarjeta extends React.Component {
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Tarjeta', { tarjeta: tarjeta })}>
           <Block flex space="between" style={styles.tarjetaDescription}>
             <Text size={20} style={styles.tarjetaEntidad}>{tarjeta.emisor}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta: {tarjeta.ultimosDigitos}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Vencimiento del resumen:{tarjeta.fechaVenc}</Text>
-            <Text size={20} style={styles.tarjetaEntidad}>Cierre: {tarjeta.fechaCierre}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta: {tarjeta.ultimos_4_digitos}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Vencimiento del resumen:{tarjeta.fecha_vencimiento_resumen}</Text>
+            <Text size={20} style={styles.tarjetaEntidad}>Cierre: {tarjeta.fecha_cierre_resume}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>

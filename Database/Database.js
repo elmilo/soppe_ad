@@ -214,14 +214,14 @@ export function getTarjetas(successCallback) {
   });
 }
 
-export function setTarjeta(cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen) {
+export function setTarjeta(entidad,cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen, saldo) {
   console.log("SetTarjeta");
-  console.log(cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen);
+  console.log(entidad,cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen, saldo);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "insert into Tarjetas (user_id, cuenta_id, ultimos_4_digitos, emisor, tipo, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen) values (?, ?, ?, ?, ?, ?, ?, ?)",
-        [1, cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen]
+        "insert into Tarjetas (user_id, entidad_id ,cuenta_id, ultimos_4_digitos, emisor, tipo, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen, saldo) values (?, ?, ?, ?, ?, ?, ?, ?)",
+        [1, entidad,cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen,saldo]
       );
     },
     null,

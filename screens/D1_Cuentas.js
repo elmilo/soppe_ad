@@ -116,9 +116,7 @@ export default function D1_Cuentas(props) {
                   borderRadius: 1,
                   borderColor: materialTheme.COLORS.INPUT,
                 }}
-                onChangeText={(text) => {
-                  setAccNumber(text);
-                }}
+                onChangeText={(text) => {setAccNumber(text);}}
               />
             </Block>
           </Block>

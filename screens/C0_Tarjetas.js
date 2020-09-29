@@ -1,101 +1,79 @@
-import React from 'react';
-import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
-import { Block, Button, Text, theme } from 'galio-framework';
-import { LinearGradient } from 'expo-linear-gradient';
-
-const { height, width } = Dimensions.get('screen');
-import { Images, materialTheme } from '../constants';
+import React, { useState, useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native'
+import {
+  ImageBackground,
+  Image,
+  StyleSheet,
+  StatusBar,
+  Dimensions,
+  Platform,
+  ScrollView,
+} from "react-native";
+import { Block, Button, Text, theme } from "galio-framework";
+import { LinearGradient } from "expo-linear-gradient";
+const { height, width } = Dimensions.get("screen");
+import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Tarjeta, Header } from '../components';
-import tarjetas from '../constants/tarjetas';
-import * as SQLite from 'expo-sqlite';
+import { Icon, Cuenta, Header } from "../components";
+import { getTarjetas} from "../Database/Database";
 
+export default function C0_Tarjetas(props) {
+  const [datos, setDatos] = React.useState(null);
 
-
-export default class C0_Tarjetas extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      cards: []
-    };
-  }
-
-  renderNavigation = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Block>
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header back title="Title" navigation={this.props.navigation} />
-          </Block>
-        </Block>
-      </Block>
-    )
-  }
-  
-  componentDidMount(){
-    this.focusListener = this.props.navigation.addListener("focus", () => {
-    const db = SQLite.openDatabase("db.db");   
-    db.transaction(
-      tx => {
-        tx.executeSql("select * from cards", [], (_, { rows}) => this.setState({cards: rows._array})
-        );
-      }, {}, );
+  function successCallback(rows) {
+    var datosTemporales = [];
+    rows.forEach((tarjeta, index) => {
+      datosTemporales.push(<Tarjeta tarjeta={tarjeta} key={index} horizontal />);
     });
-  }
 
-  componentWillUnmount() {
-    this.focusListener.remove();
+    setDatos(datosTemporales);
   }
+  useFocusEffect(() => {
+    getTarjetas(successCallback);
+  })
 
-  renderTarjetas = () => {
-    const { navigation} = this.props;
-    let datos = [];
-    this.state.cards.forEach((card, index) => {
-      datos.push(
-        <Tarjeta tarjeta={card} key={index} horizontal/>
-      )
-    })
+  const renderTarjetas = () => {
+
     return (
-      <Block flex>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.tarjetas}>
+        contentContainerStyle={styles.cuentas}
+      >
         <Block flex>
-        <Block dense>
-              {datos}
-        
-          </Block>
-          <Button shadowless color="success" style={[styles.button, styles.shadow]} 
-           onPress={() => navigation.navigate('Nueva Tarjeta')}
+        <Text></Text>
+          <Block dense>{datos}</Block>
+          <Button
+            shadowless
+            color="success"
+            style={[styles.button, styles.shadow]}
+            onPress={() => props.navigation.navigate("Nueva Tarjeta")}
           >
-             +  Agregar nueva tarjeta
+            + Agregar nueva tarjeta
           </Button>
           <Text></Text>
-         </Block>
-        </ScrollView>
         </Block>
-    )
-  }
-
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderTarjetas()}
-      </Block>
+      </ScrollView>
     );
-  }
+  };
+
+  return (
+    <Block flex center style={styles.home}>
+      {renderTarjetas()}
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.COLORS.BLACK,
-    marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
+    marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
   },
   padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,
     zIndex: 3,
-    position: 'absolute',
-    bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3,
+    position: "absolute",
+    bottom:
+      Platform.OS === "android" ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3,
   },
   button: {
     width: width - theme.SIZES.BASE * 4,
@@ -108,11 +86,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginLeft: 12,
     borderRadius: 2,
-    height: 22
+    height: 22,
   },
   gradient: {
     zIndex: 1,
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
