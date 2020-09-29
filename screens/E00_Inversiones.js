@@ -15,8 +15,8 @@ export default function E00_Inversiones(props) {
 
   function successCallback(rows) {
     var datosTemporales = [];
-    rows.forEach((inversiones, index) => {
-      datosTemporales.push(<Inversiones inversiones={inversiones} key={index} horizontal />);
+    rows.forEach((inversion, index) => {
+      datosTemporales.push(<Inversion inversion={inversion} key={index} horizontal />);
     });
 
     setDatos(datosTemporales);

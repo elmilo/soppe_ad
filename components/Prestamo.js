@@ -27,13 +27,13 @@ class Prestamo extends React.Component {
           <Block flex space="between" style={styles.prestamoDescription}>
             <Text size={20} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuenta}</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.valorCuota}</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas_monto}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Cuotas restantes:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas}</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas_restantes}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Fecha próximo vencimiento:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.diaVencimiento}</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas_fecha_proximo_vencimiento}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>

@@ -212,7 +212,7 @@ export function setTarjeta(cuenta, digitos, emisor, tipo, fechaVencimientoTarjet
       );
     },
     null,
-    () => console.log("la Tarjeta se guardó correctamente")
+    () => console.log("la tarjeta se guardó correctamente")
   );
 }
 

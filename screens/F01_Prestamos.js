@@ -1,14 +1,25 @@
-import React, { useState } from 'react';
-import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, View, Switch, ScrollView } from 'react-native';
-import { Block, Button, Text, theme, Input } from 'galio-framework';
-import { LinearGradient } from 'expo-linear-gradient';
-const { height, width } = Dimensions.get('screen');
-import { Images, materialTheme } from '../constants';
+import React, { useState } from "react";
+import {
+  ImageBackground,
+  Image,
+  StyleSheet,
+  StatusBar,
+  Dimensions,
+  Platform,
+  ScrollView,
+  Switch, 
+} from "react-native";
+import { Block, Button, Text, theme, Input } from "galio-framework";
+import { LinearGradient } from "expo-linear-gradient";
+const { height, width } = Dimensions.get("screen");
+import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Product, Header, Select } from '../components';
-import ModalSelector from 'react-native-modal-selector';
-import ModalPersonalizado from '../components/ModalPersonalizado';
-import products from '../constants/products';
+import { Icon, Product, Header, Select } from "../components";
+import ModalSelector from "react-native-modal-selector";
+import ModalPersonalizado from "../components/ModalPersonalizado";
+import { setPrestamo, get2Cuentas } from "../Database/Database";
+import products from "../constants/products";
+import * as SQLite from "expo-sqlite";
 
 const arrayCuentaIngreso = [
   { value: 1, label: "Banco Galicia ARS" },
@@ -17,14 +28,32 @@ const arrayCuentaIngreso = [
   { value: 4, label: "BBVA ARS" },
 ];
 
+
 export default function F01_Prestamos(props) {
-  const [cuenta, SetCuenta] = useState('');
+  
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
+  const [proxCuota, setProxCuota] = useState(0);
+  const [descripcion, setDescripcion] = useState("");
+  const [cuotas, setCuotas] = useState(0.0);
+  const [valorCuota, setValorCuota] = useState(0.0);
+  const [valorPrestamo, setValorPrestamo] = useState(0.0);
+  const [cuenta, SetCuenta] = useState("");
+  
+  const navigation = props.navigation;
   let index = 0;
 
-  function renderDropdown(lista, texto) {
-    return <ModalPersonalizado data={lista} initValue={texto} />;
+  function handleOnChangeCuenta(unaCuenta) {
+    SetCuenta(unaCuenta);
+  }
+
+  function handleOnChangePrestamo(unPrestamo) {
+    SetPrestamo(unPrestamo);
+  }
+
+  function savePrestamo() {
+    setPrestamo(cuenta, isEnabled, 1,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,1);
+    navigation.navigate("Préstamos");
   }
 
   function DropdownCuenta(props) {
@@ -32,13 +61,15 @@ export default function F01_Prestamos(props) {
       <ModalPersonalizado
         data={arrayCuentaIngreso}
         initValue="Seleccione una Cuenta"
-        value={cuenta}
-        onChange={e => SetCuenta(e.target.value)}
+        onSelected={handleOnChangeCuenta}
       />
     );
-  };
+  }
+
+ 
   return (
-    <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+   
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
@@ -62,6 +93,7 @@ export default function F01_Prestamos(props) {
                 placeholder="$"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setValorPrestamo(text); }}
               />
             </Block>
           </Block>
@@ -73,6 +105,7 @@ export default function F01_Prestamos(props) {
                 placeholder="$"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setValorCuota(text); }}
               />
             </Block>
           </Block>
@@ -84,6 +117,7 @@ export default function F01_Prestamos(props) {
                 placeholder="1 al 30 del mes"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setProxCuota(text); }}
               />
             </Block>
           </Block>
@@ -95,6 +129,7 @@ export default function F01_Prestamos(props) {
                 placeholder="Solo números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setCuotas(text); }}
               />
             </Block>
           </Block>
@@ -106,11 +141,17 @@ export default function F01_Prestamos(props) {
                 placeholder=""
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setDescripcion(text); }}
               />
             </Block>
           </Block>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+          <Button
+              shadowless
+              color="success"
+              style={[styles.button, styles.shadow]}
+              onPress={() => {savePrestamo();}}
+            >
               +
             </Button>
           </Block>
@@ -118,21 +159,21 @@ export default function F01_Prestamos(props) {
         </Block>
       </ScrollView>
     </Block>
+    
   )
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: theme.COLORS.BLACK,
-    marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
+    marginTop: Platform.OS === "android" ? -HeaderHeight : 0,
   },
   padded: {
     paddingHorizontal: theme.SIZES.BASE * 2,
     zIndex: 3,
-    position: 'absolute',
-    bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3,
+    position: "absolute",
+    bottom:
+      Platform.OS === "android" ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3,
   },
   button: {
     width: width - theme.SIZES.BASE * 4,
@@ -145,11 +186,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginLeft: 12,
     borderRadius: 2,
-    height: 22
+    height: 22,
   },
   gradient: {
     zIndex: 1,
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,

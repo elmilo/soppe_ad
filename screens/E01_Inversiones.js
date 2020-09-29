@@ -28,6 +28,13 @@ const arrayCuentaIngreso = [
 
 
 export default function E01_Inversiones(props) {
+   
+  const [tipo, SetTipo] = useState('');
+  const [cuentaIn, SetCuentaIn] = useState('');
+  const [vencimiento, setVencimiento] = useState(0.0);
+  const [valorInv, setValorInv] = useState(0.0);
+  const [descripcion, setDescripcion] = useState("");
+ 
   const navigation = props.navigation;
   let index = 0;
 
@@ -64,14 +71,7 @@ export default function E01_Inversiones(props) {
     navigation.navigate("Inversiones");
   }
     
-  
-  const [tipo, SetTipo] = useState('');
-  const [cuentaIn, SetCuentaIn] = useState('');
-  const [vencimiento, setVencimiento] = useState(0.0);
-  const [valorInv, setValorInv] = useState(0.0);
-  const [descripcion, setDescripcion] = useState("");
  
-
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <ScrollView
