@@ -79,7 +79,7 @@ var createTarjetas =
   " Tarjetas " +
   " ( " +
   "id" +
-  " INT NOT NULL," +
+  " INTEGER PRIMARY KEY," +
   "user_id" +
   " INT NOT NULL," +
   "cuenta_id" +
@@ -103,7 +103,7 @@ var createPrestamos =
   " Prestamos " +
   " ( " +
   "id" +
-  " INT NOT NULL," +
+  " INTEGER PRIMARY KEY," +
   "user_id" +
   " INT NULL," +
   "cuenta_id" +
@@ -133,7 +133,7 @@ var createPresupuestos =
   " Presupuestos " +
   " ( " +
   "id" +
-  " INT NOT NULL," +
+  " INTEGER PRIMARY KEY," +
   "user_id" +
   " INT NULL," +
   "rubro_id" +
@@ -151,7 +151,7 @@ var createInversiones =
   " Inversiones " +
   " ( " +
   "id" +
-  " INT NOT NULL," +
+  " INTEGER PRIMARY KEY," +
   "cuenta_id" +
   " INT NULL," +
   "user_id" +
@@ -175,7 +175,7 @@ var createIngresos =
   " Ingresos " +
   " ( " +
   "id" +
-  " INT NOT NULL," +
+  " INTEGER PRIMARY KEY," +
   "user_id" +
   " INT NULL," +
   "cuenta_id" +
@@ -205,7 +205,7 @@ var createEgresos =
   " Egresos " +
   " ( " +
   "id" +
-  " INT NOT NULL," +
+  " INTEGER PRIMARY KEY," +
   "user_id" +
   " INT NULL," +
   "cuenta_id" +
@@ -238,6 +238,8 @@ var createNotificaciones =
   "CREATE TABLE IF NOT EXISTS " +
   " Notificaciones " +
   " ( " +
+  "id" +
+  " INTEGER PRIMARY KEY," +
   "id_externa" +
   " INT NOT NULL," +
   "tabla_externa" +

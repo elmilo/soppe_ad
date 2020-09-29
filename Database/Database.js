@@ -135,20 +135,33 @@ export function getPresupuestos(successCallback) {
   });
 }
 
-export function setPresupuesto(rubro, categoria, monto, descripcion) {
-  console.log("SetPresupuesto");
-  console.log(rubro, categoria, monto, descripcion);
-  db.transaction(
-    (tx) => {
-      tx.executeSql(
-        "insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual, descripcion) values (?, ?, ?, ?, ?)",
-        [1, rubro, categoria, monto, descripcion]
-      );
+// export function setPresupuesto(rubro, categoria, monto, descripcion) {
+//   console.log("SetPresupuesto");
+//   console.log(rubro, categoria, monto, descripcion);
+//   db.transaction(
+//     (tx) => {
+//       tx.executeSql(
+//         "insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual, descripcion) values (?, ?, ?, ?, ?)",
+//         [1, rubro, categoria, monto, descripcion]
+//       );
+//       console.log(tx);
+//     },
+//     null,
+//     () => console.log("el presupuesto se guardó correctamente")
+//   );
+// }
+
+export function setPresupuesto(rubro, categoria, monto, descripcion){
+  db.transaction( tx => {
+    tx.executeSql("insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual, descripcion) values (?, ?, ?, ?, ?)", [1, rubro, categoria, monto, descripcion],
+    (_, { rows})  => {
+    console.log("Se inserto la tabla correctamente.")
     },
-    null,
-    () => console.log("el presupuesto se guardó correctamente")
-  );
-}
+    (_, error) => {
+      console.log("ERROR - La tabla no pudo ser insertada.  " + error); 
+    })
+  })
+};
 
 export function getPresupuestoDetalle(id) {
   db.transaction((tx) => {
