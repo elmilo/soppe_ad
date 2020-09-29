@@ -29,7 +29,7 @@ const arrayCuentaIngreso = [
 ];
 const arrayTipo = [
   { value: 1, label: "En Cuenta" },
-  { value: 2, label: "Un Tercero" },
+  { value: 2, label: "Con Tercero" },
  ];
 
 
@@ -38,11 +38,12 @@ export default function F01_Prestamos(props) {
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [proxCuota, setProxCuota] = useState(0);
+  const [terceroDesc, setTerceroDesc] = useState(null);
   const [descripcion, setDescripcion] = useState("");
   const [cuotas, setCuotas] = useState(0.0);
   const [valorCuota, setValorCuota] = useState(0.0);
   const [valorPrestamo, setValorPrestamo] = useState(0.0);
-  const [cuenta, SetCuenta] = useState("");
+  const [cuenta, SetCuenta] = useState(null);
   
   const navigation = props.navigation;
   let index = 0;
@@ -57,18 +58,25 @@ export default function F01_Prestamos(props) {
   function handleOnChangeTipo(unTipo) {
     setTipoPrestamo(unTipo);
   }
+
+
+
   function savePrestamo() {
-    setPrestamo(1,cuenta, tipoPrestamo, 1,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,isEnabled);
+    setPrestamo(cuenta, tipoPrestamo, terceroDesc,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,isEnabled);
+    //cambiar null por terceroDesc
     navigation.navigate("Préstamos");
   }
 
   function DropdownCuenta(props) {
     return (
-      <ModalPersonalizado
+      <Block>
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
+        <ModalPersonalizado
         data={arrayCuentaIngreso}
         initValue="Seleccione una Cuenta"
         onSelected={handleOnChangeCuenta}
       />
+      </Block>
     );
   }
   function DropdownTipoPrestamo(props) {
@@ -80,6 +88,25 @@ export default function F01_Prestamos(props) {
       />
     );
   };
+
+  function TerceroDescripcion(props) {
+    return (
+      <Block>
+        <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Descripción del Tercero</Text>
+        <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder="Nombre"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setTerceroDesc(text); }}
+            />
+          </Block>
+        </Block>
+      </Block>
+    );
+  };
  
   return (
    
@@ -87,7 +114,7 @@ export default function F01_Prestamos(props) {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
-        <Text p style={[styles.text, { textAlign: 'right' }]}>Tomado / Otorgado</Text>
+        <Text p style={[styles.text, { textAlign: 'right' }]}>Otorgado / Tomado</Text>
         <Switch
           trackColor={{ false: "#767577", true: "#FF8000" }}
           thumbColor={isEnabled ? "#FF8000" : "#f4f3f4"}
@@ -97,8 +124,9 @@ export default function F01_Prestamos(props) {
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de Préstamo</Text>
         {DropdownTipoPrestamo()}
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
+        {/* {tipoPrestamo = 'En Cuenta' ? DropdownCuenta(): TerceroDescripcion()} */}
         {DropdownCuenta()}
+        {TerceroDescripcion()}
         <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
         <Block flex>
           <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de Préstamo</Text>

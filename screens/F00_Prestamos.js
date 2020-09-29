@@ -14,7 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 const { height, width } = Dimensions.get("screen");
 import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Cuenta, Header } from "../components";
+import { Icon, Cuenta, Header, Prestamo } from "../components";
 import { getPrestamos } from "../Database/Database";
 
 export default function F00_Prestamos(props) {
@@ -23,7 +23,7 @@ export default function F00_Prestamos(props) {
   function successCallback(rows) {
     var datosTemporales = [];
     rows.forEach((prestamo, index) => {
-      datosTemporales.push(<Prestamo prestamo={pestamo} key={index} horizontal />);
+      datosTemporales.push(<Prestamo prestamo={prestamo} key={index} horizontal />);
     });
 
     setDatos(datosTemporales);

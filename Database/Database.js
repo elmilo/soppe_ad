@@ -397,7 +397,7 @@ export function getPrestamos(successCallback) {
       "select * from Prestamos",
       [],
       (_, { rows }) => {
-        //console.log('Success getCuentas: ', rows._array);
+        console.log('Success getPrestamos: ', rows._array);
         successCallback(rows._array);
       },
       (_, error) => {
@@ -414,8 +414,8 @@ export function setPrestamo(cuenta, tipo, terceroDescripcion, cuotasMonto, fecha
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "insert into Prestamos (user_id, cuenta_id, tipo, prestamo_a_tercero_descripcion, cuotas_monto, cuotas_fecha_proximo_vencimiento, cuotas_restantes, prestamo_monto, descripcion, tomado, terminado) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [1, cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado, 'false']
+        "insert into Prestamos (user_id, cuenta_id, tipo, prestamo_a_tercero_descripcion, cuotas_monto, cuotas_fecha_proximo_vencimiento, cuotas_restantes, prestamo_monto, descripcion, tomado, terminado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [1, cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado, 0]
       );
     },
     null,
