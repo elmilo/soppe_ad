@@ -1,66 +1,63 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native'
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-
-const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Inversion, Header } from '../components';
-import inversiones from '../constants/inversiones';
+import { Icon, Presupuesto, Header } from '../components';
+import { getInversiones } from "../Database/Database";
+const { height, width } = Dimensions.get('screen');
 
+export default function E00_Inversiones(props) {
 
-export default class D0_Inversion extends React.Component {
-  renderNavigation = () => {
-    return (
-      <Block flex style={styles.group}>
-        <Block>
-          <Block style={{ marginBottom: theme.SIZES.BASE }}>
-            <Header back title="Title" navigation={this.props.navigation} />
-          </Block>
-        </Block>
-      </Block>
-    )
+  const [datos, setDatos] = React.useState(null);
+
+  function successCallback(rows) {
+    var datosTemporales = [];
+    rows.forEach((inversion, index) => {
+      datosTemporales.push(<Inversion inversion={inversion} key={index} horizontal />);
+    });
+
+    setDatos(datosTemporales);
   }
+  useFocusEffect(() => {
+    getInversiones(successCallback);
+  })
 
-  renderInversiones = () => {
-    const { navigation} = this.props;
-    let datos = [];
-    inversiones.forEach((inversion,index) => {
-        datos.push(
-                <Inversion inversion={inversion} key={index} horizontal/>
-                
-            )
-        
-    })
+  const renderInversiones = () => {
+
+
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.inversiones}>
+        contentContainerStyle={styles.cuentas}
+      >
         <Block flex>
-        <Block dense>
-              {datos}
-        
-          </Block>
-          <Button shadowless color="success" style={[styles.button, styles.shadow]} 
-           onPress={() => navigation.navigate('Nueva Inversion')}
+          <Text></Text>
+          <Block dense>{datos}</Block>
+          <Button
+            shadowless
+            color="success"
+            style={[styles.button, styles.shadow]}
+            onPress={() => props.navigation.navigate("Nueva Inversion")}
           >
-             +  Agregar nueva inversion 
+            + Agregar nueva inversion
           </Button>
           <Text></Text>
-         </Block>
-        </ScrollView>
-    )
-  }
-
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderInversiones()}
-      </Block>
+        </Block>
+      </ScrollView>
     );
-  }
+  };
+
+  return (
+    <Block flex center style={styles.home}>
+      {renderInversiones()}
+    </Block>
+  );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useFocusEffect } from '@react-navigation/native'
 import {
   ImageBackground,
   Image,
@@ -10,12 +11,11 @@ import {
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 import { LinearGradient } from "expo-linear-gradient";
-
 const { height, width } = Dimensions.get("screen");
 import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Cuenta, Header } from "../components";
-import { getAccounts } from "../Database/Database";
+import { getCuentas } from "../Database/Database";
 
 export default function D0_Cuentas(props) {
   const [datos, setDatos] = React.useState(null);
@@ -28,13 +28,12 @@ export default function D0_Cuentas(props) {
 
     setDatos(datosTemporales);
   }
-
-  useEffect(() => {
-    getAccounts(successCallback);
-  });
+  useFocusEffect(() => {
+    const id_usuario  = 1;
+    getCuentas(id_usuario, successCallback);
+  })
 
   const renderCuentas = () => {
-    getAccounts(successCallback);
 
     return (
       <ScrollView
@@ -42,6 +41,7 @@ export default function D0_Cuentas(props) {
         contentContainerStyle={styles.cuentas}
       >
         <Block flex>
+        <Text></Text>
           <Block dense>{datos}</Block>
           <Button
             shadowless

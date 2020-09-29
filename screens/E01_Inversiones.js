@@ -9,6 +9,8 @@ import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
+import { setInversion} from "../Database/Database";
+import * as SQLite from "expo-sqlite";
 
 const arrayTipoIngreso = [
   { value: 1, label: "Plazo Fijo" },
@@ -26,21 +28,22 @@ const arrayCuentaIngreso = [
 
 
 export default function E01_Inversiones(props) {
+   
   const [tipo, SetTipo] = useState('');
-  const [cuenta, SetCuenta] = useState('');
+  const [cuentaIn, SetCuentaIn] = useState('');
+  const [vencimiento, setVencimiento] = useState(0.0);
+  const [valorInv, setValorInv] = useState(0.0);
+  const [descripcion, setDescripcion] = useState("");
+ 
+  const navigation = props.navigation;
   let index = 0;
-
-  function renderDropdown(lista, texto) {
-    return <ModalPersonalizado data={lista} initValue={texto} />;
-  }
 
   function DropdownTipo(props) {
     return (
       <ModalPersonalizado
         data={arrayTipoIngreso}
         initValue="Seleccione un Tipo de Inversion"
-        value={tipo}
-        onChange={e => SetTipo(e.target.value)}
+        onSelected={handleOnChangeTipo}
       />
     );
   };
@@ -50,32 +53,47 @@ export default function E01_Inversiones(props) {
       <ModalPersonalizado
         data={arrayCuentaIngreso}
         initValue="Seleccione una Cuenta"
-        value={cuenta}
-        onChange={e => SetCuenta(e.target.value)}
+        onSelected={handleOnChangeCuenta}
       />
     );
   };
+
+  function handleOnChangeTipo(unTipo) {
+    SetTipo(unTipo);
+  }
+
+  function handleOnChangeCuenta(unaCuentaIn) {
+    SetCuentaIn(unaCuentaIn);
+  }
+
+  function saveInversion() {
+    setInversion(tipo, vencimiento, cuentaIn ,valorInv,descripcion);
+    navigation.navigate("Inversiones");
+  }
+    
+ 
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de Inversion</Text>
-        <DropdownTipo />
+        {DropdownTipo()}
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha de Vencimiento</Text>
         <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
               right
-              placeholder="Ingrese una fecha"
+              placeholder="Solo números ej 25052020"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setVencimiento(text); }}
             />
           </Block>
           <Block />
           <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
-          <DropdownCuenta />
+          {DropdownCuenta()}
           <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
         </Block>
         <Block flex>
@@ -87,6 +105,7 @@ export default function E01_Inversiones(props) {
                 placeholder="$"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setValorInv(text); }}
               />
             </Block>
           </Block>
@@ -98,11 +117,14 @@ export default function E01_Inversiones(props) {
                 placeholder=""
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setDescripcion(text); }}
               />
             </Block>
           </Block>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button shadowless color="success" style={[styles.button, styles.shadow]}>
+            <Button shadowless color="success" style={[styles.button, styles.shadow]}onPress={() => {
+                saveInversion();
+              }}>
               +
             </Button>
           </Block>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Dimensions, Platform } from "react-native";
 import { Block, Input, Text, theme } from "galio-framework";
 import { materialTheme } from "../constants/";
@@ -7,26 +7,81 @@ import SwitchPersonalizado from "../components/SwitchPersonalizado";
 import ModalPersonalizado from "../components/ModalPersonalizado";
 import { FloatingAction } from "react-native-floating-action";
 import CamaraPersonalizada from "../components/CamaraPersonalizada";
-import { block } from "react-native-reanimated";
+import { getCompletoFormateado } from "../Database/SelectTables";
+import { getCuentas, getTarjetas } from "../Database/Database";
+
+import { block, concat } from "react-native-reanimated";
 
 const { height, width } = Dimensions.get("screen");
 
-const arrayCuentas = [
-  { key: 1, label: "Cuenta Bancaria ARS" },
-  { key: 2, label: "Efectivo" },
-  { key: 3, label: "Cuenta Bancaria ARS 2" },
-  { key: 4, label: "Cuenta Bancaria USD" },
+const arrayMediosDePago = [
+  { value: "1Consumo", label: "Consumo Cuenta" },
+  { value: "2TC", label: "Tarjeta de crédito" },
 ];
 
-const arrayCategorias = [
-  { key: 1, label: "Servicios" },
-  { key: 2, label: "Alquileres" },
-  { key: 3, label: "Comidas" },
-  { key: 4, label: "Farmacia" },
-];
+/*
+CREATE TABLE IF NOT EXISTS `mydb`.`Egresos` (
+  `id` INT NOT NULL,
+  `user_id` INT NULL,
+  `cuenta_id` INT NULL,
+  `rubro_id` INT NULL,
+  `categoria_id` INT NULL,
+  `medio_de_pago` VARCHAR(45) NULL,
+  `monto` DECIMAL NULL,
+  `cuotas_fechas` INT NULL,
+  `cuotas_restantes` INT NULL,
+  `id_externa` INT NULL,
+  `tabla_externa` VARCHAR(45) NULL,
+  `descripcion` VARCHAR(128) NULL,
+  `auto_manual` VARCHAR(45) NULL,
+  `add_dttm` DATETIME NULL,
+*/
+/*
+const arrayCategorias = getCompletoFormateado('Categorias');
+const arrayRubros = getCompletoFormateado('Rubros');
+*/
 
 export default function B1_NuevoEgreso(props) {
+  /********************************* */
+  const [user_id, setUser_id] = useState(1);
+  const [cuenta, setCuenta] = useState("");
+  const [rubro, setRubro] = useState("");
+  const [categoria, SetCategoria] = useState("");
+  const [tarjeta, setTarjeta] = useState("");
+  const [medio_de_pago, setMedio_de_pago] = useState("");
+  const [monto, setMonto] = useState("");
+  const [cuotas_fechas, setCuotas_fechas] = useState("");
+  const [cuotas_restantes, setCuotas_restantes] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [auto_manual, setAuto_manual] = useState("");
+  const [add_dttm, setAdd_dttm] = useState("");
+
+  function handleOnChangeMedioDePago(medioDePago) {
+    
+    console.log('Medio de pago: ' + medioDePago);
+
+    const id_usuario = 1;
+
+    if (medioDePago == "Consumo Cuenta") {
+      getCuentas(id_usuario, successArrayCuentas);
+      setMedio_de_pago("Consumo Cuenta");
+    }
+    if (medioDePago == "Tarjeta de crédito") {
+      getTarjetas(id_usuario, successArrayTarjetas);
+      setMedio_de_pago("Tarjeta de crédito");
+    }
+
+    return true;
+  }
+
+  const [arrayTarjetas, setArrayTarjetas] = useState([]);
+  const [arrayCuentas, setArrayCuentas] = useState([]);
+
+  /**************************************/
   const { navigation } = props.navigation;
+
+  const [arrayCategorias, setArrayCategorias] = useState([]);
+  const [arrayRubros, setArrayRubros] = useState([]);
 
   const [isEnabledPeriodico, setIsEnabledPeriodico] = useState(false);
   const togglePeriodico = () =>
@@ -36,36 +91,78 @@ export default function B1_NuevoEgreso(props) {
   const toggleParaSiempre = () =>
     setIsEnabledParaSiempre((previousState) => !previousState);
 
-  const [cuenta, SetCuenta] = useState("");
-  const [categoria, SetCategoria] = useState("");
+  //const [cuenta, SetCuenta] = useState("");
+  //const [categoria, SetCategoria] = useState("");
 
-  function handleOnChangeCuenta(unaCuenta) {
-    SetCuenta(unaCuenta);
+  function handleOnChangeRubro(elemento) {
+    setRubro(elemento);
   }
 
-  function handleOnChangeCategoria(unaCategoria) {
-    SetCategoria(unaCategoria);
+  function handleOnChangeCuenta(elemento) {
+    SetCuenta(elemento);
   }
 
-  /*const actions = [
-    {
-      text: "Con recursividad",
-      name: "bt_accessibility",
-      position: 1
-    },
-    {
-      text: "Guardar",
-      name: "bt_language",
-      position: 1
-    }
-  ];*/
+  function handleOnChangeCategoria(elemento) {
+    SetCategoria(elemento);
+  }
+
+  function successArrayCuentas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id,
+        label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
+      });
+    });
+
+    setArrayCuentas(datosFinales);
+  }
+
+  function successArrayTarjetas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id,
+        label: elemento.emisor + '(' + elemento.ultimos_4_digitos + ')',
+      });
+    });
+
+    setArrayTarjetas(datosFinales);
+  }
+
+  function successArrayCategorias(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id + elemento.descripcion,
+        label: elemento.descripcion,
+      });
+    });
+
+    setArrayCategorias(datosFinales);
+  }
+
+  function successArrayRubros(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id + elemento.descripcion,
+        label: elemento.descripcion,
+      });
+    });
+
+    setArrayRubros(datosFinales);
+  }
+
+  useEffect(() => {
+    getCompletoFormateado("Categorias", successArrayCategorias);
+    getCompletoFormateado("Rubros", successArrayRubros);
+  }, []); // <-- empty array means 'run once'
 
   function renderDropdown(lista, texto, handle) {
-    return <ModalPersonalizado 
-    data={lista} 
-    initValue={texto}
-    onSelected={handle}    
-    />;
+    return (
+      <ModalPersonalizado data={lista} initValue={texto} onSelected={handle} />
+    );
   }
 
   function renderDinero() {
@@ -128,9 +225,25 @@ export default function B1_NuevoEgreso(props) {
     <Block>
       <Block center>{renderDinero()}</Block>
       <Block>
-        {renderDropdown(arrayCategorias, "Destino", handleOnChangeCategoria)}
         {renderInputBox("default", "Descripción")}
-        {renderDropdown(arrayCuentas, "Origen de fondos", handleOnChangeCuenta)}
+        {renderDropdown(
+          arrayMediosDePago,
+          "Medio de pago",
+          handleOnChangeMedioDePago
+        )}
+
+        {medio_de_pago == "Consumo Cuenta"
+          ? renderDropdown(arrayCuentas, "Cuentas", setCuenta)
+          : renderDropdown(arrayTarjetas, "Tarjetas de crédito", setTarjeta)}
+
+        {renderDropdown(arrayRubros, "Rubro", handleOnChangeRubro)}
+        {rubro == "Servicios e Impuestos"
+          ? renderDropdown(
+              arrayCategorias,
+              "Categoría",
+              handleOnChangeCategoria
+            )
+          : null}
       </Block>
       <SwitchPersonalizado
         titulo={"Periódico mensual"}
