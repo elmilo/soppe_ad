@@ -124,7 +124,7 @@ export default function F01_Prestamos(props) {
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de Préstamo</Text>
         {DropdownTipoPrestamo()}
-        {/* {tipoPrestamo = 'En Cuenta' ? DropdownCuenta(): TerceroDescripcion()} */}
+        {/* {tipoPrestamo = 'En Cuenta' ? DropdownCuenta(): TerceroDescripcion()}; */}
         {DropdownCuenta()}
         {TerceroDescripcion()}
         <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
