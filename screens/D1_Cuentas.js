@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import {
   ImageBackground,
   Image,
@@ -16,16 +16,10 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header, Select } from "../components";
 import ModalSelector from "react-native-modal-selector";
 import ModalPersonalizado from "../components/ModalPersonalizado";
-import { setCuentaUnica, get2Cuentas } from "../Database/Database";
+import { getCompletoFormateado } from "../Database/SelectTables";
+import { setCuentaUnica } from "../Database/Database";
 import products from "../constants/products";
 import * as SQLite from "expo-sqlite";
-
-const arrayCuentaIngreso = [
-  { value: 1, label: "Banco Galicia ARS" },
-  { value: 2, label: "Banco Galicia USD" },
-  { value: 3, label: "Mercado Pago" },
-  { value: 4, label: "BBVA ARS" },
-];
 
 const arrayMonedaIngreso = [
   { value: 1, label: "Pesos Argentinos" },
@@ -35,7 +29,7 @@ const arrayMonedaIngreso = [
 ];
 
 export default function D1_Cuentas(props) {
-  const [entity, setEntity] = useState("");
+  const [arrayEntidades, setArrayEntidades] = useState([]); 
   const [accNumber, setAccNumber] = useState("");
   const [cbu, setCbu] = useState(0);
   const [alias, setAlias] = useState("");
@@ -45,25 +39,43 @@ export default function D1_Cuentas(props) {
   const navigation = props.navigation;
   let index = 0;
 
-  function handleOnChangeCuenta(unaCuenta) {
+  function handleOnChangeEntidad(unaCuenta) {
     SetCuenta(unaCuenta);
   }
 
   function handleOnChangeMoneda(unaMoneda) {
     SetMoneda(unaMoneda);
   }
+  
+  
+  useEffect(() => {
+    getCompletoFormateado('Entidades', successArrayEntidades);
+  }, []); // <-- empty array means 'run once'
+
+  
+  function successArrayEntidades (rows){
+    var datosFinales = [];
+    rows.forEach((elemento, key)  => {
+      datosFinales.push({
+        "key": elemento.id + elemento.descripcion,
+        "label": elemento.descripcion
+      });
+    });
+    
+    setArrayEntidades(datosFinales);
+  }
 
   function saveAccount() {
-    setCuentaUnica(cbu, cuenta, moneda, accNumber, alias, saldo);
+    setCuentaUnica(cbu, 1 ,cuenta, moneda, accNumber, alias, saldo);
     navigation.navigate("Cuentas");
   }
 
   function DropdownCuenta(props) {
     return (
       <ModalPersonalizado
-        data={arrayCuentaIngreso}
+        data={arrayEntidades}
         initValue="Seleccione una Cuenta"
-        onSelected={handleOnChangeCuenta}
+        onSelected={handleOnChangeEntidad}
       />
     );
   }

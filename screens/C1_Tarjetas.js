@@ -64,7 +64,8 @@ export default function C1_Tarjetas(props) {
   }
 
   function saveTarjeta() {
-    setTarjeta(entidad,cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico,fechaVenceResumen, saldo);
+    const user_id = 1;
+    setTarjeta(user_id, entidad,cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico,fechaVenceResumen, saldo);
     navigation.navigate("Tarjetas");
   }
 
@@ -73,7 +74,7 @@ export default function C1_Tarjetas(props) {
     return (
       <ModalPersonalizado
         data={arrayEntidadIngreso}
-        initValue="Seleccione una Entidad"
+        initValue="Entidad"
         onSelected={handleOnChangeEntidad}
       />
     );
@@ -83,7 +84,7 @@ export default function C1_Tarjetas(props) {
     return (
       <ModalPersonalizado
         data={arrayEmisorIngreso}
-        initValue="Seleccione un Emisor"
+        initValue="Emisor"
         onSelected={handleOnChangeEmisor}
       />
     );
@@ -93,7 +94,7 @@ export default function C1_Tarjetas(props) {
     return (
       <ModalPersonalizado
         data={arrayTipoTarjeta1Ingreso}
-        initValue="Seleccione un Tipo de Tarjeta"
+        initValue="Tipo de Tarjeta"
         onSelected={handleOnChangeTipo}
       />
     );
@@ -104,7 +105,7 @@ export default function C1_Tarjetas(props) {
     return (
       <ModalPersonalizado
         data={arrayCuentaDebitoIngreso}
-        initValue="Seleccione una cuenta"
+        initValue="Cuenta Origen"
         onSelected={handleOnChangeCuentaDebito}
       />
     );
@@ -115,17 +116,12 @@ export default function C1_Tarjetas(props) {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Entidad</Text>
-        <DropdownEntidad/>
-        <Text></Text><Text></Text>
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Emisor</Text>
-        <DropdownEmisor/>
-        <Text></Text><Text></Text>
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de tarjeta</Text>
-        <DropdownTipoTarjeta/>
-        <Text></Text><Text></Text>
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta a debitar</Text>
-        <DropdownCuentaDebito />
+        
+        {DropdownEntidad()}
+        {DropdownEmisor()}
+        {DropdownTipoTarjeta()}
+        {DropdownCuentaDebito ()}
+
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>últimos 4 digitos</Text>
         <Block flex style={styles.group}>

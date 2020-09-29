@@ -14,7 +14,7 @@ import { LinearGradient } from "expo-linear-gradient";
 const { height, width } = Dimensions.get("screen");
 import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Cuenta, Header } from "../components";
+import { Tarjeta } from "../components";
 import { getTarjetas} from "../Database/Database";
 
 export default function C0_Tarjetas(props) {
@@ -29,7 +29,8 @@ export default function C0_Tarjetas(props) {
     setDatos(datosTemporales);
   }
   useFocusEffect(() => {
-    getTarjetas(successCallback);
+    const id_usuario  = 1;
+    getTarjetas(id_usuario, successCallback);
   })
 
   const renderTarjetas = () => {

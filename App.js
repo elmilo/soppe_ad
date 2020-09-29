@@ -21,7 +21,7 @@ import { Images, products, materialTheme } from './constants/';
 
 import { NavigationContainer } from '@react-navigation/native';
 import Screens from './navigation/Screens';
-import { createAll } from './Database/CreateTables';
+
 
 
 // Before rendering any navigation stack
@@ -90,7 +90,6 @@ export default class App extends React.Component {
   };
 
   _handleFinishLoading = () => {
-    createAll();
     this.setState({ isLoadingComplete: true });
   };
 }

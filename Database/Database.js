@@ -36,11 +36,11 @@ const db = SQLite.openDatabase("db.db");
 
 
 //*******CUENTAS************
-export function getCuentas(successCallback) {
+export function getCuentas(id_usuario, successCallback) {
   db.transaction((tx) => {
     tx.executeSql(
-      "select * from Cuentas",
-      [],
+      "select id, entidad_id, moneda, nro_cuenta from Cuentas where user_id = ?",
+      [id_usuario],
       (_, { rows }) => {
         //console.log('Success getCuentas: ', rows._array);
         successCallback(rows._array);
@@ -54,14 +54,14 @@ export function getCuentas(successCallback) {
 }
 
 
-export function setCuentaUnica(cbu, entity, currency, accNumber, alias, saldo) {
+export function setCuentaUnica(cbu, user_id ,entity, currency, accNumber, alias, saldo) {
   console.log("SetCuentaUnica");
   console.log(cbu, entity, currency, accNumber, alias, saldo);
   db.transaction(
     (tx) => {
       tx.executeSql(
         "insert into Cuentas (cbu, user_id, entidad_id, moneda, nro_cuenta, alias, saldo) values (?, ?, ?, ?, ?, ?, ?)",
-        [cbu, 1, entity, currency, accNumber, alias, saldo]
+        [cbu, user_id, entity, currency, accNumber, alias, saldo]
       );
     },
     null,
@@ -69,7 +69,7 @@ export function setCuentaUnica(cbu, entity, currency, accNumber, alias, saldo) {
   );
 
 
-  /*db.transaction( tx => {
+ /*db.transaction( tx => {
     tx.executeSql("insert into Cuentas (cbu, user, entity, currency, accNumber, alias, saldo) values (?, ?, ?, ?, ?, ?, ?)", [cbu, 1, entity, currency, accNumber, alias, saldo]
     , [], 
     (_, { rows})  => {
@@ -197,37 +197,66 @@ export function deletePresupuesto(id) {
 
 //*******TARJETAS************
 
-export function getTarjetas(successCallback) {
-  db.transaction((tx) => {
+  //*******CUENTAS************
+  export function getTarjetas(id_usuario, successCallback) {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "select id, emisor, ultimos_4_digitos from Tarjetas where user_id = ?",
+        [id_usuario],
+        (_, { rows }) => {
+          //console.log('Success getCuentas: ', rows._array);
+          successCallback(rows._array);
+        },
+        (_, error) => {
+          console.log('error getTarjetas: ' + error);
+          //errorCallback(error);
+        }
+      );
+    });
+  }
+
+export function setTarjeta(user_id, cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen, saldo) {
+console.log("SetTarjeta");
+ 
+ db.transaction((tx) => {
     tx.executeSql(
-      "select * from Tarjetas",
-      [],
+      "insert into Tarjetas (user_id, cuenta_id, ultimos_4_digitos, emisor, tipo, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen, saldo) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [user_id, cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen,saldo],
       (_, { rows }) => {
-        //console.log('Success getCuentas: ', rows._array);
-        successCallback(rows._array);
+        console.log('Success SetTarjeta: ', rows._array);
       },
       (_, error) => {
-        //console.log('error getAccounts');
-        errorCallback(error);
+        console.log('error SetTarjeta ' + error);        
       }
     );
   });
-}
 
-export function setTarjeta(entidad,cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen, saldo) {
-  console.log("SetTarjeta");
-  console.log(entidad,cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen, saldo);
-  db.transaction(
-    (tx) => {
-      tx.executeSql(
-        "insert into Tarjetas (user_id, entidad_id ,cuenta_id, ultimos_4_digitos, emisor, tipo, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen, saldo) values (?, ?, ?, ?, ?, ?, ?, ?)",
-        [1, entidad,cuenta, digitos, emisor, tipo, fechaVencimientoTarjeta, fechaCierre, fechaVencimientoResumen,saldo]
-      );
-    },
-    null,
-    () => console.log("la tarjeta se guardó correctamente")
-  );
 }
+var createTarjetas =
+  "CREATE TABLE IF NOT EXISTS " +
+  " Tarjetas " +
+  " ( " +
+  "id" +
+  " INTEGER PRIMARY KEY," +
+  "user_id" +
+  " INT NOT NULL," +
+  "cuenta_id" +
+  " INT NULL," +
+  "saldo" +
+  " INT NULL," +
+  "ultimos_4_digitos" +
+  " INT NULL," +
+  "emisor" +
+  " VARCHAR(45) NULL," +
+  "tipo" +
+  " VARCHAR(45) NULL," +
+  "fecha_vencimiento_tarjeta" +
+  " DATETIME NULL," +
+  "fecha_cierre_resumen" +
+  " DATETIME NULL," +
+  "fecha_vencimiento_resumen" +
+  " DATETIME NULL" +
+  ")";
 
 export function getTarjetaDetalle(id) {
   db.transaction((tx) => {

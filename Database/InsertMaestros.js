@@ -2,14 +2,14 @@ import * as SQLite from 'expo-sqlite';
 const db = SQLite.openDatabase("db.db");  
 
 const dataMaestros = [
-"INSERT INTO Rubros (descripcion) VALUES( 'Comida');",
-"INSERT INTO Rubros (descripcion) VALUES( 'Deportes');",
-"INSERT INTO Rubros (descripcion) VALUES( 'Entretenimiento');",
-"INSERT INTO Rubros (descripcion) VALUES( 'Educación');",
-"INSERT INTO Rubros (descripcion) VALUES( 'Salidas');",
-"INSERT INTO Rubros (descripcion) VALUES( 'Servicios e Impuestos');",
-"INSERT INTO Rubros (descripcion) VALUES( 'Viáticos');",
-"INSERT INTO Rubros (descripcion) VALUES( 'Varios');",
+"INSERT INTO Rubros (descripcion) VALUES ('Comida');",
+"INSERT INTO Rubros (descripcion) VALUES ('Deportes');",
+"INSERT INTO Rubros (descripcion) VALUES ('Entretenimiento');",
+"INSERT INTO Rubros (descripcion) VALUES ('Educación');",
+"INSERT INTO Rubros (descripcion) VALUES ('Salidas');",
+"INSERT INTO Rubros (descripcion) VALUES ('Servicios e Impuestos');",
+"INSERT INTO Rubros (descripcion) VALUES ('Viáticos');",
+"INSERT INTO Rubros (descripcion) VALUES ('Varios');",
 "INSERT INTO Categorias (descripcion) VALUES( 'AFIP');",
 "INSERT INTO Categorias (descripcion) VALUES( 'Agua');",
 "INSERT INTO Categorias (descripcion) VALUES( 'Barrio Privado');",

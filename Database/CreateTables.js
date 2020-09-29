@@ -211,13 +211,15 @@ var createEgresos =
   "user_id" +
   " INT NULL," +
   "cuenta_id" +
-  " INT NULL," +
+  " VARCHAR(96)  NULL," +
   "rubro_id" +
-  " INT NULL," +
+  " VARCHAR(96) NULL," +
   "categoria_id" +
-  " INT NULL," +
+  " VARCHAR(96) NULL," +
+  "tarjeta_id" +
+  " VARCHAR(96) NULL," +
   "medio_de_pago" +
-  " VARCHAR(45) NULL," +
+  " VARCHAR(96) NULL," +
   "monto" +
   " DECIMAL NULL," +
   "cuotas_fechas" +
@@ -270,12 +272,12 @@ function createTable(query) {
 export function createAll() {
   //dropAll();
   const arrayCreates = [
+    createRubros,
     createUsuarios,
     createEntidades,
     createCuentas,
     createTarjetas,
-    createPrestamos,
-    createRubros,
+    createPrestamos,    
     createCategorias,
     createPresupuestos,
     createInversiones,
@@ -284,12 +286,9 @@ export function createAll() {
     createNotificaciones,
   ];
 
-  arrayCreates.forEach(unaQuery => 
-            createTable(unaQuery)       
-      );
+  arrayCreates.forEach((unaQuery) => createTable(unaQuery));
 
-
-   insertMaestros();
+  //insertMaestros();
 }
 
 //DROPS
@@ -324,7 +323,7 @@ function dropTable(query) {
       query,
       null,
       (_, { rows }) => {
-        console.log("Se dropeó la tabla correctamente.");
+        //console.log("Se dropeó la tabla correctamente.");
       },
       (_, error) => {
         console.log("ERROR - La tabla no pudo ser dropeada.  " + error);

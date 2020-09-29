@@ -29,7 +29,8 @@ export default function D0_Cuentas(props) {
     setDatos(datosTemporales);
   }
   useFocusEffect(() => {
-    getCuentas(successCallback);
+    const id_usuario  = 1;
+    getCuentas(id_usuario, successCallback);
   })
 
   const renderCuentas = () => {
