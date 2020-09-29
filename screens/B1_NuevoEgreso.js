@@ -7,6 +7,7 @@ import SwitchPersonalizado from "../components/SwitchPersonalizado";
 import ModalPersonalizado from "../components/ModalPersonalizado";
 import { FloatingAction } from "react-native-floating-action";
 import CamaraPersonalizada from "../components/CamaraPersonalizada";
+import { getCompletoFormateado } from "../Database/SelectTables";
 import { block } from "react-native-reanimated";
 
 const { height, width } = Dimensions.get("screen");
@@ -18,15 +19,18 @@ const arrayCuentas = [
   { key: 4, label: "Cuenta Bancaria USD" },
 ];
 
-const arrayCategorias = [
-  { key: 1, label: "Servicios" },
-  { key: 2, label: "Alquileres" },
-  { key: 3, label: "Comidas" },
-  { key: 4, label: "Farmacia" },
-];
+/*
+const arrayCategorias = getCompletoFormateado('Categorias');
+const arrayRubros = getCompletoFormateado('Rubros');
+*/
 
 export default function B1_NuevoEgreso(props) {
   const { navigation } = props.navigation;
+  
+  const [isPrimerGet, setIsPrimerGet] = useState(true);
+  
+  const [arrayCategorias, setArrayCategorias] = useState([]); 
+  const [arrayRubros, setArrayRubros] = useState([]);
 
   const [isEnabledPeriodico, setIsEnabledPeriodico] = useState(false);
   const togglePeriodico = () =>
@@ -36,17 +40,38 @@ export default function B1_NuevoEgreso(props) {
   const toggleParaSiempre = () =>
     setIsEnabledParaSiempre((previousState) => !previousState);
 
-  const [cuenta, SetCuenta] = useState("");
-  const [categoria, SetCategoria] = useState("");
+    const [cuenta, SetCuenta] = useState("");
+    const [categoria, SetCategoria] = useState("");
+  
+    function handleOnChangeCuenta(unaCuenta) {
+      SetCuenta(unaCuenta);
+    }
+  
+    function handleOnChangeCategoria(unaCategoria) {
+      SetCategoria(unaCategoria);
+    }
 
-  function handleOnChangeCuenta(unaCuenta) {
-    SetCuenta(unaCuenta);
-  }
 
-  function handleOnChangeCategoria(unaCategoria) {
-    SetCategoria(unaCategoria);
-  }
+    function successArrayCategorias (rows){
+      var datosFinales = [];
+      rows.forEach((elemento) => {
+        datosFinales.push({
+          "key": $(elemento.id),
+          "label": $(elemento.descripcion)
+        });
+      });
+      setIsPrimerGet(false);
+      setArrayCategorias(datosFinales);
+    }
 
+    function primerGet (){
+      if (isPrimerGet){
+        getCompletoFormateado('Categorias', successArrayCategorias);
+        //getCompletoFormateado('Rubros');
+      }
+      
+      return true;
+    }
   /*const actions = [
     {
       text: "Con recursividad",
@@ -60,7 +85,7 @@ export default function B1_NuevoEgreso(props) {
     }
   ];*/
 
-  function renderDropdown(lista, texto, handle) {
+    function renderDropdown(lista, texto, handle) {
     return <ModalPersonalizado 
     data={lista} 
     initValue={texto}
@@ -126,9 +151,10 @@ export default function B1_NuevoEgreso(props) {
 
   return (
     <Block>
+      {primerGet()}
       <Block center>{renderDinero()}</Block>
       <Block>
-        {renderDropdown(arrayCategorias, "Destino", handleOnChangeCategoria)}
+        {renderDropdown(arrayCategorias, "Categoría", handleOnChangeCategoria)}
         {renderInputBox("default", "Descripción")}
         {renderDropdown(arrayCuentas, "Origen de fondos", handleOnChangeCuenta)}
       </Block>

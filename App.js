@@ -23,6 +23,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Screens from './navigation/Screens';
 import { createAll } from './Database/CreateTables';
 
+
 // Before rendering any navigation stack
 import { enableScreens } from 'react-native-screens';
 enableScreens();
