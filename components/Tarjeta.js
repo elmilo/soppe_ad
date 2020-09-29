@@ -18,18 +18,21 @@ class Tarjeta extends React.Component {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2, paddingVertical: theme.SIZES.BASE }}>
               <Icon name="credit-card" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
               <Text></Text><Text></Text>
-              <Text size={20} muted={!saldoColor} color={saldoColor}>Saldo:</Text>
+              <Text size={15} muted={!saldoColor} color={saldoColor}>Saldo:</Text>
               <Text size={23} style={styles.tarjetaEntidad}>{tarjeta.saldo}</Text>
             </Block>
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Tarjeta', { tarjeta: tarjeta })}>
           <Block flex space="between" style={styles.tarjetaDescription}>
-            <Text size={20} style={styles.tarjetaEntidad}>{tarjeta.emisor}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta: {tarjeta.ultimos_4_digitos}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Vencimiento del resumen:{tarjeta.fecha_vencimiento_resumen}</Text>
-            <Text size={20} style={styles.tarjetaEntidad}>Cierre: {tarjeta.fecha_cierre_resume}</Text>
-          </Block>
+            <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.emisor}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text> 
+            <Text size={15} style={styles.tarjetaEntidad}>{tarjeta.ultimos_4_digitos}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Cierre:</Text>
+            <Text size={15} style={styles.tarjetaEntidad}color={saldoColor}>{tarjeta.fecha_cierre_resumen}</Text>
+            <Text size={15} muted={!saldoColor} color={saldoColor}>Venc del resumen:</Text>
+            <Text size={15} style={styles.tarjetaEntidad}color={saldoColor}>{tarjeta.fecha_vencimiento_resumen}</Text>
+           </Block>
         </TouchableWithoutFeedback>
       </Block>
     );
