@@ -27,7 +27,7 @@ class Presupuesto extends React.Component {
             <Text size={13} muted={!saldoColor} color={saldoColor}>Categoria:</Text>
             <Text size={15} style={styles.presupuestoRubro}>{presupuesto.categoria_id}</Text>
             <Text size={13} muted={!saldoColor} color={saldoColor}>Valor:</Text>
-            <Text size={18} style={styles.presupuestoRubro}>{presupuesto.monto_mensual}</Text>
+            <Text size={18} style={styles.presupuestoRubro}>{presupuesto.monto}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>

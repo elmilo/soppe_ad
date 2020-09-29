@@ -23,7 +23,7 @@ class Cuenta extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Cuenta', { cuenta: cuenta })}>
           <Block flex space="between" style={styles.cuentaDescription}>
-          <Text size={22} style={styles.cuentaEntidad}>{cuenta.entidad_id}</Text>
+          <Text size={18} style={styles.cuentaEntidad}>{cuenta.entidad_id}</Text>
             <Text size={15} style={styles.cuentaEntidad}>{cuenta.moneda}</Text>
             <Text size={22} style={styles.cuentaEntidad}>${cuenta.saldo}</Text>
           </Block>

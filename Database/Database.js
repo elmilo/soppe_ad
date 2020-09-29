@@ -124,7 +124,7 @@ export function getPresupuestos(successCallback) {
       "select * from Presupuestos",
       [],
       (_, { rows }) => {
-        //console.log('Success getCuentas: ', rows._array);
+        console.log('Success getpresupuesto: ', rows._array);
         successCallback(rows._array);
       },
       (_, error) => {
@@ -152,6 +152,7 @@ export function getPresupuestos(successCallback) {
 // }
 
 export function setPresupuesto(rubro, categoria, monto, descripcion){
+  console.log(rubro, categoria, monto, descripcion);
   db.transaction( tx => {
     tx.executeSql("insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual, descripcion) values (?, ?, ?, ?, ?)", [1, rubro, categoria, monto, descripcion],
     (_, { rows})  => {

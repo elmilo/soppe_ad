@@ -58,7 +58,7 @@ export default function F01_Prestamos(props) {
     setTipoPrestamo(unTipo);
   }
   function savePrestamo() {
-    setPrestamo(1,cuenta, tipo, 1,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,isEnabled);
+    setPrestamo(1,cuenta, tipoPrestamo, 1,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,isEnabled);
     navigation.navigate("Préstamos");
   }
 
