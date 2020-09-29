@@ -5,13 +5,13 @@ import { Block, Button, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import { Icon, Presupuesto, Header } from '../components';
+import { Icon, Inversion, Header } from '../components';
 import { getInversiones } from "../Database/Database";
 const { height, width } = Dimensions.get('screen');
 
 export default function E00_Inversiones(props) {
 
-  const [datos, setDatos] = React.useState(null);
+  const [datosInv, setDatos] = React.useState(null);
 
   function successCallback(rows) {
     var datosTemporales = [];
@@ -35,7 +35,7 @@ export default function E00_Inversiones(props) {
       >
         <Block flex>
           <Text></Text>
-          <Block dense>{datos}</Block>
+          <Block dense>{datosInv}</Block>
           <Button
             shadowless
             color="success"

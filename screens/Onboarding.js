@@ -6,7 +6,7 @@ const { height, width } = Dimensions.get('screen');
 
 import materialTheme from '../constants/Theme';
 import Images from '../constants/Images';
-import { createAll } from '../Database/CreateTables';
+import { createAll, dropAll } from '../Database/CreateTables';
 import { insertMaestros } from '../Database/InsertMaestros';
 
 
@@ -14,9 +14,7 @@ import { insertMaestros } from '../Database/InsertMaestros';
 
 export default class Onboarding extends React.Component {
   
-  /*componentDidMount(){
-    createAll();    
-  }*/
+  componentDidMount(){createAll();}
 
   render() {
     const { navigation } = this.props;
@@ -44,7 +42,10 @@ export default class Onboarding extends React.Component {
                 color={materialTheme.COLORS.BUTTON_COLOR}
                 onPress={() => 
                   {navigation.navigate('App');
-                  //insertMaestros();
+                  //dropAll();
+                  //createAll();
+                  //setTimeout(insertMaestros(), 120000);
+                  insertMaestros();
                   }
                 
                 }>

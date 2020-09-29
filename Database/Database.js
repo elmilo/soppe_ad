@@ -124,7 +124,7 @@ export function getPresupuestos(successCallback) {
       "select * from Presupuestos",
       [],
       (_, { rows }) => {
-        //console.log('Success getCuentas: ', rows._array);
+        console.log('Success getpresupuesto: ', rows._array);
         successCallback(rows._array);
       },
       (_, error) => {
@@ -152,6 +152,7 @@ export function getPresupuestos(successCallback) {
 // }
 
 export function setPresupuesto(rubro, categoria, monto, descripcion){
+  console.log(rubro, categoria, monto, descripcion);
   db.transaction( tx => {
     tx.executeSql("insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual, descripcion) values (?, ?, ?, ?, ?)", [1, rubro, categoria, monto, descripcion],
     (_, { rows})  => {
@@ -315,7 +316,7 @@ export function getInversiones(successCallback) {
       "select * from Inversiones",
       [],
       (_, { rows }) => {
-        //console.log('Success getCuentas: ', rows._array);
+        console.log('Success getInversiones: ', rows._array);
         successCallback(rows._array);
       },
       (_, error) => {
@@ -326,14 +327,14 @@ export function getInversiones(successCallback) {
   });
 }
 
-export function setInversion(cuenta, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion) {
+export function setInversion(tipo, fechaVencimiento, cuenta, compraMonto, descripcion) {
   console.log("SetInversion");
-  console.log(cuenta, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion);
+  console.log(tipo, fechaVencimiento, cuenta, compraMonto, descripcion);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "insert into Inversiones (cuenta_id, user_id, tipo, fecha_vencimiento, compra_monto, venta_monto, descripcion) values (?, ?, ?, ?, ?, ?, ?)",
-        [cuenta, 1, tipo, fechaVencimiento, compraMonto, ventaMonto, descripcion]
+        "insert into Inversiones (cuenta_id, user_id, tipo, fecha_vencimiento, compra_monto, descripcion, terminado) values (?, ?, ?, ?, ?, ?, ?)",
+        [cuenta, 1, tipo, fechaVencimiento, compraMonto, descripcion, 'false']
       );
     },
     null,

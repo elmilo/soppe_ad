@@ -27,10 +27,14 @@ const arrayCuentaIngreso = [
   { value: 3, label: "Mercado Pago" },
   { value: 4, label: "BBVA ARS" },
 ];
+const arrayTipo = [
+  { value: 1, label: "En Cuenta" },
+  { value: 2, label: "Un Tercero" },
+ ];
 
 
 export default function F01_Prestamos(props) {
-  
+  const [tipoPrestamo, setTipoPrestamo] = useState("");
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [proxCuota, setProxCuota] = useState(0);
@@ -50,9 +54,11 @@ export default function F01_Prestamos(props) {
   function handleOnChangePrestamo(unPrestamo) {
     SetPrestamo(unPrestamo);
   }
-
+  function handleOnChangeTipo(unTipo) {
+    setTipoPrestamo(unTipo);
+  }
   function savePrestamo() {
-    setPrestamo(cuenta, isEnabled, 1,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,1);
+    setPrestamo(1,cuenta, tipoPrestamo, 1,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,isEnabled);
     navigation.navigate("Préstamos");
   }
 
@@ -65,7 +71,15 @@ export default function F01_Prestamos(props) {
       />
     );
   }
-
+  function DropdownTipoPrestamo(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayTipo}
+        initValue="Tipo de Préstamo"
+        onSelected={handleOnChangeTipo}
+      />
+    );
+  };
  
   return (
    
@@ -81,8 +95,10 @@ export default function F01_Prestamos(props) {
           value={isEnabled}
         />
         <Block />
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de Préstamo</Text>
+        {DropdownTipoPrestamo()}
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
-        <DropdownCuenta />
+        {DropdownCuenta()}
         <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
         <Block flex>
           <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de Préstamo</Text>
@@ -114,7 +130,7 @@ export default function F01_Prestamos(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
               <Input
                 right
-                placeholder="1 al 30 del mes"
+                placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
                 onChangeText={(text) => {setProxCuota(text); }}

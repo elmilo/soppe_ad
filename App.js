@@ -21,6 +21,7 @@ import { Images, products, materialTheme } from './constants/';
 
 import { NavigationContainer } from '@react-navigation/native';
 import Screens from './navigation/Screens';
+import { dropAll } from "./Database/CreateTables";
 
 
 
@@ -91,5 +92,7 @@ export default class App extends React.Component {
 
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
+    dropAll(); //incluye createAll;
+    //createAll(); correr/sacar el comment en caso de no querer hacer drop
   };
 }

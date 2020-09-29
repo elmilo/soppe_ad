@@ -13,13 +13,6 @@ import * as SQLite from 'expo-sqlite';
 import { setTarjeta } from '../Database/Database';
 const db = SQLite.openDatabase("db.db");
 
-const arrayEntidadIngreso = [
-  { value: 1, label: "Banco Galicia" },
-  { value: 2, label: "Banco Patagonia" },
-  { value: 3, label: "Banco Provincia" },
-  { value: 4, label: "BBVA ARS" },
-];
-
 const arrayEmisorIngreso = [
   { value: 1, label: "Visa" },
   { value: 2, label: "Mastercard" },
@@ -50,9 +43,6 @@ export default function C1_Tarjetas(props) {
   const navigation = props.navigation;
   let index = 0;
        
-  function handleOnChangeEntidad(unaEntidad) {
-    SetEntidad(unaEntidad);
-  }
   function handleOnChangeEmisor(unEmisor) {
     SetEmisor(unEmisor);
   }
@@ -65,20 +55,9 @@ export default function C1_Tarjetas(props) {
 
   function saveTarjeta() {
     const user_id = 1;
-    setTarjeta(user_id, entidad,cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico,fechaVenceResumen, saldo);
+    setTarjeta(user_id, cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico,fechaVenceResumen, saldo);
     navigation.navigate("Tarjetas");
   }
-
-
-  function DropdownEntidad(props) {
-    return (
-      <ModalPersonalizado
-        data={arrayEntidadIngreso}
-        initValue="Entidad"
-        onSelected={handleOnChangeEntidad}
-      />
-    );
-  };
 
   function DropdownEmisor(props) {
     return (
@@ -116,11 +95,10 @@ export default function C1_Tarjetas(props) {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
-        
-        {DropdownEntidad()}
+        {DropdownCuentaDebito ()}
         {DropdownEmisor()}
         {DropdownTipoTarjeta()}
-        {DropdownCuentaDebito ()}
+        
 
         <Text></Text><Text></Text>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>últimos 4 digitos</Text>
@@ -144,7 +122,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
-                placeholder="Solo Números"
+                placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
                   borderRadius: 1,
@@ -159,7 +137,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
-                placeholder="Solo Números"
+                placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
                   borderRadius: 1,
@@ -174,7 +152,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
-                placeholder="Solo Números"
+                placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
                   borderRadius: 1,
@@ -185,23 +163,7 @@ export default function C1_Tarjetas(props) {
              
             </Block>
           </Block>
-          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Saldo</Text>
-          <Block flex style={styles.group}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-            <Input
-                right
-                placeholder="Solo Números"
-                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{
-                  borderRadius: 1,
-                  borderColor: materialTheme.COLORS.INPUT,
-                }}
-                onChangeText={(text) => {setSaldo(text);}}
-              />
-            </Block>
-          </Block>
-
-          <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
           <Button
               shadowless
               color="success"
