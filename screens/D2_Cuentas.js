@@ -37,7 +37,7 @@ export default function D2_Cuentas (props) {
           
 
           <Text size={18} style={styles.cuentaEntidad}>Número de Cuenta:</Text>
-          <Text size={20} style={styles.cuentaEntidad}>{cuenta_nro}</Text>
+          <Text size={20} style={styles.cuentaEntidad}>{}</Text>
           <Text size={18} style={styles.cuentaEntidad}>Número de Cbu:</Text>
           <Text size={20} style={styles.cuentaEntidad}>{}</Text>
           <Text size={18} style={styles.cuentaEntidad}>Alias:</Text>

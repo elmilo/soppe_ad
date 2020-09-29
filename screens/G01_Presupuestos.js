@@ -54,7 +54,7 @@ export default function G01_Presupuestos(props) {
   }
 
   function savePresupuesto() {
-    setPresupuesto(rubro, categoria,valorMensual,descripcion);
+    setPresupuesto(1,rubro, categoria,valorMensual,descripcion);
     navigation.navigate("Presupuestos");
   }
   

@@ -14,7 +14,7 @@ import { insertMaestros } from '../Database/InsertMaestros';
 
 export default class Onboarding extends React.Component {
   
-  //componentDidMount(){createAll();}
+  componentDidMount(){createAll();}
 
   render() {
     const { navigation } = this.props;
