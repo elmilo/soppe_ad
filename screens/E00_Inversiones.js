@@ -6,7 +6,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Presupuesto, Header } from '../components';
-import presupuestos from '../constants/presupuestos';
 import { getInversiones } from "../Database/Database";
 const { height, width } = Dimensions.get('screen');
 
@@ -16,8 +15,8 @@ export default function E00_Inversiones(props) {
 
   function successCallback(rows) {
     var datosTemporales = [];
-    rows.forEach((inversion, index) => {
-      datosTemporales.push(<Inversion inversion={inversion} key={index} horizontal />);
+    rows.forEach((inversiones, index) => {
+      datosTemporales.push(<Inversiones inversiones={inversiones} key={index} horizontal />);
     });
 
     setDatos(datosTemporales);

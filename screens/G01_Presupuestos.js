@@ -58,17 +58,11 @@ export default function G01_Presupuestos(props) {
     navigation.navigate("Presupuestos");
   }
   
-
-  function renderDropdown(lista, texto) {
-    return <ModalPersonalizado data={lista} initValue={texto} />;
-  }
-
   function DropdownCategorias(props) {
     return (
       <ModalPersonalizado
         data={arrayCategoriasIngreso}
         initValue="Seleccione una Categoria"
-        value={categoria}
         onSelected={handleOnChangeCategoria}
       />
     );
@@ -79,7 +73,6 @@ export default function G01_Presupuestos(props) {
       <ModalPersonalizado
         data={arrayRubrosIngreso}
         initValue="Seleccione un Rubro"
-        value={rubro}
         onSelected={handleOnChangeRubro}
       />
     );
@@ -139,7 +132,6 @@ export default function G01_Presupuestos(props) {
     </Block>
   )
 }
-
 
 
 

@@ -10,6 +10,7 @@ import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
 import { setInversion} from "../Database/Database";
+import * as SQLite from "expo-sqlite";
 
 const arrayTipoIngreso = [
   { value: 1, label: "Plazo Fijo" },
@@ -30,23 +31,11 @@ export default function E01_Inversiones(props) {
   const navigation = props.navigation;
   let index = 0;
 
-  const [tipo, SetTipo] = useState('');
-  const [cuentaIn, SetCuentaIn] = useState('');
-  const [vencimiento, setVencimiento] = useState(0.0);
-  const [valorInv, setValorInv] = useState(0.0);
-  const [descripcion, setDescripcion] = useState("");
- 
-
-  function renderDropdown(lista, texto) {
-    return <ModalPersonalizado data={lista} initValue={texto} />;
-  }
-
   function DropdownTipo(props) {
     return (
       <ModalPersonalizado
         data={arrayTipoIngreso}
         initValue="Seleccione un Tipo de Inversion"
-        value={tipo}
         onSelected={handleOnChangeTipo}
       />
     );
@@ -57,7 +46,6 @@ export default function E01_Inversiones(props) {
       <ModalPersonalizado
         data={arrayCuentaIngreso}
         initValue="Seleccione una Cuenta"
-        value={cuentaIn}
         onSelected={handleOnChangeCuenta}
       />
     );
@@ -76,6 +64,14 @@ export default function E01_Inversiones(props) {
     navigation.navigate("Inversiones");
   }
     
+  
+  const [tipo, SetTipo] = useState('');
+  const [cuentaIn, SetCuentaIn] = useState('');
+  const [vencimiento, setVencimiento] = useState(0.0);
+  const [valorInv, setValorInv] = useState(0.0);
+  const [descripcion, setDescripcion] = useState("");
+ 
+
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <ScrollView
