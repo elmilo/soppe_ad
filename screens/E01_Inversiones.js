@@ -67,7 +67,7 @@ export default function E01_Inversiones(props) {
   }
 
   function saveInversion() {
-    setInversion(cuentaIn,1 ,tipo, vencimiento, valorInv,1,descripcion);
+    setInversion(tipo, vencimiento, cuentaIn, valorInv,descripcion);
     navigation.navigate("Inversiones");
   }
     

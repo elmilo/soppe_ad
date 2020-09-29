@@ -41,6 +41,7 @@ export default function F01_Prestamos(props) {
   const [terceroDesc, setTerceroDesc] = useState(null);
   const [descripcion, setDescripcion] = useState("");
   const [cuotas, setCuotas] = useState(0.0);
+  const [fechaVencimiento, setFechaVencimiento] = useState(0.0);
   const [valorCuota, setValorCuota] = useState(0.0);
   const [valorPrestamo, setValorPrestamo] = useState(0.0);
   const [cuenta, SetCuenta] = useState(null);
@@ -62,7 +63,7 @@ export default function F01_Prestamos(props) {
 
 
   function savePrestamo() {
-    setPrestamo(cuenta, tipoPrestamo, terceroDesc,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,isEnabled);
+    setPrestamo(cuenta, tipoPrestamo, terceroDesc,valorCuota,  fechaVencimiento, proxCuota, cuotas, valorPrestamo,descripcion,isEnabled);
     //cambiar null por terceroDesc
     navigation.navigate("Préstamos");
   }
@@ -174,6 +175,18 @@ export default function F01_Prestamos(props) {
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
                 onChangeText={(text) => {setCuotas(text); }}
+              />
+            </Block>
+          </Block>
+          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha vencimiento </Text>
+          <Block flex style={styles.group}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="Solo números ej 25052020"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setFechaVencimiento(text); }}
               />
             </Block>
           </Block>
