@@ -84,6 +84,8 @@ var createTarjetas =
   " INT NOT NULL," +
   "cuenta_id" +
   " INT NULL," +
+  "saldo" +
+  " INT NULL," +
   "ultimos_4_digitos" +
   " INT NULL," +
   "emisor" +
