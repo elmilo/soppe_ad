@@ -100,7 +100,7 @@ function runQuery(query){
     db.transaction( tx => {
       tx.executeSql(query, null,
       (_, { rows})  => {
-      //console.log("Se ejecutó ok la query" + rows);
+ //     console.log("Se hizo 1 insert");
       },
       (_, error) => {
         console.log("ERROR - en la query " + error); 
@@ -113,4 +113,5 @@ export function insertMaestros() {
     dataMaestros.forEach(unaFila => 
            runQuery(unaFila)       
       );
+ //     console.log("terminaron todos los inserts")
 }
