@@ -20,19 +20,19 @@ const db = SQLite.openDatabase("db.db");
 //   });
 // }
 
-// export function registerUser(email, nombre, apellido, password) {
-//   console.log("registerUser");
-//   console.log(email, nombre, apellido, password);
-//   db.transaction(
-//     (tx) => {
-//       tx.executeSql(
-//         "insert into Usuarios (email, nombre, apellido, password) values (?, ?, ?, ?)",
-//         [email, nombre, apellido, password]
-//       );
-//     },
-//     null,
-//     () => console.log("el usuarios se registró correctamente")
-//   );
+ export function registerUser(email, nombre, apellido, password, idExt) {
+   console.log("registerUser");
+   console.log(email, nombre, apellido, password, idExt);
+   db.transaction(
+     (tx) => {
+       tx.executeSql(
+         "insert into Usuarios (email, nombre, apellido, password, idExt) values (?, ?, ?, ?, ?)",
+         [email, nombre, apellido, password, idExt]
+       );
+     },
+     null,
+     () => console.log("el usuarios se registró correctamente"));
+    }
 
 
 //*******CUENTAS************
