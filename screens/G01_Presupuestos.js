@@ -10,29 +10,10 @@ import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
 import { setPresupuesto} from "../Database/Database";
+import  InsertMaestros  from "../Database/InsertMaestros";
 
-const arrayCategoriasIngreso = [
-  { value: 1, label: "Luz" },
-  { value: 2, label: "Gas" },
-  { value: 3, label: "Agua" },
-  { value: 4, label: "Tv por Cable" },
-  { value: 5, label: "Internet" },
-  { value: 6, label: "Teléfono Fijo" },
-  { value: 7, label: "Teléfono Movil" },
-  { value: 8, label: "Otros" },
-];
-
-const arrayRubrosIngreso = [
-  { value: 1, label: "Servicios" },
-  { value: 2, label: "Impuestos" },
-  { value: 3, label: "Salud" },
-  { value: 4, label: "Viaticos" },
-  { value: 5, label: "Comidas" },
-  { value: 6, label: "Entretenimiento" },
-  { value: 7, label: "Vacaciones" },
-  { value: 8, label: "Otros" },
-
-];
+const arrayCategorias = InsertMaestros.CATEGORIAS;
+const arrayRubros     = InsertMaestros.RUBROS;
 
 
 export default function G01_Presupuestos(props) {
@@ -61,7 +42,7 @@ export default function G01_Presupuestos(props) {
   function DropdownCategorias(props) {
     return (
       <ModalPersonalizado
-        data={arrayCategoriasIngreso}
+        data={arrayCategorias}
         initValue="Seleccione una Categoria"
         onSelected={handleOnChangeCategoria}
       />
@@ -71,7 +52,7 @@ export default function G01_Presupuestos(props) {
   function DropdownRubros(props) {
     return (
       <ModalPersonalizado
-        data={arrayRubrosIngreso}
+        data={arrayRubros}
         initValue="Seleccione un Rubro"
         onSelected={handleOnChangeRubro}
       />

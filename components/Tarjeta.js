@@ -29,9 +29,9 @@ class Tarjeta extends React.Component {
             <Text size={15} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text> 
             <Text size={15} style={styles.tarjetaEntidad}>{tarjeta.ultimos_4_digitos}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Cierre:</Text>
-            <Text size={15} style={styles.tarjetaEntidad}color={saldoColor}>{tarjeta.fecha_cierre_resumen}</Text>
+            <Text size={15} style={styles.tarjetaEntidad}>{tarjeta.fecha_cierre_resumen}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Venc del resumen:</Text>
-            <Text size={15} style={styles.tarjetaEntidad}color={saldoColor}>{tarjeta.fecha_vencimiento_resumen}</Text>
+            <Text size={15} style={styles.tarjetaEntidad}>{tarjeta.fecha_vencimiento_resumen}</Text>
            </Block>
         </TouchableWithoutFeedback>
       </Block>

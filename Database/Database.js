@@ -20,19 +20,19 @@ const db = SQLite.openDatabase("db2.db");
 //   });
 // }
 
-// export function registerUser(email, nombre, apellido, password) {
-//   console.log("registerUser");
-//   console.log(email, nombre, apellido, password);
-//   db.transaction(
-//     (tx) => {
-//       tx.executeSql(
-//         "insert into Usuarios (email, nombre, apellido, password) values (?, ?, ?, ?)",
-//         [email, nombre, apellido, password]
-//       );
-//     },
-//     null,
-//     () => console.log("el usuarios se registró correctamente")
-//   );
+ export function registerUser(email, nombre, apellido, password, idExt) {
+   console.log("registerUser");
+   console.log(email, nombre, apellido, password, idExt);
+   db.transaction(
+     (tx) => {
+       tx.executeSql(
+         "insert into Usuarios (email, nombre, apellido, password, idExt) values (?, ?, ?, ?, ?)",
+         [email, nombre, apellido, password, idExt]
+       );
+     },
+     null,
+     () => console.log("el usuarios se registró correctamente"));
+    }
 
 
 //*******CUENTAS************
@@ -234,10 +234,10 @@ export function deletePresupuesto(id){
   export function getTarjetas(id_usuario, successCallback) {
     db.transaction((tx) => {
       tx.executeSql(
-        "select id, emisor, ultimos_4_digitos from Tarjetas where user_id = ?",
+        "select id, emisor, ultimos_4_digitos, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen from Tarjetas where user_id = ?",
         [id_usuario],
         (_, { rows }) => {
-          //console.log('Success getCuentas: ', rows._array);
+          //console.log('Success getCuentas: ', rows._array);;;
           successCallback(rows._array);
         },
         (_, error) => {
