@@ -27,7 +27,7 @@ export default function A0_Login (props) {
   }
 
   function validateLogin(){
-    return login(username, password).then(res => doLogin(res));
+    return login(username, password).then(valid => doLogin(valid));
   }
 
   function doLogin(valid){
