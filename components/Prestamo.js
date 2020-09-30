@@ -19,13 +19,13 @@ class Prestamo extends React.Component {
               <Icon name="leaf" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
               <Text></Text><Text></Text><Text></Text>
               <Text size={15} muted={!saldoColor} color={saldoColor}>Prestamo:</Text>
-              <Text size={19} style={styles.prestamoEntidad}>{prestamo.tipo}</Text>
+              <Text size={19} style={styles.prestamoEntidad}>{prestamo.tomado}</Text>
             </Block>
           </Block>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })}>
           <Block flex space="between" style={styles.prestamoDescription}>
-            <Text size={20} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+            <Text size={14} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
             <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>

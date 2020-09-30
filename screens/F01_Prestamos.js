@@ -63,7 +63,7 @@ export default function F01_Prestamos(props) {
 
 
   function savePrestamo() {
-    setPrestamo(cuenta, tipoPrestamo, terceroDesc,valorCuota,  fechaVencimiento, proxCuota, cuotas, valorPrestamo,descripcion,isEnabled);
+    setPrestamo(cuenta, isEnabled, terceroDesc, valorCuota, fechaVencimiento , cuotas,valorPrestamo, descripcion, proxCuota,tipoPrestamo, );
     //cambiar null por terceroDesc
     navigation.navigate("Préstamos");
   }
