@@ -66,7 +66,7 @@ export default function D1_Cuentas(props) {
   }
 
   function saveAccount() {
-    setCuentaUnica(cbu, 1 ,cuenta, moneda, accNumber, alias, saldo);
+    setCuentaUnica(cbu,1,cuenta, moneda, accNumber, alias, saldo);
     navigation.navigate("Cuentas");
   }
 
