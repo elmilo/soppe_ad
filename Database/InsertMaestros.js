@@ -44,6 +44,7 @@ export default {
     { value: 242, label: "Otro" }
   ],
   ENTIDADES:  [
+    { value: 543, label: "EFECTIVO" },
     { value: 243, label: "BANCO BBVA" },
     { value: 244, label: "BANCO BICA " },
     { value: 245, label: "BANCO COINAG " },
@@ -95,5 +96,19 @@ export default {
     { value: 291, label: "JPMORGAN CHASE BANK" },
     { value: 292, label: "WILOBANK " },
     { value: 293, label: "Otro" }
+  ],
+  TIPOSINGRESO: [
+    { value: 981, label: "Sueldo" },
+    { value: 982, label: "Ventas" },
+    { value: 983, label: "Otros conceptos" },
+    { value: 984, label: "Aguinaldo" },
+    { value: 985, label: "Facturaciones particulares" },
+    { value: 986, label: "Rentas" },
+    { value: 987, label: "Otros" },
+  ],
+  MONEDAS: [
+    { value: 5671, label: "ARS" },
+    { value: 5672, label: "USD" },
+    { value: 5673, label: "EUR" },
   ]
 };

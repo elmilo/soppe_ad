@@ -9,7 +9,7 @@ import { FloatingAction } from "react-native-floating-action";
 import CamaraPersonalizada from "../components/CamaraPersonalizada";
 import { getCuentas, getTarjetas } from "../Database/Database";
 
-import { setEgreso, getEgresos } from "../Database/DatabaseEgresos";
+import { setEgreso, getEgresos } from "../Database/Egresos";
 import  InsertMaestros  from "../Database/InsertMaestros";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 

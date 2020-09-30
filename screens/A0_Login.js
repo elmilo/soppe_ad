@@ -42,12 +42,12 @@ export default function A0_Login (props) {
     getCompletoFormateado("Usuarios", getUsersCallback);
     return (
       <Block flex space="evenly" style={styles.container}>
-        <Text>Super login</Text>
         <Block style={styles.padded}>
           <Input
             value={username}
             style={styles.textInput}
-            placeholder="Username"
+            type ='email-address'
+            placeholder="Dirección de email"
             autoFocus={true}
             onChangeText={(user) => setUsername(user)}
           />

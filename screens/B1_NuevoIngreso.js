@@ -1,67 +1,83 @@
-import React, {useState} from 'react';
-import { StyleSheet, Dimensions, Platform, View } from "react-native";
-import { Block, Input, Text, theme } from "galio-framework";
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Dimensions, Platform, View ,ScrollView } from "react-native";
+import { Block, Input, Text, theme , Button} from "galio-framework";
 import { materialTheme } from "../constants/";
 import { Icon } from "../components/";
 import SwitchPersonalizado from "../components/SwitchPersonalizado";
 import ModalPersonalizado from '../components/ModalPersonalizado';
-import { FloatingAction } from "react-native-floating-action";
-
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import  InsertMaestros  from "../Database/InsertMaestros";
+import { getCuentas } from "../Database/Database";
+import { setIngreso, getIngresos } from "../Database/Ingresos";
 
 const { height, width } = Dimensions.get("screen");
 
-
-const arrayCuentas = [
-  { value: 1, label: "Cuenta Bancaria ARS" },
-  { value: 2, label: "Efectivo" },
-  { value: 3, label: "Cuenta Bancaria ARS 2" },
-  { value: 4, label: "Cuenta Bancaria USD" },
-];
-
-const arrayCategoriasIngreso = [
-  { value: 1, label: "Sueldo" },
-  { value: 2, label: "Venta" },
-  { value: 3, label: "Otros conceptos" },
-  { value: 4, label: "Aguinaldo" },
-  { value: 5, label: "Rentas" },
-];
+/*
+  •
+  La aplicación permite que el usuario registre sus ingresos.
+  •
+  Los ingresos pueden ser periódicos: alquileres de propiedades, sueldos en relación de
+  dependencia, facturación autónomo, etc.
+  •
+  Ingresos extraordinarios
+  •
+  La aplicación debe permitir el destino de los ingresos: cuentas bancarias, efectivo. En
+  el caso de cuentas bancarias actualizaran el saldo de las mismas
+*/
+const arrayTiposIngreso = InsertMaestros.TIPOSINGRESO;
 
 export default function B1_NuevoIngreso(props){
-  const { navigation } = props.navigation;
+  const [user_id, setUser_id]               = useState(1);
+  const [cuenta, setCuenta]                 = useState("");
+  const [tipoIngreso, setTipoIngreso]       = useState(null);
+  const [descripcion, setDescripcion]       = useState("");
+  const [monto, setMonto]                   = useState("");
   
-  const [isEnabled, setIsEnabled] = useState(false);
-  const togglePeriodico = () => setIsEnabled(previousState => !previousState);
+  const [cuotas_fechas, setCuotas_fechas]   = useState("");
+  const [cuotas_restantes, setCuotas_restantes] = useState(1024);
+  const [auto_manual, setAuto_manual]       = useState("manual");
+ 
   
-  const [cuenta, SetCuenta] = useState('');
-  const [categoria, SetCategoria] = useState('');
+  const { navigation } = props;
+
+
+  const [arrayCuentas, setArrayCuentas] = useState([]);
+
+
+  const [isEnabledPeriodico, setIsEnabledPeriodico] = useState(false);
+  const togglePeriodico = () =>
+    setIsEnabledPeriodico((previousState) => !previousState);
 
 
   function handleOnChangeCuenta (unaCuenta){
     console.log('handleOnChangeCuenta: ' + unaCuenta);
-    SetCuenta(unaCuenta);
+    setCuenta(unaCuenta);
   }
 
-  function handleOnChangeCategoria (unaCategoria){
-    console.log('handleOnChangeCategoria: ' + unaCategoria);
-    SetCategoria(unaCategoria);
+  function handleOnChangeTipoIngreso (elemento){
+    console.log('handleOnChangeTipoIngreso: ' + elemento);
+    setTipoIngreso(elemento);
   }
 
-  const actions = [
-    {
-      text: "Con recursividad",
-      name: "bt_accessibility",
-      position: 1,
-    },
-    {
-      text: "Guardar",
-      name: "bt_language",
-      position: 1,
-    },
-  ];
+  /*********************************************************** */
+  /*********************************************************** */
+  /*********************************************************** */
+  useEffect(() => {
+    getCuentas(user_id, successArrayCuentas);
+  }, []);
+  
 
- 
+  function successArrayCuentas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id + elemento.nro_cuenta ,
+        label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
+      });
+    });
 
-
+    setArrayCuentas(datosFinales);
+  }
 
   function DropdownCuentas (){
     return (
@@ -73,17 +89,84 @@ export default function B1_NuevoIngreso(props){
     );
   };
 
-  function DropdownCategorias (){
+  function DropdownTiposIngreso (){
     return (
       <ModalPersonalizado
-      data={arrayCategoriasIngreso}
-      initValue="Categoría"
-      onSelected={handleOnChangeCategoria}
+      data={arrayTiposIngreso}
+      initValue="Tipo de Ingreso"
+      onSelected={handleOnChangeTipoIngreso}
       />
     );
   };
+/********************************************************************* */
+const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
-  function Dinero (){
+const showDatePicker = () => {
+  setDatePickerVisibility(true);
+};
+
+const hideDatePicker = () => {
+  setDatePickerVisibility(false);
+};
+
+const handleConfirm = (date) => {
+  
+  function formatFecha(fecha) {
+    var d = new Date(fecha),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('');
+}
+
+  setFechaDatePicker (date);
+  setCuotas_fechas (formatFecha(date));
+  hideDatePicker();
+};
+
+
+  const [fechaDatePicker, setFechaDatePicker] = useState(new Date())
+ 
+  function renderDatePicker() {
+    return (
+      <Block center>
+        <Button shadowless color="success"onPress={showDatePicker}>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+          <Text>Elegir la fecha de acreditación</Text>
+        </Button>
+      </Block>
+    )
+}
+
+/********************************************************************* */
+function saveIngreso() {
+
+  setIngreso( user_id,
+      cuenta, 
+      tipoIngreso, 
+      monto, 
+      cuotas_fechas, 
+      cuotas_restantes, 
+      descripcion,
+      auto_manual);
+    
+    getIngresos();
+
+  }
+
+
+  function renderDinero() {
     return (
       <Block style={{ height: 0.1 * height }}>
         <Input
@@ -93,9 +176,10 @@ export default function B1_NuevoIngreso(props){
           placeholder="0.00"
           fontSize={40}
           placeholderTextColor={materialTheme.COLORS.DEFAULT}
+          onChangeText={(texto) => {setMonto(texto);}}
           iconContent={
             <Icon
-              size={50}
+              size={45}
               color={theme.COLORS.ICON}
               name="attach-money"
               family="MaterialIcons"
@@ -111,71 +195,68 @@ export default function B1_NuevoIngreso(props){
         />
       </Block>
     );
-  };
+  }
 
-  function InputDia (){
+  function renderInputBox(tipo, titulo, callback) {
     return (
       <Block>
         <Input
           borderless
           bgColor="#FFFFFFFF"
-          type="numeric"
-          placeholder="Cuotas restantes"
+          type={tipo}
+          placeholder={titulo}
           fontSize={16}
           placeholderTextColor={materialTheme.COLORS.DEFAULT}
           style={{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT }}
+          onChangeText={(texto) => {callback(texto);}}          
         />
       </Block>
     );
-  };
+  }
 
-  function CuotasRestantes (){
-    return (
-      <Block>
-        <Input
-          borderless
-          bgColor="#FFFFFFFF"
-          type="default"
-          placeholder="Descripción"
-          fontSize={16}
-          placeholderTextColor={materialTheme.COLORS.DEFAULT}
-          style={{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT }}
-        />
-      </Block>
-    );
-  };
+
 
 return (
+  <ScrollView showsVerticalScrollIndicator={false}>
       <Block>
         <Block center>
-        {Dinero()}
+        {renderDinero()}
         </Block>
         <Block>
-        {DropdownCategorias()}
+        {renderInputBox('default', 'Descripción', setDescripcion)}
+        {DropdownTiposIngreso()}
+        {DropdownCuentas()}
+
         <SwitchPersonalizado
-        titulo={"Periódico"}
-        initialValue={isEnabled}
+        titulo={"Periódico mensual"}
+        initialValue={isEnabledPeriodico}
         toggle={togglePeriodico}
       />
-          {InputDia()}
-          {DropdownCuentas()}
+        {isEnabledPeriodico ? renderDatePicker() : null}
+        {isEnabledPeriodico ? 
+        renderInputBox("numeric", "Veces restantes", setCuotas_restantes)
+         : null}
         </Block>
-        <Block
-          style={{ marginTop: 0.2 * height, marginBottom: theme.SIZES.BASE }}
-        />
 
+        <Block>
       </Block>
+      <Button
+              shadowless
+              color="success"
+              style={[styles.button, styles.shadow]}
+              onPress={() => {
+                saveIngreso();
+                navigation.navigate('Inicio', {});
+                }
+              }
+        >
+              +
+            </Button>
+    </Block>
+    </ScrollView>
     );
 }
 
-/*        <FloatingAction
-          actions={actions}
-          color={theme.COLORS.DEFAULT}
-          onPressItem={(name) => {
-            console.log("selected button: " + name);
-          }}
-        />
-        */
 const styles = StyleSheet.create({
   components: {
     paddingVertical: theme.SIZES.BASE,

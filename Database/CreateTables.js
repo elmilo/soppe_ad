@@ -177,30 +177,18 @@ var createIngresos =
   "CREATE TABLE IF NOT EXISTS " +
   " Ingresos " +
   " ( " +
-  "id" +
-  " INTEGER PRIMARY KEY," +
-  "user_id" +
-  " INT NULL," +
-  "cuenta_id" +
-  " INT NULL," +
-  "rubro_id" +
-  " INT NULL," +
-  "categoria_id" +
-  " INT NULL," +
-  "monto" +
-  " DECIMAL NULL," +
-  "cuotas_fechas" +
-  " INT NULL," +
-  "id_externa" +
-  " INT NULL," +
-  "tabla_externa" +
-  " VARCHAR(45) NULL," +
-  "descripcion" +
-  " VARCHAR(128) NULL," +
-  "auto_manual" +
-  " VARCHAR(45) NULL," +
-  "add_dttm" +
-  " DATETIME NULL" +
+  "id" + " INTEGER PRIMARY KEY," +
+  "user_id" + " INT NULL," +
+  "cuenta_id" +  " VARCHAR(96)  NULL," +
+  "tipo_ingreso" +  " VARCHAR(96)  NULL," +
+  "cuotas_restantes" +   " INT NULL, " +
+  "monto" +  " DECIMAL NULL," +
+  "cuotas_fechas" +  " INT NULL," +
+  "id_externa" +   " INT NULL," +
+  "tabla_externa" +  " VARCHAR(45) NULL," +
+  "descripcion" +  " VARCHAR(128) NULL," +
+  "auto_manual" +   " VARCHAR(45) NULL," +
+  "add_dttm" +  " DATETIME NULL" +
   ")";
 
 var createEgresos =
@@ -347,8 +335,11 @@ export function dropAll() {
     dropNotificaciones,
   ];
 
-  arrayDrop.forEach((unaQuery) => dropTable(unaQuery));
+  //arrayDrop.forEach((unaQuery) => dropTable(unaQuery));
+  //createAll();
 
-  createAll();
+  //Crear solamente una
+  dropTable(dropIngresos)
+  createTable(createIngresos);
 
 }

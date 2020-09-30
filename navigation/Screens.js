@@ -114,60 +114,6 @@ function StackTarjetas(props) {
 }
 
 /************************************************************************** */
-function StackLogin(props) {
-  return (
-    <Stack.Navigator
-      initialRouteName="Login"
-      mode="card"
-      headerMode="screen"
-    >
-      <Stack.Screen
-        name="Login"
-        component={A0_Login}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title="Login"
-              scene={scene}
-              navigation={navigation}
-            />
-          )
-        },
-        {headerTransparent: true}
-      }
-      />
-    </Stack.Navigator>
-  );
-}
-
-/************************************************************************** */
-function StackRegistrarse(props) {
-  return (
-    <Stack.Navigator
-      initialRouteName="Registrarse"
-      mode="card"
-      headerMode="screen"
-    >
-      <Stack.Screen
-        name="Registrarse"
-        component={A1_Registrarse}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title="Registrarse"
-              scene={scene}
-              navigation={navigation}
-            />
-          )
-        },
-        {headerTransparent: true}
-      }
-      />
-    </Stack.Navigator>
-  );
-}
-
-/************************************************************************** */
 function StackCuentas(props) {
   return (
     <Stack.Navigator initialRouteName="Cuentas" mode="card" headerMode="screen">
@@ -618,6 +564,60 @@ function StackNuevoIngreso(props) {
 }
 
 
+/************************************************************************** */
+function StackLogin(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="Login"
+      mode="card"
+      headerMode="screen"
+    >
+      <Stack.Screen
+        name="Login"
+        component={A0_Login}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Login"
+              scene={scene}
+              navigation={navigation}
+            />
+          )
+        },
+        {headerTransparent: true}
+      }
+      />
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
+function StackRegistrarse(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="Registrarse"
+      mode="card"
+      headerMode="screen"
+    >
+      <Stack.Screen
+        name="Registrarse"
+        component={A1_Registrarse}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Registrarse"
+              scene={scene}
+              navigation={navigation}
+            />
+          )
+        },
+        {headerTransparent: true}
+      }
+      />
+    </Stack.Navigator>
+  );
+}
+
 
 function ComponentsStack(props) {
   return (
@@ -668,9 +668,6 @@ function AppStack(props) {
       initialRouteName="Login"
     >
  
-
-
-
       <Drawer.Screen
         name="Tarjetas"
         component={StackTarjetas}
@@ -805,38 +802,7 @@ function AppStack(props) {
         }}
       />
      
-      <Drawer.Screen
-        name="Login"
-        component={StackLogin}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="circle-10"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-        }}
-      />
-
-  <Drawer.Screen
-        name="Registrarse"
-        component={StackRegistrarse}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="circle-10"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-        }}
-      />
-
-
-    <Drawer.Screen
+     <Drawer.Screen
         name="Inicio"
         component={StackInicio}
         options={{
@@ -1012,7 +978,36 @@ function AppStack(props) {
           ),
         }}
       />
+     <Drawer.Screen
+        name="Login"
+        component={StackLogin}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />
 
+  <Drawer.Screen
+        name="Registrarse"
+        component={StackRegistrarse}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />
+      
       <Drawer.Screen
         name="Sign In"
         component={ProScreen}

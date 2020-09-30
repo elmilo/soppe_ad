@@ -16,20 +16,15 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header, Select } from "../components";
 import ModalSelector from "react-native-modal-selector";
 import ModalPersonalizado from "../components/ModalPersonalizado";
-import { getCompletoFormateado } from "../Database/SelectTables";
+import  InsertMaestros  from "../Database/InsertMaestros";
 import { setCuentaUnica } from "../Database/Database";
 import products from "../constants/products";
 import * as SQLite from "expo-sqlite";
 
-const arrayMonedaIngreso = [
-  { value: 1, label: "Pesos Argentinos" },
-  { value: 2, label: "Dolares" },
-  { value: 3, label: "Euros" },
-  { value: 4, label: "CNY" },
-];
+const arrayEntidades      = InsertMaestros.ENTIDADES;
+const arrayMonedaIngreso  = InsertMaestros.MONEDAS;
 
 export default function D1_Cuentas(props) {
-  const [arrayEntidades, setArrayEntidades] = useState([]); 
   const [accNumber, setAccNumber] = useState("");
   const [cbu, setCbu] = useState(0);
   const [alias, setAlias] = useState("");
@@ -48,23 +43,6 @@ export default function D1_Cuentas(props) {
   }
   
   
-  useEffect(() => {
-    getCompletoFormateado('Entidades', successArrayEntidades);
-  }, []); // <-- empty array means 'run once'
-
-  
-  function successArrayEntidades (rows){
-    var datosFinales = [];
-    rows.forEach((elemento, key)  => {
-      datosFinales.push({
-        "key": elemento.id + elemento.descripcion,
-        "label": elemento.descripcion
-      });
-    });
-    
-    setArrayEntidades(datosFinales);
-  }
-
   function saveAccount() {
     setCuentaUnica(cbu,1,cuenta, moneda, accNumber, alias, saldo);
     navigation.navigate("Cuentas");
@@ -74,7 +52,7 @@ export default function D1_Cuentas(props) {
     return (
       <ModalPersonalizado
         data={arrayEntidades}
-        initValue="Seleccione una Cuenta"
+        initValue="Seleccione una entidad"
         onSelected={handleOnChangeEntidad}
       />
     );
@@ -90,6 +68,121 @@ export default function D1_Cuentas(props) {
     );
   }
 
+  function renderDebajoCuentas (){
+
+  if (cuenta != 'EFECTIVO'){
+    return(
+      <Block flex>
+      <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>
+        Número de Cuenta
+      </Text>
+      <Block flex style={styles.group}>
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+          <Input
+            right
+            placeholder="Solo Números"
+            placeholderTextColor={materialTheme.COLORS.DEFAULT}
+            style={{
+              borderRadius: 1,
+              borderColor: materialTheme.COLORS.INPUT,
+            }}
+            onChangeText={(text) => {setAccNumber(text);}}
+          />
+        </Block>
+      </Block>
+
+      <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>
+        Número de Cbu
+      </Text>
+      <Block flex style={styles.group}>
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+          <Input
+            right
+            placeholder="Solo Números"
+            placeholderTextColor={materialTheme.COLORS.DEFAULT}
+            style={{
+              borderRadius: 1,
+              borderColor: materialTheme.COLORS.INPUT,
+            }}
+            onChangeText={(text) => {
+              setCbu(text);
+            }}
+          />
+        </Block>
+      </Block>
+
+      <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>
+        Alias
+      </Text>
+      <Block flex style={styles.group}>
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+          <Input
+            right
+            placeholder=""
+            placeholderTextColor={materialTheme.COLORS.DEFAULT}
+            style={{
+              borderRadius: 1,
+              borderColor: materialTheme.COLORS.INPUT,
+            }}
+            onChangeText={(text) => {
+              setAlias(text);
+            }}
+          />
+        </Block>
+      </Block>
+
+      <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>
+        Saldo
+      </Text>
+      <Block flex style={styles.group}>
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+          <Input
+            right
+            placeholder="$"
+            placeholderTextColor={materialTheme.COLORS.DEFAULT}
+            style={{
+              borderRadius: 1,
+              borderColor: materialTheme.COLORS.INPUT,
+            }}
+            onChangeText={(text) => {
+              setSaldo(text);
+            }}
+          />
+        </Block>
+      </Block>
+      <Block
+        style={{
+          paddingHorizontal: theme.SIZES.BASE,
+          paddingVertical: theme.SIZES.BASE,
+        }}
+      >
+
+      </Block>
+      <Text></Text>
+    </Block>
+    )
+  }
+    
+  return(
+      <Block flex style={styles.group}>
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+          <Input
+            right
+            placeholder="Descripción cuenta"
+            placeholderTextColor={materialTheme.COLORS.DEFAULT}
+            style={{
+              borderRadius: 1,
+              borderColor: materialTheme.COLORS.INPUT,
+            }}
+            onChangeText={(text) => {setAccNumber(text);}}
+          />
+        </Block></Block>)
+
+  }
+  
+  
+
+
   return (
     <Block
       style={{
@@ -101,114 +194,21 @@ export default function D1_Cuentas(props) {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}
       >
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>
-          Entidad
-        </Text>
         {DropdownCuenta()}
 
         <Block />
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>
-          Moneda
-        </Text>
         {DropdownMoneda()}
         <Block />
-        <Text></Text>
+        {renderDebajoCuentas()}
 
-        <Block flex>
-          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>
-            Número de Cuenta
-          </Text>
-          <Block flex style={styles.group}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
-                right
-                placeholder="Solo Números"
-                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{
-                  borderRadius: 1,
-                  borderColor: materialTheme.COLORS.INPUT,
-                }}
-                onChangeText={(text) => {setAccNumber(text);}}
-              />
-            </Block>
-          </Block>
-
-          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>
-            Número de Cbu
-          </Text>
-          <Block flex style={styles.group}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
-                right
-                placeholder="Solo Números"
-                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{
-                  borderRadius: 1,
-                  borderColor: materialTheme.COLORS.INPUT,
-                }}
-                onChangeText={(text) => {
-                  setCbu(text);
-                }}
-              />
-            </Block>
-          </Block>
-
-          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>
-            Alias
-          </Text>
-          <Block flex style={styles.group}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
-                right
-                placeholder=""
-                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{
-                  borderRadius: 1,
-                  borderColor: materialTheme.COLORS.INPUT,
-                }}
-                onChangeText={(text) => {
-                  setAlias(text);
-                }}
-              />
-            </Block>
-          </Block>
-
-          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>
-            Saldo
-          </Text>
-          <Block flex style={styles.group}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
-                right
-                placeholder="$"
-                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{
-                  borderRadius: 1,
-                  borderColor: materialTheme.COLORS.INPUT,
-                }}
-                onChangeText={(text) => {
-                  setSaldo(text);
-                }}
-              />
-            </Block>
-          </Block>
-          <Block
-            style={{
-              paddingHorizontal: theme.SIZES.BASE,
-              paddingVertical: theme.SIZES.BASE,
-            }}
-          >
-            <Button
-              shadowless
-              color="success"
-              style={[styles.button, styles.shadow]}
-              onPress={() => {saveAccount();}}
-            >
-              +
-            </Button>
-          </Block>
-          <Text></Text>
-        </Block>
+        <Button
+          shadowless
+          color="success"
+          style={[styles.button, styles.shadow]}
+          onPress={() => {saveAccount();}}
+        >
+          +
+        </Button>
       </ScrollView>
     </Block>
   );
