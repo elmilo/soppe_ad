@@ -100,6 +100,40 @@ export function getCuentaDetalle(id) {
   });
 }
 
+export function getSaldoIngresosCuenta(cuenta) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select sum(monto) from Ingresos where cuenta_id = ? group by cuenta_id",
+      [cuenta],
+      (_, { rows }) => {
+        console.log('Success getSaldoTarjetaEstePeriodo: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function getSaldoEgresosCuenta(cuenta) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select sum(monto) from Egresos where cuenta_id = ? group by cuenta_id",
+      [cuenta],
+      (_, { rows }) => {
+        console.log('Success getSaldoTarjetaEstePeriodo: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
 export function deleteCuenta(id) {
   console.log("deleteCuenta");
   console.log(id);
@@ -181,20 +215,18 @@ export function getPresupuestoDetalle(id) {
   });
 }
 
-export function deletePresupuesto(id) {
+export function deletePresupuesto(id){
   console.log("deletePresupuesto");
-  console.log(cbu);
-  db.transaction(
-    (tx) => {
-      tx.executeSql(
-        "delete from Presupuestos where id = ?",
-        [id]
-      );
+  db.transaction( tx => {
+    tx.executeSql("delete from Presupuestos where id = ?", [id],
+    (_, { rows})  => {
+    console.log("El presupuesto ha sido borrado.")
     },
-    null,
-    () => console.log("el presupuesto se borró correctamente")
-  );
-}
+    (_, error) => {
+      console.log("ERROR - La tabla no pudo ser insertada.  " + error); 
+    })
+  })
+};
 
 //*******TARJETAS************
 
@@ -488,20 +520,224 @@ export function deletePrestamo(id) {
 }
 
 //*******INGRESOS************
+//date time NOW DATETIME('now','localtime')
 
-//MANUALES
+export function getIngresosEgresos(successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select monto, descripcion, add_dttm from Ingresos union select (monto*-1), descripcion, add_dttm from Egresos order by add_dttm desc",
+      [],
+      (_, { rows }) => {
+        console.log('Success getIngresosEgresos: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+//getIngresosEgresosEsteAnio
+
+export function getIngresos(successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Ingresos order by add_dttm desc",
+      [],
+      (_, { rows }) => {
+        console.log('Success getIngresos: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function getIngresosCuenta(cuenta) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Ingresos where cuenta_id = ?",
+      [cuenta],
+      (_, { rows }) => {
+        console.log('Success getIngresos: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function getIngresosCuentaFecha(cuenta, fechaDesde, fechaHasta) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Ingresos where cuenta_id = ? and add_dttm between ? and ?",
+      [cuenta, DATE(substr(fechaDesde,5,8)||substr(fechaDesde,3,4)||substr(fechaDesde,1,2)), DATE(substr(fechaHasta,5,8)||substr(fechaHasta,3,4)||substr(fechaHasta,1,2))],
+      (_, { rows }) => {
+        console.log('Success getIngresos: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+// SETS MANUALES
+
+export function setIngreso(cuenta, rubro, categoria, monto, fechaVencimiento, cuotasRestantes, descripcion) {
+  console.log("setIngreso");
+  console.log(cuenta, rubro, categoria, monto, fechaVencimiento, cuotasRestantes, descripcion);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "insert into Ingresos (user_id, cuenta_id, rubro_id, categoria_id, monto, cuotas_fechas, cuotas_restantes, descripcion, auto_manual, add_dttm) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [1, cuenta, rubro, categoria, monto, fechaVencimiento, cuotasRestantes, descripcion, 'manual',DATETIME('now','localtime')]
+      );
+    },
+    null,
+    () => console.log("el Ingreso se guardó correctamente")
+  );
+}
 
 
+//SETS AUTOMATICOS
 
-//AUTOMATICOS
 
-//al crear nueva cuenta
+//ingresoInicialNuevaCuenta
         //AGREGAR insert into Ingreso (user_id, cuenta_id, rubro_id, categoria_id, monto, cuotas_fechas, id_externa, tabla_externa, descripcion, auto_manual, add_dttm) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         // [user_id, cuenta_id, null, null, ?=saldo, null, cuenta_id, 'Cuentas', 'Saldo Inicial de Cuenta', 'auto', sysdate]
 
+//ingresoCuotaPrestamoOtorgado
+
+//ingresoMontoPrestamoTomado
+
+//ingresoVentaInversion
+
+//ingresoCuotaIngresoPeriodico
+
 
 //*******EGRESOS************
+export function getEgresos(successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Egresos order by add_dttm desc",
+      [],
+      (_, { rows }) => {
+        console.log('Success getIngresos: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
 
+export function getEgresosTarjeta(tarjeta) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Egresos where tarjeta_id = ?",
+      [tarjeta],
+      (_, { rows }) => {
+        console.log('Success getIngresos: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+//31012020
+export function getEgresosTarjetaEstePeriodo(tarjeta, fechaCierre) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Egresos where tarjeta_id = ? and add_dttm between ? and ? ",
+      [tarjeta, DATE(DATE(substr(fechaCierre,5,8)||substr(fechaCierre,3,4)||substr(fechaCierre,1,2)),'-1 month'), DATE(substr(fechaCierre,5,8)||substr(fechaCierre,3,4)||substr(fechaCierre,1,2))],
+      (_, { rows }) => {
+        console.log('Success getEgresosTarjetaEstePeriodo: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function getSaldoTarjetaEstePeriodo(tarjeta) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select sum(monto) from Egresos where tarjeta_id = ? and substr(add_dttm, 6, 7) = substr(date('now'), 6, 7) group by tarjeta_id",
+      [tarjeta],
+      (_, { rows }) => {
+        console.log('Success getSaldoTarjetaEstePeriodo: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+export function getEgresosCuentaFecha(cuenta, fechaDesde, fechaHasta) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Egresos where cuenta_id = ? and add_dttm between ? and ?",
+      [cuenta, fechaDesde, fechaHasta],
+      (_, { rows }) => {
+        console.log('Success getEgresosCuentaFecha: ', rows._array);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        errorCallback(error);
+      }
+    );
+  });
+}
+
+
+//SETS MANUALES
+export function setEgreso(cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion) {
+  console.log("setEgreso");
+  console.log(cuenta, rubro, categoria, monto, fechaVencimiento, cuotasRestantes, descripcion);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "insert into Egresos (user_id, cuenta_id, rubro_id, categoria_id, tarjeta_id, medio_de_pago, monto, cuotas_fechas, cuotas_restantes, descripcion, auto_manual, add_dttm) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        [1, cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion, 'manual', DATETIME('now','localtime')]
+      );
+    },
+    null,
+    () => console.log("el Egreso se guardó correctamente")
+  );
+}
+
+
+//SETS AUTOMATICOS
+
+//egresoCompraInversion
+
+//egresoCuotaPrestamoTomado
+
+//egresoMontoPrestamoOtorgado
+
+//egresoCuotaEgresoPeriodico
 
 
 
