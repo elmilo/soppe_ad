@@ -19,7 +19,7 @@ async function callLogin(user, pass) {
     });
     let responseJson = await response.json();
     console.log(responseJson);
-    if(responseJson[0]._id){
+    if(responseJson[0]){
       return true;
     }
     return false;
