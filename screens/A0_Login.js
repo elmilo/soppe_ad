@@ -1,62 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
 import { Images, materialTheme } from '../constants';
-import { Icon, Product } from '../components';
+import { getCompletoFormateado } from "../Database/SelectTables";
+import {login} from "../external/UserAPI"
 
 const { width } = Dimensions.get('screen');
-import products from '../constants/products';
-//import AsyncStorage from "@react-native-community/async-storage";
 
-export default class A0_Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: "",
-      password: "",
-    };
+export default function A0_Login (props) {
+  const navigation = props.navigation;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  function goToInicio(){
+    navigation.navigate("Inicio");
   }
 
+  function goToRegistrarse(){
+    navigation.navigate("Registrarse")
+  }
 
-  render() {
-    /*const { navigation } = this.props;
-    const USER_STORAGE = 'USER_STORAGE';
-    async function loadUser() {
-      try {
-        const user = await AsyncStorage.getItem(USER_STORAGE);        
-
-        console.log(user + " loaded");
-        return user;
-
-      } catch (e) {
-        console.error(e);
-      }
+  function getUsersCallback(rows){
+    if(rows.length > 0){
+      goToInicio();
     }
+  }
 
-    
+  function validateLogin(){
+    return login(username, password).then(res => doLogin(res));
+  }
 
-    if(loadUser()){
-     // navigation.navigate("App")
+  function doLogin(valid){
+    if(valid){
+      //TODO insert usuario
+      goToInicio();
+    } else {
+      alert("Invalid user or password");
+      setPassword("");
     }
-*/
+  }
+    getCompletoFormateado("Usuarios", getUsersCallback);
     return (
       <Block flex space="evenly" style={styles.container}>
         <Text>Super login</Text>
         <Block style={styles.padded}>
           <Input
-            value={this.username}
+            value={username}
             style={styles.textInput}
             placeholder="Username"
             autoFocus={true}
-            onChangeText={(user) => this.setState({ username: user })}
+            onChangeText={(user) => setUsername(user)}
           />
         </Block>
         <Block style={styles.padded}>
           <Input
             style={styles.textInput}
+            value={password}
             placeholder="Password"
             secureTextEntry={true}
-            onChangeText={(pass) => this.setState({ password: pass })}
+            onChangeText={(pass) => setPassword(pass)}
           />
         </Block>
         <Block center>
@@ -64,7 +66,7 @@ export default class A0_Login extends React.Component {
             shadowless
             style={styles.button}
             color={materialTheme.COLORS.BUTTON_COLOR}
-            onPress={() => navigation.navigate("App")}
+            onPress={() => validateLogin()}
           >
             Login
           </Button>
@@ -74,7 +76,7 @@ export default class A0_Login extends React.Component {
             shadowless
             style={styles.button}
             color={materialTheme.COLORS.INFO}
-            onPress={() => console.log("go to register")}
+            onPress={() => goToRegistrarse()}
           >
             Register
           </Button>
@@ -82,54 +84,22 @@ export default class A0_Login extends React.Component {
       </Block>
     );
   }
-}
 
 const styles = StyleSheet.create({
-  home: {
-    width: width,    
+  container: {
+    backgroundColor: theme.COLORS.GRAY,
   },
-  search: {
-    height: 48,
-    width: width - 32,
-    marginHorizontal: 16,
-    borderWidth: 1,
-    borderRadius: 3,
+  padded: {
+    paddingHorizontal: theme.SIZES.BASE * 2,
+    position: 'relative',
+    bottom: theme.SIZES.BASE,
+    
   },
-  header: {
-    backgroundColor: theme.COLORS.WHITE,
-    shadowColor: theme.COLORS.BLACK,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowRadius: 8,
-    shadowOpacity: 0.2,
-    elevation: 4,
-    zIndex: 2,
-  },
-  tabs: {
-    marginBottom: 24,
-    marginTop: 10,
-    elevation: 4,
-  },
-  tab: {
-    backgroundColor: theme.COLORS.TRANSPARENT,
-    width: width * 0.50,
-    borderRadius: 0,
-    borderWidth: 0,
-    height: 24,
-    elevation: 0,
-  },
-  tabTitle: {
-    lineHeight: 19,
-    fontWeight: '300'
-  },
-  divider: {
-    borderRightWidth: 0.3,
-    borderRightColor: theme.COLORS.MUTED,
-  },
-  products: {
-    width: width - theme.SIZES.BASE * 2,
-    paddingVertical: theme.SIZES.BASE * 2,
+  button: {
+    width: width - theme.SIZES.BASE * 4,
+    height: theme.SIZES.BASE * 3,
+    shadowRadius: 0,
+    shadowOpacity: 0,
   },
 });
+

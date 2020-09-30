@@ -11,7 +11,7 @@ export function getCompletoFormateado(table, callback) {
         callback(rows._array);
       },
       (_, error) => {
-        console.log("error getCompleto");
+        console.log("error getCompleto", error);
         //errorCallback(error);
       }
     );

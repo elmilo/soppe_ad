@@ -141,6 +141,33 @@ function StackLogin(props) {
 }
 
 /************************************************************************** */
+function StackRegistrarse(props) {
+  return (
+    <Stack.Navigator
+      initialRouteName="Registrarse"
+      mode="card"
+      headerMode="screen"
+    >
+      <Stack.Screen
+        name="Registrarse"
+        component={A1_Registrarse}
+        options={{
+          header: ({ navigation, scene }) => (
+            <Header
+              title="Registrarse"
+              scene={scene}
+              navigation={navigation}
+            />
+          )
+        },
+        {headerTransparent: true}
+      }
+      />
+    </Stack.Navigator>
+  );
+}
+
+/************************************************************************** */
 function StackCuentas(props) {
   return (
     <Stack.Navigator initialRouteName="Cuentas" mode="card" headerMode="screen">
@@ -792,6 +819,37 @@ function AppStack(props) {
           ),
         }}
       />
+
+  <Drawer.Screen
+        name="Registrarse"
+        component={StackRegistrarse}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />
+
+
+    <Drawer.Screen
+        name="Inicio"
+        component={StackInicio}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />  
 
       <Drawer.Screen
         name="Nueva Cuenta"

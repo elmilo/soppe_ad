@@ -1,123 +1,96 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Button, Block, Text, Input, theme } from 'galio-framework';
+import { materialTheme } from '../constants';
+import { registerUser} from '../Database/Database'
+import { register } from "../external/UserAPI"
 
-import { Icon, Product } from '../components';
 
 const { width } = Dimensions.get('screen');
-import products from '../constants/products';
 
-export default class A1_Registrarse extends React.Component {
-  renderSearch = () => {
-    const { navigation } = this.props;
-    const iconCamera = <Icon size={16} color={theme.COLORS.MUTED} name="zoom-in" family="material" />
+export default function A1_Registrarse(props){
+ 
+    const navigation = props.navigation;
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [password, setPassword] = useState("");
+
+
+    function goToInicio(){
+      navigation.navigate("Login");
+    }
+
+    function doRegister(){
+      register(name, lastName, email, password).then(id => {
+        console.log("id", id)
+        if (id == -1){
+          alert("Error creando la cuenta por favor probar de nuevo")
+        } else {
+          registerUser(email, name, lastName, password, id);
+          goToInicio();
+        }
+      })
+    }
 
     return (
-      <Input
-        right
-        color="black"
-        style={styles.search}
-        iconContent={iconCamera}
-        placeholder="What are you looking for?"
-        onFocus={() => navigation.navigate('Pro')}
-      />
-    )
-  }
-  
-  renderTabs = () => {
-    const { navigation } = this.props;
-
-    return (
-      <Block row style={styles.tabs}>
-        <Button shadowless style={[styles.tab, styles.divider]} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon name="grid" family="feather" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>Categories</Text>
-          </Block>
-        </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon size={16} name="camera-18" family="GalioExtra" style={{ paddingRight: 8 }} />
-            <Text size={16} style={styles.tabTitle}>Best Deals</Text>
-          </Block>
-        </Button>
+      <Block style={styles.container}>
+      <Block style={styles.padded}>
+        <Text> Email*</Text>
+        <Input
+          style={styles.textInput}
+          placeholder="Email"
+          autoFocus={true}
+          onChangeText={(email) => setEmail(email)}
+        />
+        <Text> Nombre* </Text>
+        <Input
+          style={styles.textInput}
+          placeholder="Nombre"
+          onChangeText={(name) => setName(name)}
+        />
+        <Text> Apellido* </Text>
+        <Input
+          style={styles.textInput}
+          placeholder="Apellido"
+          onChangeText={(lastName) => setLastName(lastName)}
+        />
+        <Text> Password* </Text>
+         <Input
+            style={styles.textInput}
+            placeholder="Password" 
+            secureTextEntry={true}
+            onChangeText={(pass) => setPassword(pass)}
+          />
+          <Button
+            shadowless
+            style={styles.button}
+            color={materialTheme.COLORS.INFO}
+            onPress={() => doRegister()}
+          >
+            Register
+          </Button>
+      </Block>
       </Block>
     )
-  }
-
-  renderProducts = () => {
-    return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.products}>
-        <Block flex>
-          <Product product={products[0]} horizontal />
-          <Block flex row>
-            <Product product={products[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Product product={products[2]} />
-          </Block>
-          <Product product={products[3]} horizontal />
-          <Product product={products[4]} full />
-        </Block>
-      </ScrollView>
-    )
-  }
-
-  render() {
-    return (
-      <Block flex center style={styles.home}>
-        {this.renderProducts()}
-      </Block>
-    );
-  }
 }
 
+
 const styles = StyleSheet.create({
-  home: {
-    width: width,    
+  container: {
+    backgroundColor: theme.COLORS.GRAY,
   },
-  search: {
-    height: 48,
-    width: width - 32,
-    marginHorizontal: 16,
-    borderWidth: 1,
-    borderRadius: 3,
+  padded: {
+    paddingHorizontal: theme.SIZES.BASE * 2,
+    position: 'relative',
+    bottom: theme.SIZES.BASE,
+    paddingVertical: theme.SIZES.BASE * 5,
   },
-  header: {
-    backgroundColor: theme.COLORS.WHITE,
-    shadowColor: theme.COLORS.BLACK,
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowRadius: 8,
-    shadowOpacity: 0.2,
-    elevation: 4,
-    zIndex: 2,
-  },
-  tabs: {
-    marginBottom: 24,
-    marginTop: 10,
-    elevation: 4,
-  },
-  tab: {
-    backgroundColor: theme.COLORS.TRANSPARENT,
-    width: width * 0.50,
-    borderRadius: 0,
-    borderWidth: 0,
-    height: 24,
-    elevation: 0,
-  },
-  tabTitle: {
-    lineHeight: 19,
-    fontWeight: '300'
-  },
-  divider: {
-    borderRightWidth: 0.3,
-    borderRightColor: theme.COLORS.MUTED,
-  },
-  products: {
-    width: width - theme.SIZES.BASE * 2,
-    paddingVertical: theme.SIZES.BASE * 2,
+  button: {
+    width: width - theme.SIZES.BASE * 4,
+    height: theme.SIZES.BASE * 3,
+    shadowRadius: 0,
+    shadowOpacity: 0,
+    top: theme.SIZES.BASE ,
   },
 });
