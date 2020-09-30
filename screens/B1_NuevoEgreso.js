@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Dimensions, Platform } from "react-native";
-import { Block, Input, Text, theme } from "galio-framework";
+import { Block, Input, Button, theme, Text } from "galio-framework";
 import { materialTheme } from "../constants/";
 import { Icon } from "../components/";
 import SwitchPersonalizado from "../components/SwitchPersonalizado";
@@ -9,6 +9,8 @@ import { FloatingAction } from "react-native-floating-action";
 import CamaraPersonalizada from "../components/CamaraPersonalizada";
 import { getCompletoFormateado } from "../Database/SelectTables";
 import { getCuentas, getTarjetas } from "../Database/Database";
+import  InsertMaestros  from "../Database/InsertMaestros";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { block, concat } from "react-native-reanimated";
 
@@ -36,39 +38,74 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Egresos` (
   `auto_manual` VARCHAR(45) NULL,
   `add_dttm` DATETIME NULL,
 */
-/*
-const arrayCategorias = getCompletoFormateado('Categorias');
-const arrayRubros = getCompletoFormateado('Rubros');
-*/
+
+const arrayCategorias = InsertMaestros.CATEGORIAS;
+const arrayRubros     = InsertMaestros.RUBROS;
+
 
 export default function B1_NuevoEgreso(props) {
   /********************************* */
-  const [user_id, setUser_id] = useState(1);
-  const [cuenta, setCuenta] = useState("");
-  const [rubro, setRubro] = useState("");
-  const [categoria, SetCategoria] = useState("");
-  const [tarjeta, setTarjeta] = useState("");
-  const [medio_de_pago, setMedio_de_pago] = useState("");
-  const [monto, setMonto] = useState("");
-  const [cuotas_fechas, setCuotas_fechas] = useState("");
-  const [cuotas_restantes, setCuotas_restantes] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [auto_manual, setAuto_manual] = useState("");
-  const [add_dttm, setAdd_dttm] = useState("");
+  const [user_id, setUser_id]               = useState(1);
+  const [cuenta, setCuenta]                 = useState("");
+  const [rubro, setRubro]                   = useState("");
+  const [categoria, SetCategoria]           = useState("");
+  const [tarjeta, setTarjeta]               = useState("");
+  const [medio_de_pago, setMedio_de_pago]   = useState("");
+  const [monto, setMonto]                   = useState("");
+  const [cuotas_fechas, setCuotas_fechas]   = useState("");
+  const [cuotas_restantes, setCuotas_restantes] = useState(1024);
+  const [descripcion, setDescripcion]       = useState("");
+  const [auto_manual, setAuto_manual]       = useState("manual");
+  const [add_dttm, setAdd_dttm]             = useState(Date.now());
+  const { navigation } = props;
 
-  function handleOnChangeMedioDePago(medioDePago) {
+/********************************************************************* */
+const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+const showDatePicker = () => {
+  setDatePickerVisibility(true);
+};
+
+const hideDatePicker = () => {
+  setDatePickerVisibility(false);
+};
+
+const handleConfirm = (date) => {
+  console.warn("A date has been picked: ", date);
+  setFechaDatePicker (date);
+  setCuotas_fechas (date);
+  hideDatePicker();
+};
+
+
+  const [fechaDatePicker, setFechaDatePicker] = useState(new Date())
+ 
+  function renderDatePicker() {
+    return (
+      <Block center>
+        <Button shadowless color="success"onPress={showDatePicker}>
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
+          <Text>Elegir la fecha de vencimiento</Text>
+        </Button>
+      </Block>
+    )
+}
+
+/********************************************************************* */
+function handleOnChangeMedioDePago(medioDePago) {
     
-    console.log('Medio de pago: ' + medioDePago);
-
-    const id_usuario = 1;
-
     if (medioDePago == "Consumo Cuenta") {
-      getCuentas(id_usuario, successArrayCuentas);
+      getCuentas(user_id, successArrayCuentas);
       setMedio_de_pago("Consumo Cuenta");
       setTarjeta(null);
     }
     if (medioDePago == "Tarjeta de crédito") {
-      getTarjetas(id_usuario, successArrayTarjetas);
+      getTarjetas(user_id, successArrayTarjetas);
       setMedio_de_pago("Tarjeta de crédito");
       setCuenta(null);
     }
@@ -80,10 +117,7 @@ export default function B1_NuevoEgreso(props) {
   const [arrayCuentas, setArrayCuentas] = useState([]);
 
   /**************************************/
-  const { navigation } = props.navigation;
 
-  const [arrayCategorias, setArrayCategorias] = useState([]);
-  const [arrayRubros, setArrayRubros] = useState([]);
 
   const [isEnabledPeriodico, setIsEnabledPeriodico] = useState(false);
   const togglePeriodico = () =>
@@ -94,7 +128,6 @@ export default function B1_NuevoEgreso(props) {
     setIsEnabledParaSiempre((previousState) => !previousState);
 
   //const [cuenta, SetCuenta] = useState("");
-  //const [categoria, SetCategoria] = useState("");
 
   function handleOnChangeRubro(elemento) {
     setRubro(elemento);
@@ -132,34 +165,30 @@ export default function B1_NuevoEgreso(props) {
     setArrayTarjetas(datosFinales);
   }
 
-  function successArrayCategorias(rows) {
-    var datosFinales = [];
-    rows.forEach((elemento, key) => {
-      datosFinales.push({
-        key: elemento.id + elemento.descripcion,
-        label: elemento.descripcion,
-      });
-    });
+  
+  
+  function saveEgreso() {
+    const user_id = 1;
+    /*
+user_id, 
+cuenta, 
+rubro, 
+categoria, 
+tarjeta, 
+medio_de_pago, 
+monto, 
+cuotas_fechas, 
+cuotas_restantes,
+descripcion, 
+auto_manual,
+add_dttm, 
 
-    setArrayCategorias(datosFinales);
+    */
+    //setTarjeta(user_id, cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico,fechaVenceResumen, saldo);
+    //console.log('this.props: ' + this.props);
+    console.log('navigation: ' + JSON.stringify(navigation));
+    //navigation.navigate("Inicio");
   }
-
-  function successArrayRubros(rows) {
-    var datosFinales = [];
-    rows.forEach((elemento, key) => {
-      datosFinales.push({
-        key: elemento.id + elemento.descripcion,
-        label: elemento.descripcion,
-      });
-    });
-
-    setArrayRubros(datosFinales);
-  }
-
-  useEffect(() => {
-    getCompletoFormateado("Categorias", successArrayCategorias);
-    getCompletoFormateado("Rubros", successArrayRubros);
-  }, []); // <-- empty array means 'run once'
 
   function renderDropdown(lista, texto, handle) {
     return (
@@ -198,17 +227,18 @@ export default function B1_NuevoEgreso(props) {
     );
   }
 
-  function renderInputBox(tipo, texto) {
+  function renderInputBox(tipo, titulo, callback) {
     return (
       <Block>
         <Input
           borderless
           bgColor="#FFFFFFFF"
           type={tipo}
-          placeholder={texto}
+          placeholder={titulo}
           fontSize={16}
           placeholderTextColor={materialTheme.COLORS.DEFAULT}
           style={{ borderRadius: 3, borderColor: materialTheme.COLORS.INPUT }}
+          onChangeText={(texto) => {callback(texto);}}          
         />
       </Block>
     );
@@ -228,7 +258,8 @@ export default function B1_NuevoEgreso(props) {
     <Block>
       <Block center>{renderDinero()}</Block>
       <Block>
-        {renderInputBox("default", "Descripción")}
+        {renderInputBox('numeric', 'Descripción', setDescripcion)}
+        
         {renderDropdown(
           arrayMediosDePago,
           "Medio de pago",
@@ -254,16 +285,26 @@ export default function B1_NuevoEgreso(props) {
         toggle={togglePeriodico}
       />
       {isEnabledPeriodico ? renderSwitchParaSiempre() : null}
+     
       {isEnabledPeriodico && !isEnabledParaSiempre
-        ? renderInputBox("numeric", "Cuotas restantes")
+        ? renderDatePicker()
+        : null}
+      
+      {isEnabledPeriodico && !isEnabledParaSiempre
+        ? renderInputBox("numeric", "Cuotas restantes", setCuotas_restantes)
         : null}
 
       <Block>
         <CamaraPersonalizada />
       </Block>
-      <Block
-        style={{ marginTop: 0.2 * height, marginBottom: theme.SIZES.BASE }}
-      />
+      <Button
+              shadowless
+              color="success"
+              style={[styles.button, styles.shadow]}
+              onPress={() => {saveEgreso();}}
+        >
+              +
+            </Button>
     </Block>
   );
 }

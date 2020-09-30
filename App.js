@@ -92,7 +92,7 @@ export default class App extends React.Component {
 
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
-    dropAll(); //incluye createAll;
+    //dropAll(); //incluye createAll;
     //createAll(); correr/sacar el comment en caso de no querer hacer drop
   };
 }
