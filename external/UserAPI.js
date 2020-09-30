@@ -19,10 +19,8 @@ async function callLogin(user, pass) {
     });
     let responseJson = await response.json();
     console.log(responseJson);
-    if(responseJson[0]){
-      return true;
-    }
-    return false;
+    
+    return responseJson[0];
   } catch (error) {
     console.error(error);
     return false;
