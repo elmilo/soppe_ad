@@ -1,5 +1,6 @@
 import * as SQLite from "expo-sqlite";
 const db = SQLite.openDatabase("db2.db");
+export var userData = {};
 
 //*******USUARIOS************
 
@@ -19,6 +20,10 @@ const db = SQLite.openDatabase("db2.db");
 //     );
 //   });
 // }
+
+ export function setUserData(data){
+   userData = data;
+ }
 
  export function registerUser(email, nombre, apellido, password, idExt) {
    console.log("registerUser");

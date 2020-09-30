@@ -4,7 +4,7 @@ import { Button, Block, Text, Input, theme } from 'galio-framework';
 import { Images, materialTheme } from '../constants';
 import { getCompletoFormateado } from "../Database/SelectTables";
 import {login} from "../external/UserAPI"
-import { registerUser} from '../Database/Database'
+import { registerUser, setUserData} from '../Database/Database'
 
 const { width } = Dimensions.get('screen');
 
@@ -23,6 +23,7 @@ export default function A0_Login (props) {
 
   function getUsersCallback(rows){
     if(rows.length > 0){
+      setUserData(rows[0]);
       goToInicio();
     }
   }
