@@ -17,7 +17,7 @@ const arrayRubros     = InsertMaestros.RUBROS;
 
 
 export default function G01_Presupuestos(props) {
-  
+
   const [categoria, SetCategoria] = useState("");
   const [rubro, SetRubro] = useState("");
   const [valorMensual, setValorMensual] = useState(0.0);

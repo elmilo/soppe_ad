@@ -1,40 +1,150 @@
-import React from 'react';
-import { withNavigation } from '@react-navigation/compat';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
-import { Block, Text, theme } from 'galio-framework';
-import { Icon } from '../components';
-import materialTheme from '../constants/Theme';
-const { width } = Dimensions.get('screen');
+import React, { useState } from "react";
+import { withNavigation } from "@react-navigation/compat";
+import {
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { Block, Text, theme , Button } from "galio-framework";
+import { Icon } from "../components";
+import materialTheme from "../constants/Theme";
+import { dropAll } from "../Database/Database";
+const { width } = Dimensions.get("screen");import presupuestos from '../constants/presupuestos';
+import { getPresupuestos } from "../Database/Database";
 
-class Presupuesto extends React.Component {
-  render() {
-    const { navigation, presupuesto, horizontal, full, style, saldoColor, imageStyle } = this.props;
-    const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
 
-    return (
-      <Block row={horizontal} card flex style={[styles.presupuesto, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
-          <Block flex style={[styles.imageContainer, styles.shadow]}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2.5, paddingVertical: theme.SIZES.BASE }}>
-              <Icon name="indent-left" family="AntDesign" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
-            </Block>
-          </Block>
-        </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
-          <Block flex space="between" style={styles.presupuestoDescription}>
-            <Text size={13} muted={!saldoColor} color={saldoColor}>Rubro:</Text>
-            <Text size={14} style={styles.presupuestoRubro}>{presupuesto.rubro_id}</Text>
-            <Text size={13} muted={!saldoColor} color={saldoColor}>Categoria:</Text>
-            <Text size={14} style={styles.presupuestoRubro}>{presupuesto.categoria_id}</Text>
-            <Text size={13} muted={!saldoColor} color={saldoColor}>Valor:</Text>
-            <Text size={18} style={styles.presupuestoRubro}>$ {presupuesto.monto_mensual}</Text>
-          </Block>
-        </TouchableWithoutFeedback>
+
+export default function Presupuesto(props) {
+
+const [pantallaInicial, setPantallaInicial] = React.useState(true);
+const toggleDetalle = () =>
+  setPantallaInicial((previousState) => !previousState);
+
+const {
+  presupuesto ,
+  horizontal,
+  full,
+  style,
+  saldoColor,
+  imageStyle,
+} = props;
+
+const imageStyles = [
+  styles.image,
+  full ? styles.fullImage : styles.horizontalImage,
+  imageStyle,
+];
+
+function renderInsidePresupuesto() {
+  return (
+    <Block
+    row={horizontal}
+    card
+    flex
+    style={[styles.presupuesto, styles.shadow, style]}
+  >
+    <TouchableWithoutFeedback
+      onPress={() => toggleDetalle()}
+    >
+      <Block flex style={[styles.imageContainer, styles.shadow]}>
+        <Block
+          style={{
+            paddingHorizontal: theme.SIZES.BASE * 2,
+            paddingVertical: theme.SIZES.BASE,
+          }}
+        >
+          <Icon
+            name="delete"
+            family="MaterialIcons"
+            iconColor={theme.COLORS.WHITE}
+            size={30}
+            color={theme.COLORS.RED}
+            style={[styles.social, styles.shadow]}
+          ></Icon>
+        </Block>
       </Block>
-    );
-  }
+    </TouchableWithoutFeedback>
+    <TouchableWithoutFeedback
+      onPress={() =>
+        toggleDetalle()
+      }
+    >
+      <Block flex space="between" style={styles.presupuestoDescription}>
+      <Text size={18} style={styles.presupuestoEntidad}>Rubro:</Text>
+          <Text size={20} style={styles.presupuestoEntidad}>{presupuesto.monto_mensual}</Text>
+          <Text size={18} style={styles.presupuetoEntidad}>Categoria:</Text>
+          <Text size={20} style={styles.presupuestoEntidad}>{presupuesto.categoria_id}</Text>
+          <Text size={18} style={styles.presupuestoEntidad}>Valor:</Text>
+          <Text size={20} style={styles.presupuestoEntidad}>{presupuesto.monto_mensual}</Text>
+      </Block>
+       
+    </TouchableWithoutFeedback>
+  </Block>
+  )
 }
-export default withNavigation(Presupuesto);
+
+function renderPresupuesto() {
+  return (
+    <Block
+      row={horizontal}
+      card
+      flex
+      style={[styles.presupuesto, styles.shadow, style]}
+    >
+      <TouchableWithoutFeedback
+        onPress={() => toggleDetalle()}
+      >
+        <Block flex style={[styles.imageContainer, styles.shadow]}>
+          <Block
+            style={{
+              paddingHorizontal: theme.SIZES.BASE * 2,
+              paddingVertical: theme.SIZES.BASE,
+            }}
+          >
+            <Icon
+              name="account-balance-wallet"
+              family="MaterialIcons"
+              iconColor={theme.COLORS.WHITE}
+              size={80}
+              color={theme.COLORS.FACEBOOK}
+              style={[styles.social, styles.shadow]}
+            ></Icon>
+          </Block>
+        </Block>
+      </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback
+        onPress={() =>
+          toggleDetalle()
+        }
+      >
+        <Block flex space="between" style={styles.presupuestoDescription}>
+          <Text size={22} style={styles.presupuestoEntidad}>
+            {presupuesto.rubro_id}
+          </Text>
+          <Text size={15} style={styles.presupuestoEntidad}>
+            {presupuesto.categoria_id}
+          </Text>
+          <Text size={22} style={styles.presupuestoEntidad}>
+            ${presupuesto.monto_mensual}
+          </Text>
+          <Text size={22} style={styles.presupuestoEntidad}>
+          {presupuesto.descripcion}
+          </Text>
+        </Block>
+      </TouchableWithoutFeedback>
+    </Block>
+  );
+}
+
+
+return(
+  pantallaInicial? renderPresupuesto() : renderInsidePresupuesto()
+);
+
+}
+
+
 
 const styles = StyleSheet.create({
   presupuesto: {
@@ -43,9 +153,9 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     minHeight: 80,
   },
-  presupuestoRubro: {
+  presupuestoEntidad: {
     flex: 2,
-    flexWrap: 'wrap',
+    flexWrap: "wrap",
     paddingBottom: 6,
   },
   presupuestoDescription: {
@@ -60,8 +170,8 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   horizontalImage: {
-    height: 80,
-    width: 'auto',
+    height: 122,
+    width: "auto",
   },
   fullImage: {
     height: 215,

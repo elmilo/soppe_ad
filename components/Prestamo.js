@@ -13,7 +13,7 @@ class Prestamo extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={[styles.prestamo, styles.shadow, style]}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })}>
+        <TouchableWithoutFeedback >
           <Block flex style={[styles.imageContainer, styles.shadow]}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2, paddingVertical: theme.SIZES.BASE }}>
               <Icon name="leaf" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
@@ -23,9 +23,9 @@ class Prestamo extends React.Component {
             </Block>
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })} >
           <Block flex space="between" style={styles.prestamoDescription}>
-            <Text size={14} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
             <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>

@@ -336,7 +336,7 @@ export function dropAll() {
   ];
 
   //arrayDrop.forEach((unaQuery) => dropTable(unaQuery));
-  //createAll();
+ // createAll();
 
   //Crear solamente una
   dropTable(dropIngresos)
