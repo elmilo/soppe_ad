@@ -237,7 +237,7 @@ export function deletePresupuesto(id){
         "select id, emisor, ultimos_4_digitos, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen from Tarjetas where user_id = ?",
         [id_usuario],
         (_, { rows }) => {
-          //console.log('Success getCuentas: ', rows._array);
+          //console.log('Success getCuentas: ', rows._array);;
           successCallback(rows._array);
         },
         (_, error) => {
