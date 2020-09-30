@@ -5,8 +5,9 @@ import * as ImagePicker from 'expo-image-picker';
 import { materialTheme } from '../constants';
 const { width } = Dimensions.get("screen");
 
-export default function CamaraPersonalizada() {
+export default function CamaraPersonalizada(props) {
   const [image, setImage] = useState(null);
+  const SelectedImage = props.SelectedImage;
 
   useEffect(() => {
     (async () => {
@@ -23,14 +24,16 @@ export default function CamaraPersonalizada() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
+      base64:true,
       aspect: [4, 3],
       quality: 1,
     });
 
-    console.log(result);
+    //console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
+      SelectedImage(result.base64);
     }
   };
 

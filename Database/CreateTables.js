@@ -1,6 +1,5 @@
 import * as SQLite from "expo-sqlite";
-const db = SQLite.openDatabase("db.db");
-import { insertMaestros } from "./InsertMaestros";
+const db = SQLite.openDatabase("db2.db");
 
 var createUsuarios =
   "CREATE TABLE IF NOT EXISTS " +
@@ -272,7 +271,8 @@ function createTable(query) {
 export function createAll() {
   //
   const arrayCreates = [
-    createRubros,
+    createIngresos,
+    createEgresos,
     createUsuarios,
     createEntidades,
     createCuentas,
@@ -281,14 +281,11 @@ export function createAll() {
     createCategorias,
     createPresupuestos,
     createInversiones,
-    createIngresos,
-    createEgresos,
     createNotificaciones,
   ];
 
   arrayCreates.forEach((unaQuery) => createTable(unaQuery));
   //setTimeout(callbackSecond(), 120000);
-  //insertMaestros();
 }
 
 //DROPS

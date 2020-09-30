@@ -6,7 +6,7 @@ const { height, width } = Dimensions.get('screen');
 
 import materialTheme from '../constants/Theme';
 import Images from '../constants/Images';
-import { createAll, dropAll } from '../Database/CreateTables';
+import { dropAll } from '../Database/CreateTables';
 
 
 
@@ -42,7 +42,7 @@ export default class Onboarding extends React.Component {
                 color={materialTheme.COLORS.BUTTON_COLOR}
                 onPress={() => 
                   {navigation.navigate('App');
-                  
+                  //dropAll(); //incluye createAll;
                    }
                 
                 }>

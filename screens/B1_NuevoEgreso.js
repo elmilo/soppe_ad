@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Dimensions, Platform } from "react-native";
+import { View, StyleSheet, Dimensions, Platform , ScrollView} from "react-native";
 import { Block, Input, Button, theme, Text } from "galio-framework";
 import { materialTheme } from "../constants/";
 import { Icon } from "../components/";
@@ -7,8 +7,9 @@ import SwitchPersonalizado from "../components/SwitchPersonalizado";
 import ModalPersonalizado from "../components/ModalPersonalizado";
 import { FloatingAction } from "react-native-floating-action";
 import CamaraPersonalizada from "../components/CamaraPersonalizada";
-import { getCompletoFormateado } from "../Database/SelectTables";
 import { getCuentas, getTarjetas } from "../Database/Database";
+
+import { setEgreso, getEgresos } from "../Database/DatabaseEgresos";
 import  InsertMaestros  from "../Database/InsertMaestros";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
@@ -21,26 +22,9 @@ const arrayMediosDePago = [
   { value: "2TC", label: "Tarjeta de crédito" },
 ];
 
-/*
-CREATE TABLE IF NOT EXISTS `mydb`.`Egresos` (
-  `id` INT NOT NULL,
-  `user_id` INT NULL,
-  `cuenta_id` INT NULL,
-  `rubro_id` INT NULL,
-  `categoria_id` INT NULL,
-  `medio_de_pago` VARCHAR(45) NULL,
-  `monto` DECIMAL NULL,
-  `cuotas_fechas` INT NULL,
-  `cuotas_restantes` INT NULL,
-  `id_externa` INT NULL,
-  `tabla_externa` VARCHAR(45) NULL,
-  `descripcion` VARCHAR(128) NULL,
-  `auto_manual` VARCHAR(45) NULL,
-  `add_dttm` DATETIME NULL,
-*/
-
 const arrayCategorias = InsertMaestros.CATEGORIAS;
 const arrayRubros     = InsertMaestros.RUBROS;
+
 
 
 export default function B1_NuevoEgreso(props) {
@@ -48,7 +32,7 @@ export default function B1_NuevoEgreso(props) {
   const [user_id, setUser_id]               = useState(1);
   const [cuenta, setCuenta]                 = useState("");
   const [rubro, setRubro]                   = useState("");
-  const [categoria, SetCategoria]           = useState("");
+  const [categoria, SetCategoria]           = useState(null);
   const [tarjeta, setTarjeta]               = useState("");
   const [medio_de_pago, setMedio_de_pago]   = useState("");
   const [monto, setMonto]                   = useState("");
@@ -56,7 +40,8 @@ export default function B1_NuevoEgreso(props) {
   const [cuotas_restantes, setCuotas_restantes] = useState(1024);
   const [descripcion, setDescripcion]       = useState("");
   const [auto_manual, setAuto_manual]       = useState("manual");
-  const [add_dttm, setAdd_dttm]             = useState(Date.now());
+  const [add_dttm, setAdd_dttm]             = useState(new Date());
+  const [imagenComprobante, setImagenComprobante]   = useState(null);
   const { navigation } = props;
 
 /********************************************************************* */
@@ -71,9 +56,24 @@ const hideDatePicker = () => {
 };
 
 const handleConfirm = (date) => {
-  console.warn("A date has been picked: ", date);
+  
+  function formatFecha(fecha) {
+    var d = new Date(fecha),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('');
+}
+
+  //console.warn("A date has been picked: ", date);
   setFechaDatePicker (date);
-  setCuotas_fechas (date);
+  setCuotas_fechas (formatFecha(date));
   hideDatePicker();
 };
 
@@ -165,29 +165,40 @@ function handleOnChangeMedioDePago(medioDePago) {
     setArrayTarjetas(datosFinales);
   }
 
-  
+  function tratarImagenCallback (ImagenCamara){
+    console.log('ImagenCamara: OK' );
+    setImagenComprobante(ImagenCamara);
+  }
   
   function saveEgreso() {
-    const user_id = 1;
-    /*
-user_id, 
-cuenta, 
-rubro, 
-categoria, 
-tarjeta, 
-medio_de_pago, 
-monto, 
-cuotas_fechas, 
-cuotas_restantes,
-descripcion, 
-auto_manual,
-add_dttm, 
 
-    */
-    //setTarjeta(user_id, cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico,fechaVenceResumen, saldo);
-    //console.log('this.props: ' + this.props);
-    console.log('navigation: ' + JSON.stringify(navigation));
-    //navigation.navigate("Inicio");
+  setEgreso(cuenta, 
+      rubro, 
+      categoria, 
+      tarjeta, 
+      medio_de_pago, 
+      monto, 
+      cuotas_fechas, 
+      cuotas_restantes, 
+      descripcion,
+      auto_manual);
+    
+    getEgresos();
+
+
+    setCuenta("");
+    setRubro("");
+    SetCategoria(null);
+    setTarjeta("");
+    setMedio_de_pago("");
+    setMonto("");
+    setCuotas_fechas("");
+    setCuotas_restantes(1024);
+    setDescripcion("");
+    setAuto_manual("manual");
+    setAdd_dttm(new Date());
+    setImagenComprobante(null);
+
   }
 
   function renderDropdown(lista, texto, handle) {
@@ -255,10 +266,11 @@ add_dttm,
   }
 
   return (
+    <ScrollView showsVerticalScrollIndicator={false}>
     <Block>
       <Block center>{renderDinero()}</Block>
       <Block>
-        {renderInputBox('numeric', 'Descripción', setDescripcion)}
+        {renderInputBox('default', 'Descripción', setDescripcion)}
         
         {renderDropdown(
           arrayMediosDePago,
@@ -295,17 +307,22 @@ add_dttm,
         : null}
 
       <Block>
-        <CamaraPersonalizada />
+        <CamaraPersonalizada SelectedImage={tratarImagenCallback}/>
       </Block>
       <Button
               shadowless
               color="success"
               style={[styles.button, styles.shadow]}
-              onPress={() => {saveEgreso();}}
+              onPress={() => {
+                saveEgreso();
+                navigation.navigate('Inicio', {});
+                }
+              }
         >
               +
             </Button>
     </Block>
+    </ScrollView>
   );
 }
 
