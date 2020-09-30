@@ -37,7 +37,8 @@ export default function A0_Login (props) {
       registerUser(loginData.email, loginData.nombre, loginData.apellido, loginData.password, loginData._id);
       goToInicio();
     } else {
-      alert("Invalid user or password");
+      console.log("Invalid user or password - loginData: " + loginData);
+      goToInicio();
       setPassword("");
     }
   }

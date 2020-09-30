@@ -64,7 +64,7 @@ class DrawerItem extends React.Component {
             color={focused ? "white" : materialTheme.COLORS.MUTED}
           />
         );
-      case "Análisis":
+      case "Movimientos":
         return (
           <Icon
             size={16}

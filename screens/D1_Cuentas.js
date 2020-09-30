@@ -18,8 +18,6 @@ import ModalSelector from "react-native-modal-selector";
 import ModalPersonalizado from "../components/ModalPersonalizado";
 import  InsertMaestros  from "../Database/InsertMaestros";
 import { setCuentaUnica } from "../Database/Database";
-import products from "../constants/products";
-import * as SQLite from "expo-sqlite";
 
 const arrayEntidades      = InsertMaestros.ENTIDADES;
 const arrayMonedaIngreso  = InsertMaestros.MONEDAS;

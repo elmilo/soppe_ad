@@ -473,25 +473,22 @@ function StackPerfil(props) {
 function StackAnalisis(props) {
   return (
     <Stack.Navigator
-      initialRouteName="Analisis"
+      initialRouteName="Movimientos"
       mode="card"
       headerMode="screen"
     >
       <Stack.Screen
-        name="Análisis"
+        name="Movimientos"
         component={B02_Analisis}
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              white
-              transparent
               back
-              title="Análisis"
+              title="Movimientos"
               scene={scene}
               navigation={navigation}
             />
-          ),
-          headerTransparent: true,
+          )
         }}
       />
     </Stack.Navigator>
@@ -713,7 +710,7 @@ function AppStack(props) {
       />
 
 <Drawer.Screen
-        name="Análisis"
+        name="Movimientos"
         component={StackAnalisis}
         options={{
           drawerIcon: ({ focused }) => (

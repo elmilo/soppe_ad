@@ -21,7 +21,7 @@ function CustomDrawerContent({
     "Tarjetas",
     "Cuentas",
     "Préstamos",
-    "Análisis",
+    "Movimientos",
     "Inversiones",
     "Presupuestos",   
   ];
