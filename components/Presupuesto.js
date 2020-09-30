@@ -23,9 +23,9 @@ class Presupuesto extends React.Component {
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Presupuesto', { presupuesto: presupuesto })}>
           <Block flex space="between" style={styles.presupuestoDescription}>
             <Text size={13} muted={!saldoColor} color={saldoColor}>Rubro:</Text>
-            <Text size={18} style={styles.presupuestoRubro}>{presupuesto.rubro_id}</Text>
+            <Text size={14} style={styles.presupuestoRubro}>{presupuesto.rubro_id}</Text>
             <Text size={13} muted={!saldoColor} color={saldoColor}>Categoria:</Text>
-            <Text size={15} style={styles.presupuestoRubro}>{presupuesto.categoria_id}</Text>
+            <Text size={14} style={styles.presupuestoRubro}>{presupuesto.categoria_id}</Text>
             <Text size={13} muted={!saldoColor} color={saldoColor}>Valor:</Text>
             <Text size={18} style={styles.presupuestoRubro}>$ {presupuesto.monto_mensual}</Text>
           </Block>

@@ -15,7 +15,9 @@ var createUsuarios =
   "apellido" +
   " VARCHAR(128) NULL," +
   "password" +
-  " VARCHAR(256) NOT NULL" +
+  " VARCHAR(256) NOT NULL," +
+  "idExt" +
+  " VARCHAR(256)" +
   ")";
 
 var createRubros =
