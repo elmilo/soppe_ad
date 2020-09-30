@@ -27,18 +27,24 @@ const arrayCuentaIngreso = [
   { value: 3, label: "Mercado Pago" },
   { value: 4, label: "BBVA ARS" },
 ];
+const arrayTipo = [
+  { value: 1, label: "En Cuenta" },
+  { value: 2, label: "Con Tercero" },
+ ];
 
 
 export default function F01_Prestamos(props) {
-  
+  const [tipoPrestamo, setTipoPrestamo] = useState("");
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   const [proxCuota, setProxCuota] = useState(0);
+  const [terceroDesc, setTerceroDesc] = useState(null);
   const [descripcion, setDescripcion] = useState("");
   const [cuotas, setCuotas] = useState(0.0);
+  const [fechaVencimiento, setFechaVencimiento] = useState(0.0);
   const [valorCuota, setValorCuota] = useState(0.0);
   const [valorPrestamo, setValorPrestamo] = useState(0.0);
-  const [cuenta, SetCuenta] = useState("");
+  const [cuenta, SetCuenta] = useState(null);
   
   const navigation = props.navigation;
   let index = 0;
@@ -50,22 +56,58 @@ export default function F01_Prestamos(props) {
   function handleOnChangePrestamo(unPrestamo) {
     SetPrestamo(unPrestamo);
   }
+  function handleOnChangeTipo(unTipo) {
+    setTipoPrestamo(unTipo);
+  }
+
+
 
   function savePrestamo() {
-    setPrestamo(cuenta, isEnabled, 1,valorCuota, proxCuota, cuotas, valorPrestamo,descripcion,1);
+    setPrestamo(cuenta, isEnabled, terceroDesc, valorCuota, fechaVencimiento , cuotas,valorPrestamo, descripcion, proxCuota,tipoPrestamo, );
+    //cambiar null por terceroDesc
     navigation.navigate("Préstamos");
   }
 
   function DropdownCuenta(props) {
     return (
-      <ModalPersonalizado
+      <Block>
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
+        <ModalPersonalizado
         data={arrayCuentaIngreso}
         initValue="Seleccione una Cuenta"
         onSelected={handleOnChangeCuenta}
       />
+      </Block>
     );
   }
+  function DropdownTipoPrestamo(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayTipo}
+        initValue="Tipo de Préstamo"
+        onSelected={handleOnChangeTipo}
+      />
+    );
+  };
 
+  function TerceroDescripcion(props) {
+    return (
+      <Block>
+        <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Descripción del Tercero</Text>
+        <Block flex style={styles.group}>
+          <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+            <Input
+              right
+              placeholder="Nombre"
+              placeholderTextColor={materialTheme.COLORS.DEFAULT}
+              style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+              onChangeText={(text) => {setTerceroDesc(text); }}
+            />
+          </Block>
+        </Block>
+      </Block>
+    );
+  };
  
   return (
    
@@ -73,7 +115,7 @@ export default function F01_Prestamos(props) {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
-        <Text p style={[styles.text, { textAlign: 'right' }]}>Tomado / Otorgado</Text>
+        <Text p style={[styles.text, { textAlign: 'right' }]}>Otorgado / Tomado</Text>
         <Switch
           trackColor={{ false: "#767577", true: "#FF8000" }}
           thumbColor={isEnabled ? "#FF8000" : "#f4f3f4"}
@@ -81,8 +123,11 @@ export default function F01_Prestamos(props) {
           value={isEnabled}
         />
         <Block />
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de Préstamo</Text>
+        {DropdownTipoPrestamo()}
+        {/* {tipoPrestamo = 'En Cuenta' ? DropdownCuenta(): TerceroDescripcion()}; */}
         {DropdownCuenta()}
+        {TerceroDescripcion()}
         <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
         <Block flex>
           <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de Préstamo</Text>
@@ -130,6 +175,18 @@ export default function F01_Prestamos(props) {
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
                 onChangeText={(text) => {setCuotas(text); }}
+              />
+            </Block>
+          </Block>
+          <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha vencimiento </Text>
+          <Block flex style={styles.group}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="Solo números ej 25052020"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setFechaVencimiento(text); }}
               />
             </Block>
           </Block>

@@ -23,9 +23,8 @@ class Inversion extends React.Component {
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Inversion', { inversion: inversion })}>
           <Block flex space="between" style={styles.inversionDescription}>
-            <Text size={23} style={styles.inversionEntidad}>{inversion.descripcion}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Tipo:</Text>
-            <Text size={15} style={styles.inversionEntidad}>{inversion.tipo}</Text>
+            <Text size={23} style={styles.inversionEntidad}>{inversion.tipo}</Text>
+            <Text size={15} style={styles.inversionEntidad}>{inversion.descripcion}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
             <Text size={15} style={styles.inversionEntidad}>{inversion.cuenta_id}</Text>
             <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de compra:</Text>

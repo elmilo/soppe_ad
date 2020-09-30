@@ -4,10 +4,12 @@ import { Button, Block, Text, Input, theme } from "galio-framework";
 import GraficoAvance from "../components/GraficoAvance";
 import GraficoGastosAcumulados from "../components/GraficoGastosAcumulados";
 import GraficoPresupuesto from "../components/GraficoPresupuesto";
-
+import { insertMaestros } from '../Database/InsertMaestros';
 const { width } = Dimensions.get("screen");
 
 export default class B0_Inicio extends React.Component {
+  
+  //componentDidMount(){insertMaestros();}
 
   renderGraficoPresupuesto = () =>{
     return (

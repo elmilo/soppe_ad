@@ -7,12 +7,11 @@ export function getCompletoFormateado(table, callback) {
       "select * from " + table,
       [],
       (_, { rows }) => {
-        console.log('Success getCompletoFormateado: ' + table + ' ' + JSON.stringify(rows._array));
+        //console.log('Success getCompletoFormateado: ' + table + ' ' + JSON.stringify(rows._array));
         callback(rows._array);
       },
       (_, error) => {
         console.log("error getCompleto", error);
-        //errorCallback(error);
       }
     );
   });

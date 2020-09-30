@@ -272,7 +272,7 @@ function createTable(query) {
 }
 
 export function createAll() {
-  dropAll();
+  //
   const arrayCreates = [
     createRubros,
     createUsuarios,
@@ -289,8 +289,8 @@ export function createAll() {
   ];
 
   arrayCreates.forEach((unaQuery) => createTable(unaQuery));
-
-  insertMaestros();
+  //setTimeout(callbackSecond(), 120000);
+  //insertMaestros();
 }
 
 //DROPS
@@ -325,7 +325,7 @@ function dropTable(query) {
       query,
       null,
       (_, { rows }) => {
-        //console.log("Se dropeó la tabla correctamente.");
+//        console.log("Se dropeó la tabla correctamente.");
       },
       (_, error) => {
         console.log("ERROR - La tabla no pudo ser dropeada.  " + error);
@@ -351,4 +351,7 @@ export function dropAll() {
   ];
 
   arrayDrop.forEach((unaQuery) => dropTable(unaQuery));
+
+  createAll();
+
 }
