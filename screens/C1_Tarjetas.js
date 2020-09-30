@@ -39,6 +39,7 @@ export default function C1_Tarjetas(props) {
   const [ultimos4Digitos, setUltimos4Digitos] = useState();
   const [fechaVencePlastico, setFechaVencePlastico] = useState("");
   const [fechaVenceResumen, setFechaVenceResumen] = useState("");
+  const [fechaCierre, setFechaCierre] = useState("");
   const [saldo, setSaldo] = useState(0);
   const navigation = props.navigation;
   let index = 0;
@@ -55,7 +56,7 @@ export default function C1_Tarjetas(props) {
 
   function saveTarjeta() {
     const user_id = 1;
-    setTarjeta(user_id, cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico,fechaVenceResumen, saldo);
+    setTarjeta(user_id, cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico, fechaCierre, fechaVenceResumen, saldo);
     navigation.navigate("Tarjetas");
   }
 
@@ -143,7 +144,7 @@ export default function C1_Tarjetas(props) {
                   borderRadius: 1,
                   borderColor: materialTheme.COLORS.INPUT,
                 }}
-                onChangeText={(text) => {setFechaVenceResumen(text);}}
+                onChangeText={(text) => {setFechaCierre(text);}}
               />
            </Block>
           </Block>
