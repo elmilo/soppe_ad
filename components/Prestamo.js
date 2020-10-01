@@ -80,7 +80,7 @@ export default function Prestamo(props) {
             <Text size={15} style={styles.prestamoEntidad}>{prestamo.tipo}</Text>
             <Text size={15} style={styles.prestamoEntidad}>{prestamo.prestamo_a_tercero_descripcion}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
-            <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
+            <Text size={14} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
             <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_monto}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Cuotas restantes:</Text>
@@ -143,7 +143,7 @@ export default function Prestamo(props) {
               <Block flex space="between" style={styles.prestamoDescription}>
                 <Text size={17} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
                 <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
-                <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
+                <Text size={14} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
                 <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
                 <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_monto}</Text>
                 <Text size={9} muted={!saldoColor} color={saldoColor}>Fecha próximo vencimiento:</Text>
