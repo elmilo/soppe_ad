@@ -8,7 +8,7 @@ import { theme, Text as GalioText} from "galio-framework";
 
 import { PieChart } from "react-native-svg-charts";
 import materialTheme from "../constants/Theme";
-import { getDisponiblesGroupedByCuenta } from '../Database/Database'
+import { getActiveEgresos } from '../Database/Egresos'
 
 
 const screenWidth = 0.5*Dimensions.get("window").width;
@@ -20,20 +20,14 @@ const hex2rgba = (hex, alpha = 1) => {
 };
 */
 
-function randomInt(min, max) {
-  return min + Math.floor((max - min) * Math.random());
-}
-
-const values = [randomInt(1,15), randomInt(1,25), randomInt(1,35), randomInt(1,25), randomInt(1,15)];
-const keys = ['Descripción 1', 'Descripción 2', 'Descripción 3', 'Descripción 4', 'Descripción 5'];
-var cuentas = [];
-var saldos = [];
+var descripciones = [];
+var montos = [];
 
 
-function setDisponibles(cs, ss){
-  console.log(cs, ss);
-  cuentas = cs;
-  saldos = ss;
+function setEgresos(ds, ms){
+  console.log(ds, ms);
+  descripciones = ds;
+  montos = ms;
 }
 
 const colors = [materialTheme.COLORS.ACTIVE, 
@@ -42,7 +36,7 @@ const colors = [materialTheme.COLORS.ACTIVE,
   materialTheme.COLORS.WARNING, 
   materialTheme.COLORS.ERROR];
 
-export default class GraficoAvance extends React.Component {
+export default class GraficoVencimientos extends React.Component {
  constructor(props) {
    super(props);
     this.state = {
@@ -55,7 +49,7 @@ export default class GraficoAvance extends React.Component {
   }
 
   componentDidMount(){
-    getDisponiblesGroupedByCuenta(setDisponibles);
+    getActiveEgresos(setEgresos);
   }
   
 
@@ -66,13 +60,13 @@ export default class GraficoAvance extends React.Component {
     
     const { titulo } = this.props; 
     
-    const data = cuentas.map((key, index) => {
+    const data = descripciones.map((key, index) => {
         return {
           key,
-          value: saldos[index],
+          value: montos[index],
           svg: { fill: colors[index] },
-          arc: { outerRadius: (70 + saldos[index]/200) + '%', padAngle: label === key ? 0.1 : 0 },
-          onPress: () => this.setState({ selectedSlice: { label: key, value: saldos[index] } })
+          arc: { outerRadius: (70 + montos[index]/200) + '%', padAngle: label === key ? 0.1 : 0 },
+          onPress: () => this.setState({ selectedSlice: { label: key, value: montos[index] } })
         }
       })
 

@@ -4,6 +4,7 @@ import { Button, Block, Text, Input, theme } from "galio-framework";
 import GraficoAvance from "../components/GraficoAvance";
 import GraficoGastosAcumulados from "../components/GraficoGastosAcumulados";
 import GraficoPresupuesto from "../components/GraficoPresupuesto";
+import GraficoVencimientos from "../components/GraficoVencimientos";
 const { width } = Dimensions.get("screen");
 
 export default class B0_Inicio extends React.Component {
@@ -60,7 +61,7 @@ export default class B0_Inicio extends React.Component {
             styles.shadow,
           ]}
         >
-          <GraficoAvance titulo={"Vencimientos de la semana"} />
+          <GraficoVencimientos titulo={"Vencimientos del mes"} />
         </Block>
         <Block
           card

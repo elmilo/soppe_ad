@@ -614,7 +614,30 @@ export function getEgresosCuentaFecha(cuenta, fechaDesde, fechaHasta) {
 
 
 
-
+//graficos
+export function getDisponiblesGroupedByCuenta(successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select saldo, alias from Cuentas",
+      [],
+      (_, { rows }) => {
+        var results = rows._array;
+        let cuentas = []
+        let saldos = []
+        for(let i = 0; i < results.length; i++ ){
+          cuentas.push(results[i].alias);
+          saldos.push(results[i].saldo);
+        }
+        
+        successCallback(cuentas, saldos);
+      },
+      (_, error) => {
+        //console.log('error getAccounts');
+        console.log(error);
+      }
+    );
+  });
+}
 
 //SETS AUTOMATICOS
 

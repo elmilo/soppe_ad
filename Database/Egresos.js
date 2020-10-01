@@ -22,6 +22,29 @@ export function getEgresos() {
   
 }
 
+export function getActiveEgresos(successCallback){
+  db.transaction((tx) => {
+    tx.executeSql(
+      'SELECT descripcion, monto from Egresos where cuotas_restantes > 0',
+      [],
+      (_, { rows }) => {
+        console.log("egresos activos", rows._array);
+        var results = rows._array;
+        let descripciones = [];
+        let montos = [];
+        for(let i = 0; i < results.length; i++){
+          descripciones.push(results[i].descripcion);
+          montos.push(results[i].monto);
+        }
+        successCallback(descripciones, montos);
+      },
+      (_, error) => {
+        console.log(error)
+      }
+    )
+  })
+}
+
 //SETS MANUALES
 export function setEgreso(cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion, auto_manual) {
   const fechaInsert = moment().format("YYYY-MM-DD");

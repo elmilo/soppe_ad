@@ -4,7 +4,7 @@ import { Button, Block, Text, Input, theme } from 'galio-framework';
 import { Images, materialTheme } from '../constants';
 import { getCompletoFormateado } from "../Database/SelectTables";
 import {login} from "../external/UserAPI"
-import { registerUser, setUserData} from '../Database/Database'
+import { registerUser, setUserData, getDisponiblesGroupedByCuenta} from '../Database/Database'
 
 const { width } = Dimensions.get('screen');
 
@@ -37,11 +37,13 @@ export default function A0_Login (props) {
       registerUser(loginData.email, loginData.nombre, loginData.apellido, loginData.password, loginData._id);
       goToInicio();
     } else {
+      alert("Invalid user or password");
       console.log("Invalid user or password - loginData: " + loginData);
-      goToInicio();
+      //goToInicio();
       setPassword("");
     }
   }
+
     getCompletoFormateado("Usuarios", getUsersCallback);
     return (
       <Block flex space="evenly" style={styles.container}>
