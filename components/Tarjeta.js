@@ -115,8 +115,8 @@ export default function Tarjeta(props) {
                 style={[styles.social, styles.shadow]}
               ></Icon>
               <Text></Text><Text></Text><Text></Text>
-              <Text size={14} muted={!saldoColor} color={saldoColor}>Saldo a vencer:</Text>
-              <Text size={22} style={styles.tarjetaEntidad}>{tarjeta.saldo}</Text>
+              <Text size={10} muted={!saldoColor} color={saldoColor}>Saldo a vencer:</Text>
+              <Text size={22} style={styles.tarjetaEntidad}>$ {tarjeta.saldo}</Text>
             </Block>
           </Block>
         </TouchableWithoutFeedback>
