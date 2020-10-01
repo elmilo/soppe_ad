@@ -186,7 +186,7 @@ function handleOnChangeMedioDePago(medioDePago) {
     getEgresos();
     {medio_de_pago == "Consumo Cuenta"
           ? updateSaldoCuentaEgreso(cuenta.slice(cuenta.search("-")+2,-5),monto): false };
-
+//;
     setCuenta("");
     setRubro("");
     SetCategoria(null);
