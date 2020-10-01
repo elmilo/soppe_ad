@@ -181,14 +181,7 @@ function handleOnChangeMedioDePago(medioDePago) {
       cuotas_fechas, 
       cuotas_restantes, 
       descripcion,
-<<<<<<< Updated upstream
-      auto_manual,
-      imagenComprobante);
-    
-    getEgresos();
-=======
       auto_manual);
->>>>>>> Stashed changes
 
     getEgresos();
     {medio_de_pago == "Consumo Cuenta"
