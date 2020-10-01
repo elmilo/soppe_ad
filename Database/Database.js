@@ -443,7 +443,7 @@ export function updateResetSaldoTarjeta(ultimosDigitos) {
 
 export function deleteTarjeta(ultimosDigitos) {
   console.log("deleteTarjeta");
-  console.log(cbu);
+  console.log(ultimosDigitos);
   db.transaction(
     (tx) => {
       tx.executeSql(
