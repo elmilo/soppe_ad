@@ -56,7 +56,6 @@ export default function B0_Inicio (props) {
   }
 
   useEffect(() => {
-    //207=general
     getPresupuestoForRubro("'General'", getPresupuestoGeneral);
     getEgresoForRubro("'General'", getGastosGeneral);
     getPresupuestoForRubro("'Servicios e Impuestos'", getPresupuestoServicio);
