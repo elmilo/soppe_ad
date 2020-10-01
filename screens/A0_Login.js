@@ -46,8 +46,10 @@ export default function A0_Login (props) {
 
     getCompletoFormateado("Usuarios", getUsersCallback);
     return (
+      
       <Block flex space="evenly" style={styles.container}>
         <Block style={styles.padded}>
+        <Text></Text><Text></Text>
           <Input
             value={username}
             style={styles.textInput}
