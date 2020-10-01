@@ -74,7 +74,7 @@ export default function Prestamo(props) {
 
 
           <Block flex space="between" style={styles.cuentaDescription}>
-            <Text size={20} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
             <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
@@ -130,7 +130,7 @@ export default function Prestamo(props) {
           }
         >
           <Block flex space="between" style={styles.prestamoDescription}>
-            <Text size={20} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
             <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
