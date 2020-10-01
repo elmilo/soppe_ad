@@ -18,10 +18,9 @@ const thumbMeasure = (width - 48 - 32) / 3;
 import { userData } from "../Database/Database";
 
 import { fakeprofile as miPerfil } from "../constants";
-import { TouchableHighlight } from "react-native";
-import { getTodo } from "../Database/SelectTables";
+import { getTodo , getTodoSinFiltro} from "../Database/SelectTables";
 
-import { login } from "../external/UserAPI";
+import { cuentaEnNube } from "../external/InsertAPI";
 
 
 
@@ -32,24 +31,47 @@ export default function B01_Perfil(props) {
   const [indicadorWIPR, setIndicadorWIPR] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
+  const [datos, setDatos] = useState([]);
 
   function successCallback(rowDB) {
     setNombre(rowDB.nombre);
     setApellido(rowDB.apellido);
   }
-
-  useEffect(() => {
-    getTodo("Usuarios", successCallback);
-  }, []);
-
-  function recuperarDatosNube (){
-    setIndicadorWIPR(true);
-
+  
+  function callbackCuentas(rowDB) {
+    console.log('Exito en el recuperarDatosNube: ' + res);
+    setDatos(rowDB);
   }
 
 
+  useEffect(() => {
+    getTodo("Usuarios", successCallback);
+    getTodoSinFiltro('Cuentas', callbackCuentas);
+  }, []);
+
+
   function enviarDatosNube (){
-    setIndicadorWIPE(true);
+    setIndicadorWIPR(true);
+    
+    
+    datos.forEach((unaFila) =>{
+      cuentaEnNube(unaFila).then(res => {
+        if (res) {
+          console.log('Exito en el recuperarDatosNube: ' + res);
+        } else {
+          console.log('Error en el recuperarDatosNube');
+        }
+      });
+    });
+
+    setIndicadorWIPR(false);
+  }
+  
+
+  function recuperarDatosNube (){
+    setIndicadorWIPR(true);
+    getTodo('Cuentas', callbackCuentas);
+    setIndicadorWIPR(false);
 
   }
 

@@ -63,10 +63,11 @@ export var userData = {};
 
 //*******CUENTAS************
 export function getCuentas(id_usuario, successCallback) {
+  //where user_id = ?
   db.transaction((tx) => {
     tx.executeSql(
-      "select * from Cuentas where user_id = ?",
-      [id_usuario],
+      "select * from Cuentas ",
+      [],
       (_, { rows }) => {
         console.log('Success getCuentas: ', rows._array);
         successCallback(rows._array);

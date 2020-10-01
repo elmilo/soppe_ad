@@ -58,7 +58,7 @@ var createCuentas =
   "cbu" +
   " INTEGER," +
   "user_id" +
-  " INTEGER," +
+  " VARCHAR(45)," +
   "nro_cuenta" +
   " INTEGER," +
   "entidad_id" +
@@ -344,11 +344,11 @@ export function dropAll() {
   /*arrayDrop.forEach((unaQuery) => setTimeout(() => {
     dropTable(unaQuery);
   }, 500));*/
-
+  //dropTable(dropCuentas);
   createAll();
 
   //Crear solamente una
-  //dropTable(dropEgresos)
+  //dropTable(dropCuentas)
   //createTable(createEgresos);
 
 }
