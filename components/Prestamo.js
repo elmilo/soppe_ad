@@ -14,7 +14,6 @@ const { width } = Dimensions.get("screen");
 import { getPrestamos } from "../Database/Database";
 
 
-
 export default function Prestamo(props) {
 
   const [pantallaInicial, setPantallaInicial] = React.useState(true);
@@ -35,8 +34,10 @@ export default function Prestamo(props) {
     full ? styles.fullImage : styles.horizontalImage,
     imageStyle,
   ];
+  
+  
 
-  function renderInsidePrestamo() {
+  function renderInsidePrestamo(props) {
     return (
       <Block
         row={horizontal}
@@ -75,6 +76,9 @@ export default function Prestamo(props) {
 
           <Block flex space="between" style={styles.cuentaDescription}>
             <Text size={17} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Tipo de prestamo:</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.tipo}</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo.prestamo_a_tercero_descripcion}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
             <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
@@ -92,20 +96,65 @@ export default function Prestamo(props) {
     )
   }
 
-function otorgadoOtomado (){
-  a=prestamo.tomado;
-  if ({a}== 0){ 
-  <Text size={15} muted={!saldoColor} color={saldoColor}>{a}</Text>
-  
- }
-}
+ 
 
+  function renderPrestamo(props) {
 
-  function renderPrestamo() {
+    const b = 1;
+
+    if (prestamo.tomado=== b) {
+      return (
+        
+              <Block
+            row={horizontal}
+            card
+            flex
+            style={[styles.prestamo, styles.shadow, style]}
+          >
+            <TouchableWithoutFeedback
+              onPress={() => toggleDetalle()}
+            >
+              <Block flex style={[styles.imageContainer, styles.shadow]}>
+                <Block
+                  style={{
+                    paddingHorizontal: theme.SIZES.BASE * 2,
+                    paddingVertical: theme.SIZES.BASE,
+                  }}
+                >
+                  <Icon
+                    name="leaf"
+                    family="Entypo"
+                    iconColor={theme.COLORS.WHITE}
+                    size={80}
+                    color={theme.COLORS.FACEBOOK}
+                    style={[styles.social, styles.shadow]}
+                  ></Icon>
+                  <Text></Text><Text></Text><Text></Text>
+                  <Text size={9} muted={!saldoColor} color={saldoColor}>Prestamo:</Text>
+                  <Text size={15} style={styles.prestamoEntidad}>TOMADO</Text>
+                               </Block>
+              </Block>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback
+              onPress={() =>
+                toggleDetalle()
+              }
+            >
+              <Block flex space="between" style={styles.prestamoDescription}>
+                <Text size={17} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+                <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
+                <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
+                <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
+                <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_monto}</Text>
+                <Text size={9} muted={!saldoColor} color={saldoColor}>Fecha próximo vencimiento:</Text>
+                <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_fecha_proximo_vencimiento}</Text>
+              </Block>
+            </TouchableWithoutFeedback>
+          </Block>
+        );
+      }
     
-    
-
-    return (
+      else return (
       <Block
         row={horizontal}
         card
@@ -131,8 +180,9 @@ function otorgadoOtomado (){
                 style={[styles.social, styles.shadow]}
               ></Icon>
               <Text></Text><Text></Text><Text></Text>
-              <Text size={15} muted={!saldoColor} color={saldoColor}>Prestamo:</Text>
-              <Text size={19} style={styles.prestamoEntidad}>{prestamo.tomado}</Text>
+              <Text size={9} muted={!saldoColor} color={saldoColor}>Prestamo:</Text>
+              <Text size={15} style={styles.prestamoEntidad}>OTORGADO</Text>
+              
             </Block>
           </Block>
         </TouchableWithoutFeedback>
@@ -154,13 +204,15 @@ function otorgadoOtomado (){
       </Block>
     );
   }
-
-
+ 
+      
   return (
+    
     pantallaInicial ? renderPrestamo() : renderInsidePrestamo()
+    
   );
-
-}
+ 
+ }
 
 /* 
  <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
