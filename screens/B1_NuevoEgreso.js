@@ -166,7 +166,7 @@ function handleOnChangeMedioDePago(medioDePago) {
   }
 
   function tratarImagenCallback (ImagenCamara){
-    console.log('ImagenCamara: OK' );
+    console.log('ImagenCamara: OK');
     setImagenComprobante(ImagenCamara);
   }
   
@@ -181,7 +181,8 @@ function handleOnChangeMedioDePago(medioDePago) {
       cuotas_fechas, 
       cuotas_restantes, 
       descripcion,
-      auto_manual);
+      auto_manual,
+      imagenComprobante);
     
     getEgresos();
 

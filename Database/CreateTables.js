@@ -224,7 +224,9 @@ var createEgresos =
   "auto_manual" +
   " VARCHAR(45) NULL," +
   "add_dttm" +
-  " DATETIME NULL" +
+  " DATETIME NULL," +
+  "foto_comprobante" +
+  " BLOB NULL" +
   ")";
 
 var createNotificaciones =
@@ -346,7 +348,7 @@ export function dropAll() {
   createAll();
 
   //Crear solamente una
-  //dropTable(dropUsuarios)
-  //createTable(createUsuarios);
+  //dropTable(dropEgresos)
+  //createTable(createEgresos);
 
 }
