@@ -274,8 +274,12 @@ export function createAll() {
     createNotificaciones,
   ];
 
-  arrayCreates.forEach((unaQuery) => createTable(unaQuery));
-  //setTimeout(callbackSecond(), 120000);
+  arrayCreates.forEach((unaQuery) => setTimeout(() => {
+    createTable(unaQuery);
+  }, 500) 
+  
+  );
+  
 }
 
 //DROPS
@@ -335,11 +339,14 @@ export function dropAll() {
     dropNotificaciones,
   ];
 
-  //arrayDrop.forEach((unaQuery) => dropTable(unaQuery));
-  //createAll();
+  /*arrayDrop.forEach((unaQuery) => setTimeout(() => {
+    dropTable(unaQuery);
+  }, 500));*/
+
+  createAll();
 
   //Crear solamente una
-  dropTable(dropIngresos)
-  createTable(createIngresos);
+  //dropTable(dropUsuarios)
+  //createTable(createUsuarios);
 
 }

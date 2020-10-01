@@ -15,7 +15,17 @@ const { width } = Dimensions.get('screen');
 export default function Movimiento (props) {
   
   const { unMovimiento } = props;
+  //const fecha_formateada = unMovimiento.fecha.substring(0, 10);
   
+  /*{
+    cols: [{ name: "A", key: 0 }, { name: "B", key: 1 }, { name: "C", key: 2 }],
+    data: [
+      [ "id",    "name", "value" ],
+      [    1, "sheetjs",    7262 ],
+      [    2, "js-xlsx",    6969 ]
+    ]
+  }*/
+
   function renderIcon(origen){
 
     return(
@@ -29,7 +39,7 @@ export default function Movimiento (props) {
       )
   }
     return (
-      <Block row='horizontal' flex style={[styles.cuenta, styles.shadow]}>
+      <Block row flex style={[styles.cuenta, styles.shadow]}>
 
 
             <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2, paddingVertical: theme.SIZES.BASE }}>

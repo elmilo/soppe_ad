@@ -1,6 +1,8 @@
 import * as SQLite from "expo-sqlite";
 const db = SQLite.openDatabase("db2.db");
-
+import React  from 'react';
+import Moment from 'react-moment';
+import moment from 'moment';
 //*******INGRESOS************
 //date time NOW DATETIME('now','localtime')
 
@@ -76,8 +78,8 @@ export function getIngresosEgresos(successCallback) {
   // SETS MANUALES
   
   export function setIngreso(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual) {
-    var fechaInsert = new Date();
-    console.log(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual)
+    const fechaInsert = moment().format("YYYY-MM-DD");
+    //console.log(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual)
     
     
     db.transaction((tx) => {

@@ -50,7 +50,10 @@
     "react-native-speedometer-chart": "^0.7.5",
     "react-native-svg": "11.0.1",
     "react-native-svg-charts": "^5.4.0",
-    "react-native-vector-icons": "^7.1.0"
+    "react-native-vector-icons": "^7.1.0",
+    "xlsx": "^0.16.7",
+    "expo-file-system": "~8.1.0",
+    "expo-media-library": "~8.1.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^8.2.1",
