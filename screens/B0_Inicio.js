@@ -1,15 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions, ScrollView } from "react-native";
 import { Button, Block, Text, Input, theme } from "galio-framework";
 import GraficoAvance from "../components/GraficoAvance";
 import GraficoGastosAcumulados from "../components/GraficoGastosAcumulados";
 import GraficoPresupuesto from "../components/GraficoPresupuesto";
 import GraficoVencimientos from "../components/GraficoVencimientos";
+import { getPresupuestoForRubro, getOtherPresupuestos } from "../Database/Database"
+import { getEgresoForRubro, getOtherEgresos } from "../Database/Egresos"
 const { width } = Dimensions.get("screen");
 
-export default class B0_Inicio extends React.Component {
+export default function B0_Inicio (props) {
+
+  const [presupuestoGeneral, setPresupuestoGeneral] = useState(0);
+  const [presupuestoServicios, setPresupuestoServicios] = useState(0);
+  const [presupuestoOtros, setPresupuestoOtros] = useState(0);
+  const [gastosGenerales, setGastosGenerales] = useState(0);
+  const [gastoServicios, setGastoServicios] = useState(0);
+  const [gastoOtros, setGastoOtros] = useState(0);
+
+
+  function getPresupuestoGeneral(rows){
+    if(rows.length > 0){
+      setPresupuestoGeneral(Number(rows[0].monto_mensual));
+    }
+  }
+
+  function getGastosGeneral(rows){
+    if(rows[0].total != null){
+      setGastosGenerales(Number(rows[0].total));
+    }
+  }
+
+  function getPresupuestoServicio(rows){
+    if(rows.length > 0){
+      setPresupuestoServicios(Number(rows[0].monto_mensual));
+    }
+  }
+
+  function getGastoServicios(rows) {
+    if(rows[0].total != null){
+      setGastoServicios(Number(rows[0].total));
+    }
+  }
+
+  function getRemainingPresupuestos(rows){
+    if(rows[0].total != null){
+      setPresupuestoOtros(Number(rows[0].total));
+    }
+  }
+
+  function getOtherGastos(rows){
+    if(rows[0].total != null){
+      setGastoOtros(Number(rows[0].total));
+    }
+  }
+
+  useEffect(() => {
+    //207=general
+    getPresupuestoForRubro("'General'", getPresupuestoGeneral);
+    getEgresoForRubro("'General'", getGastosGeneral);
+    getPresupuestoForRubro("'Servicios e Impuestos'", getPresupuestoServicio);
+    getEgresoForRubro("'Servicios e Impuestos'", getGastoServicios);
+    getOtherPresupuestos(getRemainingPresupuestos);
+    getOtherEgresos(getOtherGastos);
+  })
   
-  renderGraficoPresupuesto = () =>{
+  function renderGraficoPresupuesto() {
     return (
       <Block fluid style={[
         styles.elementografico,
@@ -22,20 +78,20 @@ export default class B0_Inicio extends React.Component {
  </Text></Block>
     <Block row >
       <Block >
-      <GraficoPresupuesto avance={15} target={100} categoria={'General'}/>
+      <GraficoPresupuesto avance={gastosGenerales} target={presupuestoGeneral} categoria={'General'}/>
       </Block>
       <Block >
-      <GraficoPresupuesto avance={80} target={60} categoria={'Servicios'}/>
+      <GraficoPresupuesto avance={gastoServicios} target={presupuestoServicios} categoria={'Servicios'}/>
       </Block>
       <Block >
-      <GraficoPresupuesto avance={36} target={80} categoria={'Otros'}/>
+      <GraficoPresupuesto avance={gastoOtros} target={presupuestoOtros} categoria={'Otros'}/>
       </Block>
       </Block>
       </Block>
       );
   }
 
-  renderGastosAcumulados = () => {
+  function renderGastosAcumulados(){
     return (
       <Block
         card
@@ -49,7 +105,7 @@ export default class B0_Inicio extends React.Component {
     );
   };
 
-  renderVencimientosYDisponibles = () => {
+  function renderVencimientosYDisponibles(){
     return (
       <Block row>
         <Block
@@ -80,18 +136,18 @@ export default class B0_Inicio extends React.Component {
 
 
 
-  render() {
+  
     return (
       <Block flex center>
         <ScrollView showsVerticalScrollIndicator={false}>
-        {this.renderGastosAcumulados()}
-{this.renderVencimientosYDisponibles()} 
-          {this.renderGraficoPresupuesto()}
+        {renderGastosAcumulados()}
+{renderVencimientosYDisponibles()} 
+          {renderGraficoPresupuesto()}
           
         </ScrollView>
       </Block>
     );
-  }
+  
 }
 
 
