@@ -7,7 +7,7 @@ import SwitchPersonalizado from "../components/SwitchPersonalizado";
 import ModalPersonalizado from '../components/ModalPersonalizado';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import  InsertMaestros  from "../Database/InsertMaestros";
-import { getCuentas } from "../Database/Database";
+import { getCuentas, updateSaldoCuentaIngreso } from "../Database/Database";
 import { setIngreso, getIngresos } from "../Database/Ingresos";
 
 const { height, width } = Dimensions.get("screen");
@@ -151,7 +151,6 @@ const handleConfirm = (date) => {
 
 /********************************************************************* */
 function saveIngreso() {
-
   setIngreso( user_id,
       cuenta, 
       tipoIngreso, 
@@ -162,6 +161,9 @@ function saveIngreso() {
       auto_manual);
     
     getIngresos();
+
+    // {medio_de_pago == "Consumo Cuenta"
+    updateSaldoCuentaIngreso(cuenta.slice(cuenta.search("-")+2,-5),monto);
 
   }
 

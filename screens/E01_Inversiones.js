@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
 import { Block, Button, Text, theme, Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -11,6 +11,7 @@ import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
 import { setInversion} from "../Database/Database";
 import * as SQLite from "expo-sqlite";
+import { getCuentas } from "../Database/Database";
 
 const arrayTipoIngreso = [
   { value: 1, label: "Plazo Fijo" },
@@ -18,17 +19,19 @@ const arrayTipoIngreso = [
   { value: 3, label: "Compra Acción" },
   { value: 4, label: "Fondo de Inversion" },
 ];
-
+/*
 const arrayCuentaIngreso = [
   { value: 1, label: "Banco Galicia ARS" },
   { value: 2, label: "Banco Galicia USD" },
   { value: 3, label: "Mercado Pago" },
   { value: 4, label: "BBVA ARS" },
 ];
-
+*/
 
 export default function E01_Inversiones(props) {
-   
+  const [user_id, setUser_id] = useState(1);
+  const [cuenta, setCuenta]= useState("");
+  const [arrayCuentas, setArrayCuentas] = useState([]);
   const [tipo, SetTipo] = useState('');
   const [cuentaIn, SetCuentaIn] = useState('');
   const [vencimiento, setVencimiento] = useState(0.0);
@@ -38,6 +41,29 @@ export default function E01_Inversiones(props) {
  
   const navigation = props.navigation;
   let index = 0;
+
+  useEffect(() => {
+    getCuentas(user_id, successArrayCuentas);
+  }, []);
+
+  function handleOnChangeCuenta (unaCuenta){
+    console.log('handleOnChangeCuenta: ' + unaCuenta);
+    setCuenta(unaCuenta);
+  }
+
+  
+  function successArrayCuentas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id + elemento.nro_cuenta ,
+        label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
+      });
+    });
+
+    setArrayCuentas(datosFinales);
+  }
+
 
   function DropdownTipo(props) {
     return (
@@ -51,21 +77,21 @@ export default function E01_Inversiones(props) {
 
   function DropdownCuenta(props) {
     return (
-      <ModalPersonalizado
-        data={arrayCuentaIngreso}
+      <Block>
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
+        <ModalPersonalizado
+        data={arrayCuentas}
         initValue="Seleccione una Cuenta"
         onSelected={handleOnChangeCuenta}
       />
+      </Block>
     );
-  };
+  }
 
   function handleOnChangeTipo(unTipo) {
     SetTipo(unTipo);
   }
 
-  function handleOnChangeCuenta(unaCuentaIn) {
-    SetCuentaIn(unaCuentaIn);
-  }
 
   function saveInversion() {
     setInversion(tipo, vencimiento, cuentaIn, valorInv,valorVenta, descripcion);
@@ -82,7 +108,7 @@ export default function E01_Inversiones(props) {
         {DropdownTipo()}
         <Block />
           <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
-          {DropdownCuenta()}
+         {DropdownCuenta()}
           <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
       
         <Block flex>

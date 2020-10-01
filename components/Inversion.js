@@ -77,7 +77,7 @@ export default function Inversion(props) {
             <Text size={17} style={styles.inversionEntidad}>{inversion.tipo}</Text>
             <Text size={15} style={styles.inversionEntidad}>{inversion.descripcion}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
-            <Text size={17} style={styles.inversionEntidad}>{inversion.cuenta_id}</Text>
+            <Text size={14} style={styles.inversionEntidad}>{inversion.cuenta_id}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de compra:</Text>
             <Text size={17} style={styles.inversionEntidad}>${inversion.compra_monto}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Vencimiento:</Text>
@@ -132,7 +132,7 @@ export default function Inversion(props) {
             <Text size={17} style={styles.inversionEntidad}>{inversion.tipo}</Text>
             <Text size={15} style={styles.inversionEntidad}>{inversion.descripcion}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
-            <Text size={17} style={styles.inversionEntidad}>{inversion.cuenta_id}</Text>
+            <Text size={14} style={styles.inversionEntidad}>{inversion.cuenta_id}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de compra:</Text>
             <Text size={17} style={styles.inversionEntidad}>${inversion.compra_monto}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Vencimiento:</Text>

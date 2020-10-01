@@ -7,7 +7,7 @@ import SwitchPersonalizado from "../components/SwitchPersonalizado";
 import ModalPersonalizado from "../components/ModalPersonalizado";
 import { FloatingAction } from "react-native-floating-action";
 import CamaraPersonalizada from "../components/CamaraPersonalizada";
-import { getCuentas, getTarjetas } from "../Database/Database";
+import { getCuentas, getTarjetas, updateSaldoCuentaEgreso } from "../Database/Database";
 
 import { setEgreso, getEgresos } from "../Database/Egresos";
 import  InsertMaestros  from "../Database/InsertMaestros";
@@ -181,12 +181,12 @@ function handleOnChangeMedioDePago(medioDePago) {
       cuotas_fechas, 
       cuotas_restantes, 
       descripcion,
-      auto_manual,
-      imagenComprobante);
-    
+      auto_manual);
+
     getEgresos();
-
-
+    {medio_de_pago == "Consumo Cuenta"
+          ? updateSaldoCuentaEgreso(cuenta.slice(cuenta.search("-")+2,-5),monto): false };
+//;
     setCuenta("");
     setRubro("");
     SetCategoria(null);

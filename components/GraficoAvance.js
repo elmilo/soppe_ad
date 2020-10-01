@@ -31,7 +31,6 @@ var saldos = [];
 
 
 function setDisponibles(cs, ss){
-  console.log(cs, ss);
   cuentas = cs;
   saldos = ss;
 }

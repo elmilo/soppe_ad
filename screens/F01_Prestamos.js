@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState, useEffect} from 'react';
 import {
   ImageBackground,
   Image,
@@ -20,13 +20,8 @@ import ModalPersonalizado from "../components/ModalPersonalizado";
 import { setPrestamo, get2Cuentas } from "../Database/Database";
 import products from "../constants/products";
 import * as SQLite from "expo-sqlite";
+import { getCuentas } from "../Database/Database";
 
-const arrayCuentaIngreso = [
-  { value: 1, label: "Banco Galicia ARS" },
-  { value: 2, label: "Banco Galicia USD" },
-  { value: 3, label: "Mercado Pago" },
-  { value: 4, label: "BBVA ARS" },
-];
 const arrayTipo = [
   { value: 1, label: "En Cuenta" },
   { value: 2, label: "Con Tercero" },
@@ -34,6 +29,8 @@ const arrayTipo = [
 
 
 export default function F01_Prestamos(props) {
+  const [user_id, setUser_id] = useState(1);
+  const [cuenta, setCuenta]= useState("");
   const [tipoPrestamo, setTipoPrestamo] = useState("");
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
@@ -44,22 +41,30 @@ export default function F01_Prestamos(props) {
   const [fechaVencimiento, setFechaVencimiento] = useState(0.0);
   const [valorCuota, setValorCuota] = useState(0.0);
   const [valorPrestamo, setValorPrestamo] = useState(0.0);
-  const [cuenta, SetCuenta] = useState(null);
-  
+  const [arrayCuentas, setArrayCuentas] = useState([]);
   const navigation = props.navigation;
   let index = 0;
 
-  function handleOnChangeCuenta(unaCuenta) {
-    SetCuenta(unaCuenta);
+  useEffect(() => {
+    getCuentas(user_id, successArrayCuentas);
+  }, []);
+
+  function handleOnChangeCuenta (unaCuenta){
+    console.log('handleOnChangeCuenta: ' + unaCuenta);
+    setCuenta(unaCuenta);
   }
 
   function handleOnChangePrestamo(unPrestamo) {
     SetPrestamo(unPrestamo);
   }
+
   function handleOnChangeTipo(unTipo) {
     setTipoPrestamo(unTipo);
   }
-
+  function handleOnChangeTipoIngreso (elemento){
+    console.log('handleOnChangeTipoIngreso: ' + elemento);
+    setTipoIngreso(elemento);
+  }
 
 
   function savePrestamo() {
@@ -73,7 +78,7 @@ export default function F01_Prestamos(props) {
       <Block>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
         <ModalPersonalizado
-        data={arrayCuentaIngreso}
+        data={arrayCuentas}
         initValue="Seleccione una Cuenta"
         onSelected={handleOnChangeCuenta}
       />
@@ -89,6 +94,22 @@ export default function F01_Prestamos(props) {
       />
     );
   };
+
+ 
+
+
+  function successArrayCuentas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id + elemento.nro_cuenta ,
+        label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
+      });
+    });
+
+    setArrayCuentas(datosFinales);
+  }
+
 
   function TerceroDescripcion(props) {
     return (

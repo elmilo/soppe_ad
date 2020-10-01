@@ -25,7 +25,6 @@ var montos = [];
 
 
 function setEgresos(ds, ms){
-  console.log(ds, ms);
   descripciones = ds;
   montos = ms;
 }

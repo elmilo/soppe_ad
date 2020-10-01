@@ -28,7 +28,6 @@ export function getActiveEgresos(successCallback){
       'SELECT descripcion, monto from Egresos where cuotas_restantes > 0',
       [],
       (_, { rows }) => {
-        console.log("egresos activos", rows._array);
         var results = rows._array;
         let descripciones = [];
         let montos = [];
@@ -43,6 +42,41 @@ export function getActiveEgresos(successCallback){
       }
     )
   })
+}
+
+export function getEgresoForRubro(rubro, successCallback){
+  db.transaction((tx) => {
+    tx.executeSql(
+      'Select sum(monto) as total from Egresos where rubro_id = ' + rubro,
+      [],
+      (_, { rows }) => {
+        console.log(rows);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        console.log(error);
+      }
+    );
+  
+  });
+
+}
+
+export function getOtherEgresos(successCallback){
+  db.transaction((tx) => {
+    tx.executeSql(
+      "Select sum(monto) as total from Egresos where rubro_id != 'General' and rubro_id != 'Servicios e Impuestos'",
+      [],
+      (_, { rows }) => {
+        console.log(rows);
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        console.log(error);
+      }
+    );
+  
+  });
 }
 
 //SETS MANUALES
