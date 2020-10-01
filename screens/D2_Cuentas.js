@@ -13,19 +13,13 @@ import ModalPersonalizado from '../components/ModalPersonalizado';
 
 
 export default function D2_Cuentas (props) {
-  const [datos, setDatos] = React.useState(null);
-      const [cuenta, setCuenta]= useState("");
-  
+  const [user_id, setUser_id] = useState(1);
+  const [cuenta, setCuenta] = useState("");
+  const [arrayCuentas, setArrayCuentas] = useState([]);
   const navigation = props.navigation;
-  const arrayCuentas1 = [
-    { value: 1, label: "Cuenta1" },
-    { value: 2, label: "Cuenta2" },
-    { value: 3, label: "Cuenta3" },
-    { value: 4, label: "Cuenta4" },
-  ];
-
+  
   useEffect(() => {
-    getCuentas(1, successArrayCuentas);
+    getCuentas(user_id, successArrayCuentas);
   }, []);
 
   function handleOnChangeCuenta (unaCuenta){
@@ -45,10 +39,11 @@ export default function D2_Cuentas (props) {
     setArrayCuentas(datosFinales);
   }
 
-  function DropdownCuenta(props) {
+
+ function DropdownCuenta(props) {
     return (
       <Block>
-        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta a Eliminar</Text>
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
         <ModalPersonalizado
         data={arrayCuentas}
         initValue="Seleccione una Cuenta"
@@ -58,48 +53,45 @@ export default function D2_Cuentas (props) {
     );
   }
 
+  const arrayCuentas1 = [
+    { value: 1, label: "Cuenta1" },
+    { value: 2, label: "Cuenta2" },
+    { value: 3, label: "Cuenta3" },
+    { value: 4, label: "Cuenta4" },
+  ];
+
+  
+
   function eliminarCuenta() {
     const user_id = 1;
-    deleteCuenta(cuenta.slice(cuenta.search("-")+2,-5));
+    deleteCuenta(cuenta.nro_cuenta);
     navigation.navigate("Cuentas");
   }
   
-  const [arrayCuentas, setArrayCuentas] = useState([]);
-  //arrayCuentas
-  function successCallback(rows) {
-    var datosTemporales = [];
-    rows.forEach((cuenta, index) => {
-      datosTemporales.push(<Cuenta cuenta={cuenta} key={index} horizontal />);
-    });
-
-    setDatos(datosTemporales);
-  }
-  useFocusEffect(() => {
-    getCuentas(successCallback);
-  })
-
-  const renderCuentas = () => {
     
-    return (
-      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>   
-      {DropdownCuenta()} 
-      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>  
-      <Button shadowless color="red" style={[styles.button, styles.shadow]}>
-        Eliminar
-      </Button>
-      </Block>
-      </Block>
-      
-      
-    );
-  
-};
-return (
-  <Block flex center style={styles.home}>
-    {renderCuentas()}
-  </Block>
-);
+  return (
+    <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>  
+    {DropdownCuenta()}
+      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+      <Text></Text><Text></Text>
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+      <Button
+            shadowless
+            color="red"
+            style={[styles.button, styles.shadow]}
+            onPress={() => {eliminarCuenta();}}
+          >
+          Eliminar
+          </Button>
+          </Block>
+          </Block>      
+  );
 }
+
+
+
 
 
 const styles = StyleSheet.create({

@@ -7,32 +7,35 @@ const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import prestamos from '../constants/prestamos.js';
+import { deletePrestamo } from '../Database/Database';
 
-export default class F02_Prestamos extends React.Component {
-  render() {
-    const { navigation } = this.props;
-    const { prestamo } = this.props;
+export default function F02_Prestamos (props) {
+  
+  function eliminarPrestamo() {
+    deletePrestamo(id);
+    navigation.navigate("Prestamo");
+      }
+
     
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-      
-      <TouchableWithoutFeedback >
-          <Block flex  style={styles.prestamoDescription}>
-          <Text size={23} style={styles.prestamoEntidad}>{prestamo}</Text>
+   
+          
             
 
-          </Block>
-        </TouchableWithoutFeedback>
-        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text>
+         
        
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
        
             <Text></Text>
-        <Button shadowless color="red" style={[styles.button, styles.shadow]}>
-              Eliminar
+            <Button
+              shadowless
+              color="red"
+              style={[styles.button, styles.shadow]}
+             // onPress={() => {eliminarPrestamo();}}
+
+            >
+            Eliminar
             </Button>
             </Block>
                      
@@ -40,7 +43,6 @@ export default class F02_Prestamos extends React.Component {
       
     );
   }
-}
 
 const styles = StyleSheet.create({
     container: {
