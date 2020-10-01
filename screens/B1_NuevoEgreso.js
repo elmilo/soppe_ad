@@ -310,10 +310,11 @@ function handleOnChangeMedioDePago(medioDePago) {
         ? renderInputBox("numeric", "Cuotas restantes", setCuotas_restantes)
         : null}
 
-      <Block>
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
         <CamaraPersonalizada SelectedImage={tratarImagenCallback}/>
       </Block>
       <Text></Text>
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <Button
               shadowless
               color="success"
@@ -326,6 +327,7 @@ function handleOnChangeMedioDePago(medioDePago) {
         >
               +
             </Button>
+            </Block>
     </Block>
     </ScrollView>
   );

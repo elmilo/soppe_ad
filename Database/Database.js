@@ -509,18 +509,18 @@ export function getInversionDetalle(id) {
   });
 }
 
-export function updateVenderInversion(id, ventaMonto) {
-  console.log("updateVenderInversion");
+export function updateVentaMontoInversion(id, ventaMonto) {
+  console.log("updateVentaMontoInversion");
   console.log(id, ventaMonto);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Inversiones set venta_monto = ? terminado = 'true' where id = ?",
+        "update Inversiones set venta_monto = ? where id = ?",
         [ventaMonto, id],
       );
     },
     null,
-    () => console.log("la inversion se ha actualizado a status terminado")
+    () => console.log("la ventaMonto de inversion se ha actualizado")
   );
 }
 
