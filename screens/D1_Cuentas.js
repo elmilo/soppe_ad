@@ -128,26 +128,6 @@ export default function D1_Cuentas(props) {
           />
         </Block>
       </Block>
-
-      <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>
-        Saldo
-      </Text>
-      <Block flex style={styles.group}>
-        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-          <Input
-            right
-            placeholder="$"
-            placeholderTextColor={materialTheme.COLORS.DEFAULT}
-            style={{
-              borderRadius: 1,
-              borderColor: materialTheme.COLORS.INPUT,
-            }}
-            onChangeText={(text) => {
-              setSaldo(text);
-            }}
-          />
-        </Block>
-      </Block>
       <Block
         style={{
           paddingHorizontal: theme.SIZES.BASE,
@@ -156,7 +136,7 @@ export default function D1_Cuentas(props) {
       >
 
       </Block>
-      <Text></Text>
+      
     </Block>
     )
   }
@@ -196,9 +176,31 @@ export default function D1_Cuentas(props) {
 
         <Block />
         {DropdownMoneda()}
+
+        <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>
+        Saldo
+      </Text>
+      <Block flex style={styles.group}>
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+          <Input
+            right
+            placeholder="$"
+            placeholderTextColor={materialTheme.COLORS.DEFAULT}
+            style={{
+              borderRadius: 1,
+              borderColor: materialTheme.COLORS.INPUT,
+            }}
+            onChangeText={(text) => {
+              setSaldo(text);
+            }}
+          />
+        </Block>
+      </Block>
+
         <Block />
         {renderDebajoCuentas()}
 
+        <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
         <Button
           shadowless
           color="success"
@@ -207,6 +209,7 @@ export default function D1_Cuentas(props) {
         >
           +
         </Button>
+        </Block>
       </ScrollView>
     </Block>
   );
