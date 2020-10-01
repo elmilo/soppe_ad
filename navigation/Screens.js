@@ -454,8 +454,6 @@ function StackPerfil(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              white
-              back
               transparent
               title="Perfil"
               scene={scene}

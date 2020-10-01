@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Dimensions,
-  ScrollView,
+  ActivityIndicator,
   Image,
   ImageBackground,
   Platform,
@@ -19,59 +19,102 @@ import { userData } from "../Database/Database";
 
 import { fakeprofile as miPerfil } from "../constants";
 import { TouchableHighlight } from "react-native";
+import { getTodo } from "../Database/SelectTables";
 
-export default class B01_Perfil extends React.Component {
-  render() {
-    const { profile } = this.props;
+import { login } from "../external/UserAPI";
 
-    return (
-      <Block flex style={styles.profile}>
-        <Block flex>
-          <ImageBackground
-            source={miPerfil.avatar}
-            style={styles.profileContainer}
-            imageStyle={styles.profileImage}
-          >
-            <Block flex style={styles.profileDetails}>
-              <Block style={styles.profileTexts}>
-                <Text color="black" size={28} style={{ paddingBottom: 8 }}>
-                  {userData.nombre + " " + userData.apellido}
-                </Text>
-                <Block row space="between">
-                  <Block row>
-                    <Text color="white" size={16} muted style={styles.seller}>
-                      {miPerfil.time}
-                    </Text>
-                    <Text size={16} color={materialTheme.COLORS.WARNING}>
-                      <Icon name="shape-star" family="GalioExtra" size={14} />{" "}
-                      {miPerfil.amount} administrados
-                    </Text>
-                  </Block>
+
+
+    
+
+export default function B01_Perfil(props) {
+  const [indicadorWIPE, setIndicadorWIPE] = useState(false);
+  const [indicadorWIPR, setIndicadorWIPR] = useState(false);
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+
+  function successCallback(rowDB) {
+    setNombre(rowDB.nombre);
+    setApellido(rowDB.apellido);
+  }
+
+  useEffect(() => {
+    getTodo("Usuarios", successCallback);
+  }, []);
+
+  function recuperarDatosNube (){
+    setIndicadorWIPR(true);
+
+  }
+
+
+  function enviarDatosNube (){
+    setIndicadorWIPE(true);
+
+  }
+
+  return (
+    <Block flex style={styles.profile}>
+      <Block flex>
+        <ImageBackground
+          source={miPerfil.avatar}
+          style={styles.profileContainer}
+          imageStyle={styles.profileImage}
+        >
+          <Block flex style={styles.profileDetails}>
+            <Block style={styles.profileTexts}>
+              <Text color="black" size={28} style={{ paddingBottom: 8 }}>
+                {nombre + " " + apellido}
+              </Text>
+              <Block row space="between">
+                <Block row>
+                  <Text color="white" size={16} muted style={styles.seller}>
+                    {miPerfil.time}
+                  </Text>
+                  <Text size={16} color={materialTheme.COLORS.WARNING}>
+                    <Icon name="shape-star" family="GalioExtra" size={14} />{" "}
+                    {miPerfil.amount} administrados
+                  </Text>
                 </Block>
               </Block>
-              <LinearGradient
-                colors={["rgba(0,0,0,0)", "rgba(0,0,0,1)"]}
-                style={styles.gradient}
-              />
             </Block>
-          </ImageBackground>
+            <LinearGradient
+              colors={["rgba(0,0,0,0)", "rgba(0,0,0,1)"]}
+              style={styles.gradient}
+            />
+          </Block>
+        </ImageBackground>
 
-          <Block>
-            <Block center >
-            <Button style={styles.button}
-            color={materialTheme.COLORS.INFO}>
-              Subir datos
+        <Block>
+          <Block center>
+            <Button
+              style={styles.button}
+              color={materialTheme.COLORS.INFO}
+              onPress={() => {
+                enviarDatosNube();
+                alert("ok");
+              }}
+            >
+              <Text>Enviar mis datos a la nube</Text>
+              {indicadorWIPE? <ActivityIndicator /> : null}
             </Button>
-            <Button style={styles.button}
-            color={materialTheme.COLORS.INFO}>
-              Mis datos
+
+            <Button
+              style={styles.button}
+              color={materialTheme.COLORS.LABEL}
+              onPress={() => {
+                recuperarDatosNube();
+                alert("ok");
+              }}
+            >
+              <Text>Recuperar datos de la nube</Text>
+              {indicadorWIPR? <ActivityIndicator /> : null}
             </Button>
-            </Block>
           </Block>
         </Block>
       </Block>
-    );
-  }
+    </Block>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -143,6 +186,6 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     shadowOpacity: 0,
     marginTop: theme.SIZES.BASE,
-    marginBottom: theme.SIZES.BASE
+    marginBottom: theme.SIZES.BASE,
   },
 });

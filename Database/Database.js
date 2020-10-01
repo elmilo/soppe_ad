@@ -28,16 +28,37 @@ export var userData = {};
  export function registerUser(email, nombre, apellido, password, idExt) {
    console.log("registerUser");
    console.log(email, nombre, apellido, password, idExt);
+
    db.transaction(
-     (tx) => {
-       tx.executeSql(
-         "insert into Usuarios (email, nombre, apellido, password, idExt) values (?, ?, ?, ?, ?)",
-         [email, nombre, apellido, password, idExt]
-       );
-     },
-     null,
-     () => console.log("el usuarios se registró correctamente"));
-    }
+    (tx) => {
+      tx.executeSql(
+        "DELETE FROM Usuarios;",
+        []
+      );
+    },
+    null,
+    () => {console.log("se vació la tabla usuarios OK");
+  
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          "insert into Usuarios (email, nombre, apellido, password, idExt) values (?, ?, ?, ?, ?)",
+          [email, nombre, apellido, password, idExt]
+        );
+      },
+      null,
+      () => console.log("el usuarios se registró correctamente"));
+  
+  
+  }
+    
+    
+    
+    );
+
+
+ 
+};
 
 
 //*******CUENTAS************
