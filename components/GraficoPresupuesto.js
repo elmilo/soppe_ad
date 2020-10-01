@@ -14,10 +14,11 @@ const screenWidth = Dimensions.get("window").width;
 
 //import { ProgressCircle } from 'react-native-svg-charts'
 
-export default class GraficoPresupuesto extends React.Component {
+export default function GraficoPresupuesto (props) {
 
-    render() {
-      const { avance, target, categoria } = this.props; 
+    
+      const { avance, target, categoria } = props; 
+      
       const innerCircle = [
         {width: (screenWidth / 4) },
         {height: (screenWidth / 8)}
@@ -55,4 +56,3 @@ export default class GraficoPresupuesto extends React.Component {
             />*/
         )
     }
-  }

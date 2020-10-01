@@ -8,6 +8,7 @@ import GraficoVencimientos from "../components/GraficoVencimientos";
 import { getPresupuestoForRubro, getOtherPresupuestos } from "../Database/Database"
 import { getEgresoForRubro, getOtherEgresos } from "../Database/Egresos"
 const { width } = Dimensions.get("screen");
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function B0_Inicio (props) {
 
@@ -55,14 +56,18 @@ export default function B0_Inicio (props) {
     }
   }
 
-  useEffect(() => {
-    getPresupuestoForRubro("'General'", getPresupuestoGeneral);
-    getEgresoForRubro("'General'", getGastosGeneral);
-    getPresupuestoForRubro("'Servicios e Impuestos'", getPresupuestoServicio);
-    getEgresoForRubro("'Servicios e Impuestos'", getGastoServicios);
-    getOtherPresupuestos(getRemainingPresupuestos);
-    getOtherEgresos(getOtherGastos);
-  })
+  useFocusEffect(
+    React.useCallback(() => {
+      getPresupuestoForRubro("'General'", getPresupuestoGeneral);
+      getEgresoForRubro("'General'", getGastosGeneral);
+      getPresupuestoForRubro("'Servicios e Impuestos'", getPresupuestoServicio);
+      getEgresoForRubro("'Servicios e Impuestos'", getGastoServicios);
+      getOtherPresupuestos(getRemainingPresupuestos);
+      getOtherEgresos(getOtherGastos);
+    }, [getPresupuestoGeneral, getGastosGeneral, getPresupuestoServicio, getGastoServicios, getRemainingPresupuestos, getOtherGastos])
+  );
+
+  
   
   function renderGraficoPresupuesto() {
     return (
