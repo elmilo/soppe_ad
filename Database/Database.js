@@ -44,10 +44,10 @@ export var userData = {};
 export function getCuentas(id_usuario, successCallback) {
   db.transaction((tx) => {
     tx.executeSql(
-      "select id, entidad_id, moneda, nro_cuenta from Cuentas where user_id = ?",
+      "select * from Cuentas where user_id = ?",
       [id_usuario],
       (_, { rows }) => {
-        //console.log('Success getCuentas: ', rows._array);
+        console.log('Success getCuentas: ', rows._array);
         successCallback(rows._array);
       },
       (_, error) => {
@@ -104,6 +104,37 @@ export function getCuentaDetalle(id) {
     );
   });
 }
+
+export function updateSaldoCuentaIngreso(nroCuenta, montoIngreso) {
+  console.log("updateSaldoCuentaIngreso");
+  console.log(nroCuenta,montoIngreso);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "update Cuentas set saldo = saldo + ? where user_id = ? and nro_cuenta = ?;",
+        [montoIngreso, 1, nroCuenta]
+      );
+    },
+    null,
+    () => console.log("el saldo de la cuenta se incrementó correctamente")
+  );
+}
+
+  export function updateSaldoCuentaEgreso(nroCuenta, montoEgreso) {
+    console.log("updateSaldoCuentaEgreso");
+    console.log(nroCuenta, montoEgreso);
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          "update Cuentas set saldo = saldo - ? where user_id = ? and nro_cuenta = ?;",
+          [montoEgreso, 1, nroCuenta]
+        );
+      },
+      null,
+      () => console.log("el saldo de la cuenta se disminuyó correctamente")
+    );
+  }
+
 
 export function getSaldoIngresosCuenta(cuenta) {
   db.transaction((tx) => {
