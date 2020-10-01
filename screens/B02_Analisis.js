@@ -18,7 +18,7 @@ import { HeaderHeight } from "../constants/utils";
 import XLSX from "xlsx";
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
-
+import * as Sharing from 'expo-sharing';
 const DDP = FileSystem.documentDirectory;
 //const DDP =FileSystem.cacheDirectory /;
 const exportDir = DDP;
@@ -35,11 +35,14 @@ export default function B02_Analisis(props) {
   const [botonOpciones, setBotonOpciones] = useState(false);
   const [datosExportar, setDatosExportar] = useState([]);
 
+  const [botonExportar, setBotonExportar] = useState(false);
+
   const { navigation } = props;
 
   function exportFile() {
      /* convert AOA back to worksheet */
-    const ws = XLSX.utils.aoa_to_sheet(datosExportar);
+   // const ws = XLSX.utils.aoa_to_sheet(datosExportar);
+   const ws = XLSX.utils.json_to_sheet(datosExportar);
 
     /* build new workbook */
     const wb = XLSX.utils.book_new();
@@ -48,16 +51,37 @@ export default function B02_Analisis(props) {
     /* write file */
     const contents = XLSX.write(wb, { type: "binary", bookType: "xlsx" });
     const fileUri = exportDir + '/' + "data_export.xlsx";
+    //console.log("contents excel " + contents);
     FileSystem.writeAsStringAsync(fileUri, contents).then((res) => {
-      console.log("exportFile success" +  " Exported to " + fileUri);
-      MediaLibrary.saveToLibraryAsync(fileUri);
+      console.log("exportFile success" +  " Exported to res: " + res);
+      Sharing.shareAsync(contents, {
+        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        dialogTitle: 'Bajar datos exportados',
+        UTI: 'com.microsoft.excel.xlsx'
+      });
+      
+      //MediaLibrary.saveToLibraryAsync(fileUri);
       })
       .catch((err) => {
         console.log("exportFile Error", "Error " + err.message);
       });
   }
 
+/*  const wbout = XLSX.write(wb, {
+    type: 'base64',
+    bookType: "xlsx"
+  });*/
  
+
+  /*await FileSystem.writeAsStringAsync(uri, wbout, {
+    encoding: FileSystem.EncodingType.Base64
+  });
+  
+  await Sharing.shareAsync(uri, {
+    mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    dialogTitle: 'MyWater data',
+    UTI: 'com.microsoft.excel.xlsx'
+  });*/
  /* function getCurrentTime() {
     // Get the current 'global' time from an API using Promise
     return new Promise((resolve, reject) => {
@@ -77,23 +101,36 @@ export default function B02_Analisis(props) {
   */
 
   function callbackExportData(rows) {
-      var datosTemporales = {
+      /*var datosTemporales = {
         cols: [{ name: "A", key: 0 }, { name: "B", key: 1 }, { name: "C", key: 2 }, { name: "D", key: 3 }],
         data: []
-      };
-    
+      };*/
+      var datosTemporales = [];
       var cabeceras = [ "Tipo",    "Fecha", "Descripción" , "Monto"];
-      datosTemporales.data.push(cabeceras);
+      datosTemporales.push(cabeceras);
 
       rows.forEach((elemento, index) => {
-        console.log('elemento: ' + JSON.stringify(elemento));
+        
         var unaFila = [elemento.origen, elemento.fecha, elemento.descripcion, elemento.monto];
-        datosTemporales.data.push(unaFila);
+        datosTemporales.push(unaFila);
       });
-  
       setDatosExportar(datosTemporales);
-      exportFile();
+      setBotonExportar(true);
     }
+
+  function renderBotonDescargar(){
+    return(
+    <Button
+    shadowless
+    color={materialTheme.COLORS.ACTIVE}
+    onPress={() => {
+      exportFile();
+      setBotonExportar(false);
+    }}
+  >
+    BAJAR
+  </Button>)
+  }
 
 
   function renderBotonOpcionesDescarga() {
@@ -131,7 +168,7 @@ export default function B02_Analisis(props) {
             onPress={() => {
               getMovimientosYTD (1, callbackExportData);
               
-              setBotonOpciones(false);
+              setBotonExportar(true);
             }}
           >
             Descargar Movimientos Año Actual
@@ -160,6 +197,7 @@ export default function B02_Analisis(props) {
       {botonOpciones
         ? renderOpcionesDescargas()
         : renderBotonOpcionesDescarga()}
+      {botonExportar? renderBotonDescargar() : null}
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.cuentas}

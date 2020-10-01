@@ -192,14 +192,14 @@ export function getSaldoEgresosCuenta(cuenta) {
   });
 }
 
-export function deleteCuenta(id) {
+export function deleteCuenta(nroCuenta) {
   console.log("deleteCuenta");
-  console.log(id);
+  console.log(nroCuenta);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Cuentas where cbu = ?",
-        [id]
+        "delete from Cuentas where nro_cuenta = nroCuenta",
+        [nroCuenta]
       );
     },
     null,
