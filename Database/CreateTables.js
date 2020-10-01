@@ -339,14 +339,10 @@ export function dropAll() {
     dropNotificaciones,
   ];
 
-<<<<<<< HEAD
   /*arrayDrop.forEach((unaQuery) => setTimeout(() => {
     dropTable(unaQuery);
   }, 500));*/
 
-=======
-  arrayDrop.forEach((unaQuery) => dropTable(unaQuery));
->>>>>>> 353f3664da0f055922a68581ff159ac04e0ac296
   createAll();
 
   //Crear solamente una
