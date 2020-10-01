@@ -51,3 +51,37 @@ export function getTodoSC(campos, userID, table) {
     );
   });
 }
+
+export function getTodoSinFiltro(table, successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from " + table,
+      [],
+      (_, { rows }) => {
+        console.log('Success getTodoSinFiltro: ' + table + ' -- ' + JSON.stringify(rows._array));
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        console.log("error getCompleto", error);
+      }
+    );
+  });
+}
+
+
+export function getTodoUserID(table, user_id, callback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from " + table + " where user_id = ?",
+      [user_id],
+      (_, { rows }) => {
+        console.log('Success getTodoSC: ' + table + ' -- ' + JSON.stringify(rows._array[0]));
+        callback (rows._array);
+      },
+      (_, error) => {
+        console.log("error getCompleto", error);
+        return ([]);
+      }
+    );
+  });
+}

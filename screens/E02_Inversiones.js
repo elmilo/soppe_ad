@@ -7,18 +7,60 @@ const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import inversiones from '../constants/inversiones.js';
+import ModalPersonalizado from "../components/ModalPersonalizado";
 
-export default class D2_Inversiones extends React.Component {
-  render() {
-    const { navigation } = this.props;
-    const { inversion } = this.props;
-    
+import { setIngresoVentaInversion } from "../Database/Ingresos";
+import { updateVentaMontoInversion } from "../Database/Database";
+
+export default function D2_Inversiones(props) {
+    const { navigation, inversion } = props;
+    const [inversionId, SetInversionId] = useState("");
+    const [arrayInversiones, setArrayInversiones] = useState([]);
+
+    const arrayInversiones1 = [
+      { value: 1, label: "Inversion1" },
+      { value: 2, label: "Inversion2" },
+      { value: 3, label: "Inversion3" },
+      { value: 4, label: "Inversion4" },
+    ];
+
+    function handleOnChangeInversionId(elemento) {
+      SetInversionId(elemento);
+    }
+
+    function renderDropdown(lista, texto, handle) {
+      return (
+        <ModalPersonalizado data={lista} initValue={texto} onSelected={handle} />
+      );
+    }
+
+    function successArrayInversiones(rows) {
+      var datosFinales = [];
+      rows.forEach((elemento, key) => {
+        datosFinales.push({
+          key: elemento.id,
+          label: elemento.tipo  + ' - ' + elemento.descripcion,
+        });
+      });
+  
+      setArrayInversiones(datosFinales);
+    }
+
+    function saveUpdateMonto() {
+      updateVentaMontoInversion(inversionId, ventaMonto)
+
+    }
+
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       
       <TouchableWithoutFeedback >
           <Block flex  style={styles.inversionDescription}>
-           
+          {renderDropdown(
+          arrayInversiones,
+          "Inversion a Actualizar",
+          handleOnChangeInversionId
+        )}
             <Text size={15} >Valor de venta:</Text>
             <Block flex style={styles.group}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
@@ -52,7 +94,6 @@ export default class D2_Inversiones extends React.Component {
       
     );
   }
-}
 
 const styles = StyleSheet.create({
     container: {

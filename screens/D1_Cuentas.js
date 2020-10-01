@@ -18,11 +18,13 @@ import ModalSelector from "react-native-modal-selector";
 import ModalPersonalizado from "../components/ModalPersonalizado";
 import  InsertMaestros  from "../Database/InsertMaestros";
 import { setCuentaUnica } from "../Database/Database";
+import { getTodo } from "../Database/SelectTables";
 
 const arrayEntidades      = InsertMaestros.ENTIDADES;
 const arrayMonedaIngreso  = InsertMaestros.MONEDAS;
 
 export default function D1_Cuentas(props) {
+  const [user_id, setUser_id] = useState(1);
   const [accNumber, setAccNumber] = useState("");
   const [cbu, setCbu] = useState(0);
   const [alias, setAlias] = useState("");
@@ -30,7 +32,14 @@ export default function D1_Cuentas(props) {
   const [cuenta, SetCuenta] = useState("");
   const [moneda, SetMoneda] = useState("");
   const navigation = props.navigation;
-  let index = 0;
+  
+  function successCallback(rowDB) {
+    setUser_id(rowDB.user_id);
+  }
+
+  useEffect(() => {
+    getTodo("Usuarios", successCallback);
+  }, []);
 
   function handleOnChangeEntidad(unaCuenta) {
     SetCuenta(unaCuenta);
@@ -42,7 +51,7 @@ export default function D1_Cuentas(props) {
   
   
   function saveAccount() {
-    setCuentaUnica(cbu,1,cuenta, moneda, accNumber, alias, saldo);
+    setCuentaUnica(cbu, user_id, cuenta, moneda, accNumber, alias, saldo);
     navigation.navigate("Cuentas");
   }
 

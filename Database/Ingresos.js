@@ -97,4 +97,26 @@ export function getIngresosEgresos(successCallback) {
     
   
   }
+
+
+  export function setIngresoVentaInversion(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual) {
+    const fechaInsert = moment().format("YYYY-MM-DD");
+    //console.log(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual)
+    
+    
+    db.transaction((tx) => {
+        tx.executeSql(
+            "insert into Ingresos (user_id, cuenta_id, tipo_ingreso, monto, cuotas_fechas, cuotas_restantes, descripcion, auto_manual, add_dttm) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            [user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual, fechaInsert],
+          (_, { rows }) => {
+            console.log('Exito en setIngreso: ' + JSON.stringify(rows));
+          },
+          (_, error) => {
+            console.log('error en el setIngreso: ' + error);
+          }
+        );
+      }); 
+    
+  
+  }
   
