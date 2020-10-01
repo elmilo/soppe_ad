@@ -7,6 +7,7 @@ const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import tarjetasjs from '../constants/tarjetas.js';
+import { updateFechasTarjeta, deleteTarjeta } from "../Database/Database";
 import { getTarjetas } from "../Database/Database";
 import ModalPersonalizado from '../components/ModalPersonalizado';
 

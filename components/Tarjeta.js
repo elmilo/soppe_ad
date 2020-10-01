@@ -115,8 +115,8 @@ export default function Tarjeta(props) {
                 style={[styles.social, styles.shadow]}
               ></Icon>
               <Text></Text><Text></Text><Text></Text>
-              <Text size={9} muted={!saldoColor} color={saldoColor}>Saldo:</Text>
-              <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.saldo}</Text>
+              <Text size={14} muted={!saldoColor} color={saldoColor}>Saldo a vencer:</Text>
+              <Text size={22} style={styles.tarjetaEntidad}>{tarjeta.saldo}</Text>
             </Block>
           </Block>
         </TouchableWithoutFeedback>
@@ -128,9 +128,9 @@ export default function Tarjeta(props) {
           
           <Block flex space="between" style={styles.tarjetaDescription}>
             <Text size={22} style={styles.tarjetaEntidad}>{tarjeta.emisor}</Text>
-            <Text size={9} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text>
+            <Text size={14} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text>
             <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.ultimos_4_digitos}</Text>
-            <Text size={9} muted={!saldoColor} color={saldoColor}>Cierre:</Text>
+            <Text size={14} muted={!saldoColor} color={saldoColor}>Cierre:</Text>
             <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.fecha_cierre_resumen}</Text>
           </Block>
         </TouchableWithoutFeedback>

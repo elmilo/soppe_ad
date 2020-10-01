@@ -97,6 +97,26 @@ export default function E01_Inversiones(props) {
     setInversion(tipo, vencimiento, cuentaIn, valorInv,valorVenta, descripcion);
     navigation.navigate("Inversiones");
   }
+
+  function renderValorVentaPlazoFijo(){
+  return (
+
+    <Block>
+      <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de venta plazo fijo</Text>
+            <Block flex style={styles.group}>
+              <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+                <Input
+                  right
+                  placeholder="$"
+                  placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                  style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                  onChangeText={(text) => {setValorVenta(text); }}
+                />
+              </Block>
+            </Block>
+      </Block>
+  )
+  }
     
  
   return (
@@ -107,7 +127,6 @@ export default function E01_Inversiones(props) {
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de Inversion</Text>
         {DropdownTipo()}
         <Block />
-          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
          {DropdownCuenta()}
           <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
       
@@ -124,18 +143,10 @@ export default function E01_Inversiones(props) {
               />
             </Block>
           </Block>
-          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de venta plazo fijo</Text>
-          <Block flex style={styles.group}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
-              <Input
-                right
-                placeholder="$"
-                placeholderTextColor={materialTheme.COLORS.DEFAULT}
-                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
-                onChangeText={(text) => {setValorVenta(text); }}
-              />
-            </Block>
-          </Block>
+          {tipo == "Plazo Fijo"
+          ? renderValorVentaPlazoFijo(): 
+          false
+          }     
           <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Fecha de Vencimiento</Text>
         <Block flex style={styles.group}>
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>

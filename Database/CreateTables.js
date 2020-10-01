@@ -99,6 +99,8 @@ var createTarjetas =
   " DATETIME NULL," +
   "fecha_vencimiento_resumen" +
   " DATETIME NULL" +
+  "saldo" +
+  " NUMERIC(10, 2) DEFAULT 0 NULL" +
   ")";
 
 var createPrestamos =

@@ -321,10 +321,10 @@ export function deletePresupuesto(id){
   export function getTarjetas(id_usuario, successCallback) {
     db.transaction((tx) => {
       tx.executeSql(
-        "select id, emisor, ultimos_4_digitos, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen from Tarjetas where user_id = ?",
+        "select id, emisor, ultimos_4_digitos, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen, saldo, cuenta_id from Tarjetas where user_id = ?",
         [id_usuario],
         (_, { rows }) => {
-          //console.log('Success getCuentas: ', rows._array);;;
+          console.log('Success getCuentas: ', rows._array);;;
           successCallback(rows._array);
         },
         (_, error) => {
@@ -395,14 +395,14 @@ export function getTarjetaDetalle(id) {
   });
 }
 
-export function updateFechasTarjeta(id, fechaCierre, fechaVencimientoResumen, ) {
+export function updateFechasTarjeta(ultimosDigitos, fechaCierre, fechaVencimientoResumen) {
   console.log("updateFechasTarjeta");
-  console.log(fechaCierre, fechaVencimientoResumen, id);
+  console.log(fechaCierre, fechaVencimientoResumen, ultimosDigitos);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Tarjetas set fecha_cierre_resumen = ?, fecha_vencimiento_resumen = ? where id = ?",
-        [fechaCierre, fechaVencimientoResumen, id],
+        "update Tarjetas set fecha_cierre_resumen = ?, fecha_vencimiento_resumen = ? where ultimos_4_digitos = ?",
+        [fechaCierre, fechaVencimientoResumen, ultimosDigitos],
       );
     },
     null,
@@ -410,15 +410,45 @@ export function updateFechasTarjeta(id, fechaCierre, fechaVencimientoResumen, ) 
   );
 }
 
+export function updateSaldoTarjetaEgreso(ultimosDigitos, montoEgreso) {
+  console.log("updateSaldoCuentaEgreso");
+  console.log(ultimosDigitos, montoEgreso);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "update Tarjetas set saldo = saldo + ? where user_id = ? and ultimos_4_digitos = ?;",
+        [montoEgreso, 1, ultimosDigitos]
+      );
+    },
+    null,
+    () => console.log("el saldo de la Tarjeta se incrementó correctamente")
+  );
+}
 
-export function deleteTarjeta(id) {
+export function updateResetSaldoTarjeta(ultimosDigitos) {
+  console.log("updateResetSaldoTarjeta");
+  console.log(ultimosDigitos);
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "update Tarjetas set saldo = 0 where ultimos_4_digitos = ?",
+        [ultimosDigitos],
+      );
+    },
+    null,
+    () => console.log("el saldo de la Tarjeta se ha actualizado a 0")
+  );
+}
+
+
+export function deleteTarjeta(ultimosDigitos) {
   console.log("deleteTarjeta");
   console.log(cbu);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Tarjetas where id = ?",
-        [id]
+        "delete from Tarjetas where ultimos_4_digitos = ?",
+        [ultimosDigitos]
       );
     },
     null,
