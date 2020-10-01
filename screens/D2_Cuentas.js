@@ -8,14 +8,64 @@ const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import * as SQLite from "expo-sqlite";
-import { getCuentas } from "../Database/Database";
+import { deleteCuenta, getCuentas } from "../Database/Database";
+import ModalPersonalizado from '../components/ModalPersonalizado';
 
 
 export default function D2_Cuentas (props) {
   const [datos, setDatos] = React.useState(null);
-   
-
+      const [cuenta, setCuenta]= useState("");
   
+  const navigation = props.navigation;
+  const arrayCuentas1 = [
+    { value: 1, label: "Cuenta1" },
+    { value: 2, label: "Cuenta2" },
+    { value: 3, label: "Cuenta3" },
+    { value: 4, label: "Cuenta4" },
+  ];
+
+  useEffect(() => {
+    getCuentas(1, successArrayCuentas);
+  }, []);
+
+  function handleOnChangeCuenta (unaCuenta){
+    console.log('handleOnChangeCuenta: ' + unaCuenta);
+    setCuenta(unaCuenta);
+  }
+
+  function successArrayCuentas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id + elemento.nro_cuenta ,
+        label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
+      });
+    });
+
+    setArrayCuentas(datosFinales);
+  }
+
+  function DropdownCuenta(props) {
+    return (
+      <Block>
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta a Eliminar</Text>
+        <ModalPersonalizado
+        data={arrayCuentas}
+        initValue="Seleccione una Cuenta"
+        onSelected={handleOnChangeCuenta}
+      />
+      </Block>
+    );
+  }
+
+  function eliminarCuenta() {
+    const user_id = 1;
+    deleteCuenta(cuenta.slice(cuenta.search("-")+2,-5));
+    navigation.navigate("Cuentas");
+  }
+  
+  const [arrayCuentas, setArrayCuentas] = useState([]);
+  //arrayCuentas
   function successCallback(rows) {
     var datosTemporales = [];
     rows.forEach((cuenta, index) => {
@@ -31,19 +81,9 @@ export default function D2_Cuentas (props) {
   const renderCuentas = () => {
     
     return (
-      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-      <TouchableWithoutFeedback >
-          <Block flex  style={styles.cuentaDescription}>
-          
-
-       
-          </Block>
-      </TouchableWithoutFeedback>     
+      <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>   
+      {DropdownCuenta()} 
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>  
-      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-      <Text></Text><Text></Text><Text></Text><Text></Text>
       <Button shadowless color="red" style={[styles.button, styles.shadow]}>
         Eliminar
       </Button>
