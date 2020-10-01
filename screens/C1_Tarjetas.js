@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
   },
   padded: {
-    paddingHorizontal: theme.SIZES.BASE * 2,
+    paddingHorizontal: theme.SIZES.BASE * 3,
     zIndex: 3,
     position: 'absolute',
     bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3,
