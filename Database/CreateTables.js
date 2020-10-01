@@ -335,8 +335,8 @@ export function dropAll() {
     dropNotificaciones,
   ];
 
-  //arrayDrop.forEach((unaQuery) => dropTable(unaQuery));
- // createAll();
+  arrayDrop.forEach((unaQuery) => dropTable(unaQuery));
+  createAll();
 
   //Crear solamente una
   dropTable(dropIngresos)

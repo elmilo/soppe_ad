@@ -1,49 +1,166 @@
-import React from 'react';
-import { withNavigation } from '@react-navigation/compat';
-import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
-import { Block, Text, theme } from 'galio-framework';
-import { Icon } from '../components';
-import materialTheme from '../constants/Theme';
-const { width } = Dimensions.get('screen');
+import React, { useState } from "react";
+import { withNavigation } from "@react-navigation/compat";
+import {
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { Block, Text, theme, Button } from "galio-framework";
+import { Icon } from "../components";
+import materialTheme from "../constants/Theme";
+import { dropAll } from "../Database/Database";
+const { width } = Dimensions.get("screen");
+import { getPrestamos } from "../Database/Database";
 
-class Prestamo extends React.Component {
-  render() {
-    const { navigation, prestamo, horizontal, full, style, saldoColor, imageStyle } = this.props;
-    const imageStyles = [styles.image, full ? styles.fullImage : styles.horizontalImage, imageStyle];
 
+
+export default function Prestamo(props) {
+
+  const [pantallaInicial, setPantallaInicial] = React.useState(true);
+  const toggleDetalle = () =>
+    setPantallaInicial((previousState) => !previousState);
+
+  const {
+    prestamo,
+    horizontal,
+    full,
+    style,
+    saldoColor,
+    imageStyle,
+  } = props;
+
+  const imageStyles = [
+    styles.image,
+    full ? styles.fullImage : styles.horizontalImage,
+    imageStyle,
+  ];
+
+  function renderInsidePrestamo() {
     return (
-      <Block row={horizontal} card flex style={[styles.prestamo, styles.shadow, style]}>
-        <TouchableWithoutFeedback >
+      <Block
+        row={horizontal}
+        card
+        flex
+        style={[styles.prestamo, styles.shadow, style]}
+      >
+        <TouchableWithoutFeedback
+          onPress={() => toggleDetalle()}
+        >
           <Block flex style={[styles.imageContainer, styles.shadow]}>
-            <Block style={{ paddingHorizontal: theme.SIZES.BASE * 2, paddingVertical: theme.SIZES.BASE }}>
-              <Icon name="leaf" family="Entypo" iconColor={theme.COLORS.WHITE} size={80} color={theme.COLORS.FACEBOOK} style={[styles.social, styles.shadow]}></Icon>
+            <Block
+              style={{
+                paddingHorizontal: theme.SIZES.BASE * 2,
+                paddingVertical: theme.SIZES.BASE,
+              }}
+            >
+              <Icon
+                name="delete"
+                family="MaterialIcons"
+                iconColor={theme.COLORS.WHITE}
+                size={30}
+                color={theme.COLORS.RED}
+                style={[styles.social, styles.shadow]}
+              ></Icon>
+            </Block>
+          </Block>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback
+          onPress={() =>
+            toggleDetalle()
+          }
+        >
+
+
+
+          <Block flex space="between" style={styles.cuentaDescription}>
+            <Text size={20} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_monto}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Cuotas restantes:</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_restantes}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Fecha próximo vencimiento:</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_fecha_proximo_vencimiento}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Valor del Préstamo:</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.prestamo_monto}</Text>
+          </Block>
+
+        </TouchableWithoutFeedback>
+      </Block>
+    )
+  }
+
+  function renderPrestamo() {
+    return (
+      <Block
+        row={horizontal}
+        card
+        flex
+        style={[styles.prestamo, styles.shadow, style]}
+      >
+        <TouchableWithoutFeedback
+          onPress={() => toggleDetalle()}
+        >
+          <Block flex style={[styles.imageContainer, styles.shadow]}>
+            <Block
+              style={{
+                paddingHorizontal: theme.SIZES.BASE * 2,
+                paddingVertical: theme.SIZES.BASE,
+              }}
+            >
+              <Icon
+                name="leaf"
+                family="Entypo"
+                iconColor={theme.COLORS.WHITE}
+                size={80}
+                color={theme.COLORS.FACEBOOK}
+                style={[styles.social, styles.shadow]}
+              ></Icon>
               <Text></Text><Text></Text><Text></Text>
               <Text size={15} muted={!saldoColor} color={saldoColor}>Prestamo:</Text>
               <Text size={19} style={styles.prestamoEntidad}>{prestamo.tomado}</Text>
             </Block>
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Descripcion Prestamo', { prestamo: prestamo })} >
+        <TouchableWithoutFeedback
+          onPress={() =>
+            toggleDetalle()
+          }
+        >
           <Block flex space="between" style={styles.prestamoDescription}>
-            <Text size={17} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas_monto}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Cuotas restantes:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas_restantes}</Text>
-            <Text size={15} muted={!saldoColor} color={saldoColor}>Fecha próximo vencimiento:</Text>
-            <Text size={15} style={styles.prestamoEntidad}>{prestamo.cuotas_fecha_proximo_vencimiento}</Text>
+            <Text size={20} style={styles.prestamoEntidad}>{prestamo.descripcion}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuenta_id}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Valor de cuota:</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_monto}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Fecha próximo vencimiento:</Text>
+            <Text size={17} style={styles.prestamoEntidad}>{prestamo.cuotas_fecha_proximo_vencimiento}</Text>
           </Block>
         </TouchableWithoutFeedback>
       </Block>
     );
   }
-}
-//<Image source={{ uri: prestamo.image }} style={imageStyles} />
-export default withNavigation(Prestamo);
 
-//if ({prestamo.entidad}!={"efectivo"}) 
+
+  return (
+    pantallaInicial ? renderPrestamo() : renderInsidePrestamo()
+  );
+
+}
+/* 
+ <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
+       <Button shadowless color="green" style={[styles.button, styles.shadow]}>
+             Finalizar
+           </Button>
+           <Text></Text>
+      
+           </Block>
+<Button shadowless color="red" style={[styles.button, styles.shadow]}>
+             Eliminar
+           </Button>*/
+
 
 const styles = StyleSheet.create({
   prestamo: {
@@ -54,8 +171,8 @@ const styles = StyleSheet.create({
   },
   prestamoEntidad: {
     flex: 2,
-    flexWrap: 'wrap',
-    paddingBottom: 18,
+    flexWrap: "wrap",
+    paddingBottom: 6,
   },
   prestamoDescription: {
     padding: theme.SIZES.BASE / 15,
@@ -70,7 +187,7 @@ const styles = StyleSheet.create({
   },
   horizontalImage: {
     height: 122,
-    width: 'auto',
+    width: "auto",
   },
   fullImage: {
     height: 215,

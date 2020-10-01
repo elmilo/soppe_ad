@@ -43,6 +43,7 @@ export default function C0_Tarjetas(props) {
         <Block flex>
         <Text></Text>
           <Block dense>{datos}</Block>
+          <Text></Text>
           <Button
             shadowless
             color="success"
