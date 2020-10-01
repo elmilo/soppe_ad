@@ -7,12 +7,15 @@ const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import tarjetasjs from '../constants/tarjetas.js';
+import { updateFechasTarjeta, deleteTarjeta } from "../Database/Database";
+//tarjeta.slice(-5,-1) = 4 digitos tarjeta
+
 
 export default class C2_Tarjetas extends React.Component {
   render() {
     const { navigation } = this.props;
     const { tarjeta } = this.props;
-
+    
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
         <TouchableWithoutFeedback >

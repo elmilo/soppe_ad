@@ -321,7 +321,7 @@ export function deletePresupuesto(id){
   export function getTarjetas(id_usuario, successCallback) {
     db.transaction((tx) => {
       tx.executeSql(
-        "select id, emisor, ultimos_4_digitos, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen, saldo from Tarjetas where user_id = ?",
+        "select id, emisor, ultimos_4_digitos, fecha_vencimiento_tarjeta, fecha_cierre_resumen, fecha_vencimiento_resumen, saldo, cuenta_id from Tarjetas where user_id = ?",
         [id_usuario],
         (_, { rows }) => {
           console.log('Success getCuentas: ', rows._array);;;

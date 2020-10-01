@@ -170,7 +170,7 @@ function StackDescripcionCuenta(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title="Descripcion Cuenta"
+              title="Actualizar y Eliminar Cuenta"
               scene={scene}
               navigation={navigation}
             />
@@ -216,7 +216,7 @@ function StackDescripcionTarjeta(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title="Descripcion Tarjeta"
+              title="Actualizar y Eliminar Tarjeta"
               scene={scene}
               navigation={navigation}
             />
@@ -288,7 +288,7 @@ function StackDescripcionInversion(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title="Descripcion Inversion"
+              title="Actualizar y Eliminar Inversion"
               scene={scene}
               navigation={navigation}
             />
@@ -358,7 +358,7 @@ function StackDescripcionPrestamo(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title="Descripcion Prestamo"
+              title="Actualizar y Eliminar Prestamo"
               scene={scene}
               navigation={navigation}
             />
@@ -432,7 +432,7 @@ function StackDescripcionPresupuesto(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              title="Descripcion Presupuesto"
+              title="Actualizar y Eliminar Presupuesto"
               scene={scene}
               navigation={navigation}
             />
