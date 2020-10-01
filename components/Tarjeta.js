@@ -72,6 +72,8 @@ export default function Tarjeta(props) {
         >
           <Block flex space="between" style={styles.tarjetaDescription}>
             <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.emisor}</Text>
+            <Text size={9} muted={!saldoColor} color={saldoColor}>Cuenta:</Text>
+            <Text size={14} style={styles.tarjetaEntidad}>{tarjeta.cuenta_id} </Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text>
             <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.ultimos_4_digitos}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Cierre:</Text>
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
   tarjetaEntidad: {
     flex: 2,
     flexWrap: "wrap",
-    paddingBottom: 6,
+    paddingBottom: 8,
   },
   tarjetaDescription: {
     padding: theme.SIZES.BASE / 15,

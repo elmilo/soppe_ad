@@ -11,6 +11,7 @@ import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
 import * as SQLite from 'expo-sqlite';
 import { setTarjeta } from '../Database/Database';
+import { getCuentas } from "../Database/Database";
 const db = SQLite.openDatabase("db.db");
 
 const arrayEmisorIngreso = [
@@ -27,14 +28,17 @@ const arrayTipoTarjeta1Ingreso = [
   { value: 1, label: "Débito" },
   { value: 2, label: "Crédito" },
 ];
+
+/*
 const arrayCuentaDebitoIngreso = [
   { value: 1, label: "Banco Galicia 453/5265988" },
 ];
-
+*/
 export default function C1_Tarjetas(props) {
-  const [entidad, SetEntidad] = useState('');
+  const [user_id, setUser_id] = useState(1);
+  const [cuenta, setCuenta]= useState("");
+  const [arrayCuentas, setArrayCuentas] = useState([]);
   const [emisor, SetEmisor] = useState('');
-  const [cuentaDebito, SetCuentaDebito] = useState('');
   const [tipoTarjeta, setTipoTarjeta] = useState("");
   const [ultimos4Digitos, setUltimos4Digitos] = useState();
   const [fechaVencePlastico, setFechaVencePlastico] = useState("");
@@ -44,19 +48,53 @@ export default function C1_Tarjetas(props) {
   const navigation = props.navigation;
   let index = 0;
        
+
+  useEffect(() => {
+    getCuentas(user_id, successArrayCuentas);
+  }, []);
+
+  function handleOnChangeCuenta (unaCuenta){
+    console.log('handleOnChangeCuenta: ' + unaCuenta);
+    setCuenta(unaCuenta);
+  }
+
+  
+  function successArrayCuentas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id + elemento.nro_cuenta ,
+        label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
+      });
+    });
+
+    setArrayCuentas(datosFinales);
+  }
+
+  function DropdownCuenta(props) {
+    return (
+      <Block>
+        <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
+        <ModalPersonalizado
+        data={arrayCuentas}
+        initValue="Seleccione una Cuenta"
+        onSelected={handleOnChangeCuenta}
+      />
+      </Block>
+    );
+  }
+
   function handleOnChangeEmisor(unEmisor) {
     SetEmisor(unEmisor);
   }
   function handleOnChangeTipo(unTipo) {
     setTipoTarjeta(unTipo);
   }
-  function handleOnChangeCuentaDebito(unaCuentaDebito) {
-    SetCuentaDebito(unaCuentaDebito);
-  }
+
 
   function saveTarjeta() {
     const user_id = 1;
-    setTarjeta(user_id, cuentaDebito, ultimos4Digitos, emisor,  tipoTarjeta, fechaVencePlastico, fechaCierre, fechaVenceResumen, saldo);
+    setTarjeta(user_id, cuenta, ultimos4Digitos, emisor, tipoTarjeta, fechaVencePlastico, fechaCierre, fechaVenceResumen, saldo);
     navigation.navigate("Tarjetas");
   }
 
@@ -81,22 +119,13 @@ export default function C1_Tarjetas(props) {
   };
   
 
-  function DropdownCuentaDebito(props) {
-    return (
-      <ModalPersonalizado
-        data={arrayCuentaDebitoIngreso}
-        initValue="Cuenta Origen"
-        onSelected={handleOnChangeCuentaDebito}
-      />
-    );
-  };
 
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.products}>
-        {DropdownCuentaDebito ()}
+        {DropdownCuenta()}
         {DropdownEmisor()}
         {DropdownTipoTarjeta()}
         

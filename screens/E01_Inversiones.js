@@ -92,9 +92,6 @@ export default function E01_Inversiones(props) {
     SetTipo(unTipo);
   }
 
-  function handleOnChangeCuenta(unaCuentaIn) {
-    SetCuentaIn(unaCuentaIn);
-  }
 
   function saveInversion() {
     setInversion(tipo, vencimiento, cuentaIn, valorInv,valorVenta, descripcion);
