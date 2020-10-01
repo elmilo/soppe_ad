@@ -51,6 +51,15 @@ export default function F00_Prestamos(props) {
             + Agregar nuevo prestamo
           </Button>
           <Text></Text>
+          <Button
+            shadowless
+            color="success"
+            style={[styles.button, styles.shadow]}
+            onPress={() => props.navigation.navigate("Descripcion Prestamo")}
+          >
+              Actualizar y Eliminar
+          </Button>
+          <Text></Text>
         </Block>
       </ScrollView>
     );

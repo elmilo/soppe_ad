@@ -56,8 +56,8 @@ export default function Prestamo(props) {
               }}
             >
               <Icon
-                name="delete"
-                family="MaterialIcons"
+              name="book"
+              family="AntDesign"
                 iconColor={theme.COLORS.WHITE}
                 size={30}
                 color={theme.COLORS.RED}

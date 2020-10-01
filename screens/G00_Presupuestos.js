@@ -46,6 +46,15 @@ export default function G00_Presupuestos(props) {
             + Agregar nuevo presupuesto
           </Button>
           <Text></Text>
+          <Button
+            shadowless
+            color="success"
+            style={[styles.button, styles.shadow]}
+            onPress={() => props.navigation.navigate("Descripcion Presupuesto")}
+          >
+              Actualizar y Eliminar
+          </Button>
+          <Text></Text>
         </Block>
       </ScrollView>
     );

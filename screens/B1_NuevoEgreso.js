@@ -7,7 +7,7 @@ import SwitchPersonalizado from "../components/SwitchPersonalizado";
 import ModalPersonalizado from "../components/ModalPersonalizado";
 import { FloatingAction } from "react-native-floating-action";
 import CamaraPersonalizada from "../components/CamaraPersonalizada";
-import { getCuentas, getTarjetas, updateSaldoCuentaEgreso } from "../Database/Database";
+import { getCuentas, getTarjetas, updateSaldoCuentaEgreso, updateSaldoTarjetaEgreso } from "../Database/Database";
 
 import { setEgreso, getEgresos } from "../Database/Egresos";
 import  InsertMaestros  from "../Database/InsertMaestros";
@@ -42,7 +42,7 @@ export default function B1_NuevoEgreso(props) {
   const [auto_manual, setAuto_manual]       = useState("manual");
   const [add_dttm, setAdd_dttm]             = useState(new Date());
   const [imagenComprobante, setImagenComprobante]   = useState(null);
-  const { navigation } = props;
+  const {navigation } = props;
 
 /********************************************************************* */
 const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -185,8 +185,11 @@ function handleOnChangeMedioDePago(medioDePago) {
 
     getEgresos();
     {medio_de_pago == "Consumo Cuenta"
-          ? updateSaldoCuentaEgreso(cuenta.slice(cuenta.search("-")+2,-5),monto): false };
-//;
+          ? updateSaldoCuentaEgreso(cuenta.slice(cuenta.search("-")+2,-5),monto): 
+          updateSaldoTarjetaEgreso(tarjeta.slice(-5,-1),monto)
+        };
+    
+//;tarjeta.slice(-2,-5) = ultimos 4 digitos
     setCuenta("");
     setRubro("");
     SetCategoria(null);
@@ -310,6 +313,7 @@ function handleOnChangeMedioDePago(medioDePago) {
       <Block>
         <CamaraPersonalizada SelectedImage={tratarImagenCallback}/>
       </Block>
+      <Text></Text>
       <Button
               shadowless
               color="success"

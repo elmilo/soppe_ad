@@ -45,6 +45,15 @@ export default function E00_Inversiones(props) {
             + Agregar nueva inversion
           </Button>
           <Text></Text>
+          <Button
+            shadowless
+            color="success"
+            style={[styles.button, styles.shadow]}
+            onPress={() => props.navigation.navigate("Descripcion Inversion")}
+          >
+              Actualizar y Eliminar
+          </Button>
+          <Text></Text>
         </Block>
       </ScrollView>
     );

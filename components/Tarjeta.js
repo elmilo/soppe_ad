@@ -55,8 +55,8 @@ export default function Tarjeta(props) {
               }}
             >
               <Icon
-                name="delete"
-                family="MaterialIcons"
+                name="book"
+                family="AntDesign"
                 iconColor={theme.COLORS.WHITE}
                 size={30}
                 color={theme.COLORS.RED}
@@ -115,8 +115,8 @@ export default function Tarjeta(props) {
                 style={[styles.social, styles.shadow]}
               ></Icon>
               <Text></Text><Text></Text><Text></Text>
-              <Text size={9} muted={!saldoColor} color={saldoColor}>Saldo:</Text>
-              <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.saldo}</Text>
+              <Text size={14} muted={!saldoColor} color={saldoColor}>Saldo a vencer:</Text>
+              <Text size={22} style={styles.tarjetaEntidad}>{tarjeta.saldo}</Text>
             </Block>
           </Block>
         </TouchableWithoutFeedback>
@@ -125,11 +125,12 @@ export default function Tarjeta(props) {
             toggleDetalle()
           }
         >
+          
           <Block flex space="between" style={styles.tarjetaDescription}>
             <Text size={22} style={styles.tarjetaEntidad}>{tarjeta.emisor}</Text>
-            <Text size={9} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text>
+            <Text size={14} muted={!saldoColor} color={saldoColor}>Ultimos 4 dig tarjeta:</Text>
             <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.ultimos_4_digitos}</Text>
-            <Text size={9} muted={!saldoColor} color={saldoColor}>Cierre:</Text>
+            <Text size={14} muted={!saldoColor} color={saldoColor}>Cierre:</Text>
             <Text size={17} style={styles.tarjetaEntidad}>{tarjeta.fecha_cierre_resumen}</Text>
           </Block>
         </TouchableWithoutFeedback>
@@ -166,42 +167,42 @@ export default function Tarjeta(props) {
 
             */
 
-const styles = StyleSheet.create({
-  tarjeta: {
-    backgroundColor: theme.COLORS.WHITE,
-    marginVertical: theme.SIZES.BASE,
-    borderWidth: 0,
-    minHeight: 80,
-  },
-  tarjetaEntidad: {
-    flex: 2,
-    flexWrap: "wrap",
-    paddingBottom: 8,
-  },
-  tarjetaDescription: {
-    padding: theme.SIZES.BASE / 15,
-  },
-  imageContainer: {
-    elevation: 1,
-  },
-  image: {
-    borderRadius: 3,
-    marginHorizontal: theme.SIZES.BASE / 1,
-    marginTop: 0,
-  },
-  horizontalImage: {
-    height: 122,
-    width: "auto",
-  },
-  fullImage: {
-    height: 215,
-    width: width - theme.SIZES.BASE * 3,
-  },
-  shadow: {
-    shadowColor: theme.COLORS.BLACK,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    shadowOpacity: 0.1,
-    elevation: 2,
-  },
-});
+           const styles = StyleSheet.create({
+            tarjeta: {
+              backgroundColor: theme.COLORS.WHITE,
+              marginVertical: theme.SIZES.BASE,
+              borderWidth: 0,
+              minHeight: 80,
+            },
+            tarjetaEntidad: {
+              flex: 2,
+              flexWrap: "wrap",
+              paddingBottom: 2,
+            },
+            tarjetaDescription: {
+              padding: theme.SIZES.BASE / 4,
+            },
+            imageContainer: {
+              elevation: 1,
+            },
+            image: {
+              borderRadius: 3,
+              marginHorizontal: theme.SIZES.BASE / 1,
+              marginTop: 0,
+            },
+            horizontalImage: {
+              height: 122,
+              width: "auto",
+            },
+            fullImage: {
+              height: 215,
+              width: width - theme.SIZES.BASE * 3,
+            },
+            shadow: {
+              shadowColor: theme.COLORS.BLACK,
+              shadowOffset: { width: 0, height: 2 },
+              shadowRadius: 4,
+              shadowOpacity: 0.1,
+              elevation: 2,
+            },
+          });

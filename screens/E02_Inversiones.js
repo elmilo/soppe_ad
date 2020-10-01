@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback , StatusBar, Dimensions, Platform } from 'react-native';
 import { Block, Button, Text, theme,Input  } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,15 +18,7 @@ export default class D2_Inversiones extends React.Component {
       
       <TouchableWithoutFeedback >
           <Block flex  style={styles.inversionDescription}>
-            <Text size={23} style={styles.inversionEntidad}>{inversion}</Text>
-            <Text size={15} >Tipo:</Text>
-            <Text size={22} style={styles.inversionEntidad}></Text>
-            <Text size={15} >Cuenta:</Text>
-            <Text size={22} style={styles.inversionEntidad}></Text>
-            <Text size={15} >Valor de compra:</Text>
-            <Text size={22} style={styles.inversionEntidad}></Text>
-            <Text size={15} >Vencimiento:</Text>
-            <Text size={22} style={styles.inversionEntidad}></Text>
+           
             <Text size={15} >Valor de venta:</Text>
             <Block flex style={styles.group}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
