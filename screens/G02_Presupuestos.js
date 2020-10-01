@@ -2,42 +2,57 @@ import React from 'react';
 import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback , StatusBar, Dimensions, Platform } from 'react-native';
 import { Block, Button, Text, theme } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Icon, Presupuesto, Header } from '../components';
+import { Icon, Cuenta, Header } from '../components';
 const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
-import presupuestos from '../constants/presupuestos.js';
+import prestamos from '../constants/prestamos.js';
 
-export default class G02_Presupuestos extends React.Component {
+export default class F02_Prestamos extends React.Component {
   render() {
     const { navigation } = this.props;
-    const { presupuesto } = this.props;
+    const { prestamo } = this.props;
     
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-       <TouchableWithoutFeedback >
-          <Block flex  style={styles.presupuestoDescription}>
-          <Text size={18} style={styles.presupuestoRubro}>Rubro:</Text>
-          <Text size={20} style={styles.presupuestoRubro}>{presupuesto}</Text>
-          <Text size={18} style={styles.presupuestoRubro}>Valor:</Text>
-          <Text size={20} style={styles.presupuestoRubro}>{presupuesto}</Text>
-          <Text size={18} style={styles.presupuestoRubro}>Descripción:</Text>
-          <Text size={20} style={styles.presupuestoRubro}>{presupuesto}</Text>
-       
+      
+      <TouchableWithoutFeedback >
+          <Block flex  style={styles.prestamoDescription}>
+          <Text size={23} style={styles.prestamoEntidad}>{prestamo}</Text>
+             <Text size={15} >Prestamo:</Text>
+            <Text size={30} style={styles.prestamoEntidad}>{}</Text>
+            <Text size={15} >Cuenta:</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo}</Text>
+            <Text size={15} >Valor de Préstamo:</Text>
+            <Text size={20} style={styles.cuentaEntidad}>{}</Text>
+            <Text size={15} >Valor de cuota:</Text>
+            <Text size={20} style={styles.cuentaEntidad}>{}</Text>
+            <Text size={15} >Día de vencimiento:</Text>
+            <Text size={20} style={styles.cuentaEntidad}>{}</Text>
+            <Text size={15} >Cuotas restantes:</Text>
+            <Text size={20} style={styles.cuentaEntidad}>{}</Text>
+            <Text size={15} >Saldo total:</Text>
+            <Text size={20} style={styles.cuentaEntidad}>{}</Text>
+
           </Block>
         </TouchableWithoutFeedback>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+        <Text></Text><Text></Text>
+       
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-            <Button color="red" style={[styles.button, styles.shadow]}>
+        <Button shadowless color="green" style={[styles.button, styles.shadow]}>
+              Finalizar
+            </Button>
+            <Text></Text>
+        <Button shadowless color="red" style={[styles.button, styles.shadow]}>
               Eliminar
             </Button>
             </Block>
                      
         </Block>
-    
+      
     );
   }
 }

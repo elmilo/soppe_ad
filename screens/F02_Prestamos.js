@@ -19,10 +19,10 @@ export default class F02_Prestamos extends React.Component {
       <TouchableWithoutFeedback >
           <Block flex  style={styles.prestamoDescription}>
           <Text size={23} style={styles.prestamoEntidad}>{prestamo}</Text>
-            <Text size={15} >Prestamo:</Text>
+             <Text size={15} >Prestamo:</Text>
             <Text size={30} style={styles.prestamoEntidad}>{}</Text>
             <Text size={15} >Cuenta:</Text>
-            <Text size={20} style={styles.cuentaEntidad}>{}</Text>
+            <Text size={15} style={styles.prestamoEntidad}>{prestamo}</Text>
             <Text size={15} >Valor de Préstamo:</Text>
             <Text size={20} style={styles.cuentaEntidad}>{}</Text>
             <Text size={15} >Valor de cuota:</Text>

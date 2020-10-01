@@ -5,6 +5,7 @@ import { useSafeArea } from "react-native-safe-area-context";
 
 import { Icon, Drawer as DrawerCustomItem } from '../components/';
 import { Images, materialTheme } from "../constants/";
+import {userData} from '../Database/Database'
 
 
 function CustomDrawerContent({
@@ -37,17 +38,11 @@ function CustomDrawerContent({
           <Block style={styles.profile}>
             <Image source={profile.avatar} style={styles.avatar} />
             <Text h5 color={"white"}>
-              {profile.name}
+              {userData.nombre + " " + userData.apellido}
             </Text>
           </Block>
         </TouchableWithoutFeedback>
-        <Block row>
-          <Block middle style={styles.pro}>
-            <Text size={15} color="white">
-              {profile.plan}
-            </Text>
-          </Block>
-        </Block>
+        
       </Block>
       <Block flex style={{ paddingLeft: 7, paddingRight: 14 }}>
         <ScrollView
