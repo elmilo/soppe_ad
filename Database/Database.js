@@ -205,6 +205,36 @@ export function getPresupuestos(successCallback) {
   });
 }
 
+export function getPresupuestoForRubro(rubro, successCallback) {
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from Presupuestos where rubro_id = " + rubro, 
+      [],
+      (_, { rows }) => {
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        console.log(error);
+      }
+    )
+  } )
+}
+
+export function getOtherPresupuestos(successCallback){
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select sum(monto_mensual) as total from Presupuestos where rubro_id != 'General' and rubro_id != 'Servicios e Impuestos'" , 
+      [],
+      (_, { rows }) => {
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        console.log(error);
+      }
+    )
+  } )
+}
+
 // export function setPresupuesto(rubro, categoria, monto, descripcion) {
 //   console.log("SetPresupuesto");
 //   console.log(rubro, categoria, monto, descripcion);
