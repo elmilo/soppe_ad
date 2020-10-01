@@ -192,14 +192,14 @@ export function getSaldoEgresosCuenta(cuenta) {
   });
 }
 
-export function deleteCuenta(id) {
+export function deleteCuenta(nroCuenta) {
   console.log("deleteCuenta");
-  console.log(id);
+  console.log(nroCuenta);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Cuentas where cbu = ?",
-        [id]
+        "delete from Cuentas where nro_cuenta = nroCuenta",
+        [nroCuenta]
       );
     },
     null,
@@ -444,7 +444,7 @@ export function updateResetSaldoTarjeta(ultimosDigitos) {
 
 export function deleteTarjeta(ultimosDigitos) {
   console.log("deleteTarjeta");
-  console.log(cbu);
+  console.log(ultimosDigitos);
   db.transaction(
     (tx) => {
       tx.executeSql(
@@ -509,18 +509,18 @@ export function getInversionDetalle(id) {
   });
 }
 
-export function updateVenderInversion(id, ventaMonto) {
-  console.log("updateVenderInversion");
+export function updateVentaMontoInversion(id, ventaMonto) {
+  console.log("updateVentaMontoInversion");
   console.log(id, ventaMonto);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Inversiones set venta_monto = ? terminado = 'true' where id = ?",
+        "update Inversiones set venta_monto = ? where id = ?",
         [ventaMonto, id],
       );
     },
     null,
-    () => console.log("la inversion se ha actualizado a status terminado")
+    () => console.log("la ventaMonto de inversion se ha actualizado")
   );
 }
 

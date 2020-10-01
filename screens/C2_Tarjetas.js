@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback, StatusBar, Dimensions, Platform } from 'react-native';
+import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback, StatusBar, Dimensions, Platform , ScrollView } from 'react-native';
 import { Block, Button, Text, theme, Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon, Tarjeta, Header } from '../components';
@@ -11,6 +11,7 @@ import { updateFechasTarjeta, deleteTarjeta } from "../Database/Database";
 import { getTarjetas } from "../Database/Database";
 import { setTarjeta } from '../Database/Database';
 import ModalPersonalizado from '../components/ModalPersonalizado';
+
 
 const arrayTarjetas1 = [
   { value: 1, label: "Tarjeta1" },
@@ -25,6 +26,7 @@ export default function C2_Tarjetas(props) {
   const [arrayTarjetas, setArrayTarjetas] = useState([]);
   const [fechaVenceResumen, setFechaVenceResumen] = useState("");
   const [fechaCierre, setFechaCierre] = useState("");
+  const navigation = props.navigation;
   
   useEffect(() => {
     getTarjetas(user_id, successArrayTarjetas);
@@ -57,11 +59,20 @@ export default function C2_Tarjetas(props) {
     );
   };
   
+  function updateFechas() {
+    updateFechasTarjeta(tarjeta.slice(-5,-1),fechaCierre, fechaVenceResumen);
+    navigation.navigate("Tarjetas");
+      }
+  
+      function eliminarTarjeta() {
+        deleteTarjeta(tarjeta.slice(-5,-1));
+        navigation.navigate("Tarjetas");
+          }
     return (
     
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       {DropdownTarjeta() }
-        <TouchableWithoutFeedback >
+      <ScrollView>
                  
           <Block flex style={styles.tarjetaDescription}>
            <Text size={18} style={styles.tarjetaEntidad}>Fecha de cierre:</Text>
@@ -72,6 +83,7 @@ export default function C2_Tarjetas(props) {
                   placeholder="01/10/2020"
                   placeholderTextColor={materialTheme.COLORS.DEFAULT}
                   style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                  onChangeText={(text) => {setFechaCierre(text);}}
                 />
               </Block>
             </Block>
@@ -84,19 +96,37 @@ export default function C2_Tarjetas(props) {
                   placeholder="15/10/2020"
                   placeholderTextColor={materialTheme.COLORS.DEFAULT}
                   style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                  onChangeText={(text) => {setFechaVenceResumen(text);}}
                 />
                 <Text></Text><Text></Text><Text></Text>
-                <Button shadowless color="success" style={[styles.button, styles.shadow]}>
-                  Actualizar fechas
+                
+
+            <Button
+              shadowless
+              color="success"
+              style={[styles.button, styles.shadow]}
+              onPress={() => {updateFechas();}}
+
+            >
+             Actualizar
             </Button>
+
+           
+
                 <Text></Text>
-                <Button shadowless color="red" style={[styles.button, styles.shadow]}>
-                  Eliminar
+                <Button
+              shadowless
+              color="red"
+              style={[styles.button, styles.shadow]}
+              onPress={() => {eliminarTarjeta();}}
+
+            >
+            Eliminar
             </Button>
               </Block>
             </Block>
           </Block>
-        </TouchableWithoutFeedback>
+          </ScrollView>
       </Block>
     );
   }

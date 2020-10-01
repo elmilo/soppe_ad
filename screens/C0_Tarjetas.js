@@ -59,7 +59,7 @@ export default function C0_Tarjetas(props) {
             style={[styles.button, styles.shadow]}
             onPress={() => props.navigation.navigate("Descripcion Tarjeta")}
           >
-              Actualizar y Eliminar
+              Actualizar fechas y Eliminar
           </Button>
             <Text></Text>
        

@@ -50,7 +50,6 @@ export function getEgresoForRubro(rubro, successCallback){
       'Select sum(monto) as total from Egresos where rubro_id = ' + rubro,
       [],
       (_, { rows }) => {
-        console.log(rows);
         successCallback(rows._array);
       },
       (_, error) => {
@@ -66,6 +65,23 @@ export function getOtherEgresos(successCallback){
   db.transaction((tx) => {
     tx.executeSql(
       "Select sum(monto) as total from Egresos where rubro_id != 'General' and rubro_id != 'Servicios e Impuestos'",
+      [],
+      (_, { rows }) => {
+        successCallback(rows._array);
+      },
+      (_, error) => {
+        console.log(error);
+      }
+    );
+  
+  });
+}
+
+export function getEgresosFromEfectivo(successCallback){
+  db.transaction((tx) => {
+    tx.executeSql(
+      //"Select sum(monto) as totalEfectivo from Egresos e join Cuentas c on e.cuenta_id = c.id",
+      "select monto, cuenta_id from Egresos",
       [],
       (_, { rows }) => {
         console.log(rows);

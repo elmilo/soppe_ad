@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback , StatusBar, Dimensions, Platform } from 'react-native';
+import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback , StatusBar, Dimensions, Platform, ScrollView} from 'react-native';
 import { Block, Button, Text, theme,Input  } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Icon, Inversion, Header } from '../components';
@@ -7,18 +7,73 @@ const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import inversiones from '../constants/inversiones.js';
+import ModalPersonalizado from "../components/ModalPersonalizado";
+import { setIngresoVentaInversion } from "../Database/Ingresos";
+import { getInversionDetalle } from "../Database/Database";
+import { deleteInversion, getInversiones, updateVentaMontoInversion } from "../Database/Database";
 
-export default class D2_Inversiones extends React.Component {
-  render() {
-    const { navigation } = this.props;
-    const { inversion } = this.props;
-    
+export default function D2_Inversiones(props) {
+    const [user_id, setUser_id] = useState(1);
+    const [inversionId, SetInversionId] = useState("");
+    const [arrayInversiones, setArrayInversiones] = useState([]);
+    const navigation = props.navigation;
+   
+    useEffect(() => {
+      getInversiones(user_id, successArrayInversiones);
+    }, []);
+  
+
+    const arrayInversiones1 = [
+      { value: 1, label: "Inversion1" },
+      { value: 2, label: "Inversion2" },
+      { value: 3, label: "Inversion3" },
+      { value: 4, label: "Inversion4" },
+    ];
+
+    function handleOnChangeInversion(elemento) {
+      SetInversionId(elemento);
+    }
+  
+
+    function successArrayInversiones(rows) {
+      var datosFinales = [];
+      rows.forEach((elemento, key) => {
+        datosFinales.push({
+          key: elemento.id,
+          label: elemento.tipo  + ' - ' + elemento.descripcion,
+        });
+      });
+  
+      setArrayInversiones(datosFinales);
+    }
+
+    function saveUpdateMonto() {
+      updateVentaMontoInversion(inversionId, ventaMonto)
+
+    }
+
+    function eliminarInversion() {
+      deleteInversion(inversion);
+      navigation.navigate("Inversiones");
+        }
+
+    function DropdownInversiones(props) {
+      return (
+        <ModalPersonalizado
+          data={arrayInversiones}
+          initValue="Inversiones"
+          onSelected={handleOnChangeInversion}
+        />
+      );
+    };
+
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-      
-      <TouchableWithoutFeedback >
+     
+      <ScrollView>
+     
           <Block flex  style={styles.inversionDescription}>
-           
+          {DropdownInversiones() }
             <Text size={15} >Valor de venta:</Text>
             <Block flex style={styles.group}>
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
@@ -33,26 +88,32 @@ export default class D2_Inversiones extends React.Component {
             
 
           </Block>
-        </TouchableWithoutFeedback>
+          </ScrollView>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-        <Text></Text>
+       
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-        <Button shadowless color="green" style={[styles.button, styles.shadow]}>
+        <Button shadowless color="success" style={[styles.button, styles.shadow]}onPress={() => {updateVentaMontoInversion();}}>
               Actualizar
+              
             </Button>
             <Text></Text>
-        <Button shadowless color="red" style={[styles.button, styles.shadow]}>
-              Vender y Eliminar
+            <Button
+              shadowless
+              color="red"
+              style={[styles.button, styles.shadow]}
+              onPress={() => {eliminarInversion();}}
+
+            >
+            Vender y Eliminar
             </Button>
             </Block>
                      
         </Block>
-      
+       
+     
     );
   }
-}
 
 const styles = StyleSheet.create({
     container: {
