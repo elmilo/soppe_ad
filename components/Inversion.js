@@ -83,7 +83,7 @@ export default function Inversion(props) {
             <Text size={9} muted={!saldoColor} color={saldoColor}>Vencimiento:</Text>
             <Text size={17} style={styles.inversionEntidad}>{inversion.fecha_vencimiento}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Valor venta:</Text>
-            <Text size={17} style={styles.inversionEntidad}>{inversion.venta_monto}</Text>
+            <Text size={17} style={styles.inversionEntidad}>${inversion.venta_monto}</Text>
 
 
           </Block>

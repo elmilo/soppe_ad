@@ -33,6 +33,7 @@ export default function E01_Inversiones(props) {
   const [cuentaIn, SetCuentaIn] = useState('');
   const [vencimiento, setVencimiento] = useState(0.0);
   const [valorInv, setValorInv] = useState(0.0);
+  const [valorVenta, setValorVenta] = useState(0.0);
   const [descripcion, setDescripcion] = useState("");
  
   const navigation = props.navigation;
@@ -67,7 +68,7 @@ export default function E01_Inversiones(props) {
   }
 
   function saveInversion() {
-    setInversion(tipo, vencimiento, cuentaIn, valorInv,descripcion);
+    setInversion(tipo, vencimiento, cuentaIn, valorInv,valorVenta, descripcion);
     navigation.navigate("Inversiones");
   }
     
@@ -94,6 +95,18 @@ export default function E01_Inversiones(props) {
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
                 onChangeText={(text) => {setValorInv(text); }}
+              />
+            </Block>
+          </Block>
+          <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de venta plazo fijo</Text>
+          <Block flex style={styles.group}>
+            <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
+              <Input
+                right
+                placeholder="$"
+                placeholderTextColor={materialTheme.COLORS.DEFAULT}
+                style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setValorVenta(text); }}
               />
             </Block>
           </Block>

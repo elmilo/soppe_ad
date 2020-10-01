@@ -92,7 +92,19 @@ export default function Prestamo(props) {
     )
   }
 
+function otorgadoOtomado (){
+  a=prestamo.tomado;
+  if ({a}== 0){ 
+  <Text size={15} muted={!saldoColor} color={saldoColor}>{a}</Text>
+  
+ }
+}
+
+
   function renderPrestamo() {
+    
+    
+
     return (
       <Block
         row={horizontal}
@@ -149,6 +161,7 @@ export default function Prestamo(props) {
   );
 
 }
+
 /* 
  <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
        <Button shadowless color="green" style={[styles.button, styles.shadow]}>
