@@ -53,8 +53,8 @@ export default function Cuenta(props) {
               }}
             >
               <Icon
-                name="delete"
-                family="MaterialIcons"
+               name="book"
+               family="AntDesign"
                 iconColor={theme.COLORS.WHITE}
                 size={30}
                 color={theme.COLORS.RED}
@@ -72,7 +72,7 @@ export default function Cuenta(props) {
             <Text size={9} muted={!saldoColor} color={saldoColor}>Número de Cuenta:</Text>
             <Text size={17} style={styles.cuentaEntidad}>{cuenta.nro_cuenta}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Número de Cbu:</Text>
-            <Text size={17} style={styles.cuentaEntidad}>{cuenta.cbu}</Text>
+            <Text size={14} style={styles.cuentaEntidad}>{cuenta.cbu}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Alias:</Text>
             <Text size={17} style={styles.cuentaEntidad}>{cuenta.alias}</Text>
           </Block>

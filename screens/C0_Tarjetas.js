@@ -53,6 +53,17 @@ export default function C0_Tarjetas(props) {
             + Agregar nueva tarjeta
           </Button>
           <Text></Text>
+          <Button
+            shadowless
+            color="success"
+            style={[styles.button, styles.shadow]}
+            onPress={() => props.navigation.navigate("Descripcion Tarjeta")}
+          >
+              Actualizar y Eliminar
+          </Button>
+            <Text></Text>
+       
+            
         </Block>
       </ScrollView>
     );

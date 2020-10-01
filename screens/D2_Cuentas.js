@@ -36,12 +36,7 @@ export default function D2_Cuentas (props) {
           <Block flex  style={styles.cuentaDescription}>
           
 
-          <Text size={18} style={styles.cuentaEntidad}>Número de Cuenta:</Text>
-          <Text size={20} style={styles.cuentaEntidad}>{}</Text>
-          <Text size={18} style={styles.cuentaEntidad}>Número de Cbu:</Text>
-          <Text size={20} style={styles.cuentaEntidad}>{}</Text>
-          <Text size={18} style={styles.cuentaEntidad}>Alias:</Text>
-          <Text size={20} style={styles.cuentaEntidad}>{}</Text>
+       
           </Block>
       </TouchableWithoutFeedback>     
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>  

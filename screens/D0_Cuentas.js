@@ -50,6 +50,15 @@ export default function D0_Cuentas(props) {
             onPress={() => props.navigation.navigate("Nueva Cuenta")}
           >
             + Agregar nueva cuenta
+            </Button>
+          <Text></Text>
+          <Button
+            shadowless
+            color="success"
+            style={[styles.button, styles.shadow]}
+            onPress={() => props.navigation.navigate("Descripcion Cuenta")}
+          >
+              Actualizar y Eliminar
           </Button>
           <Text></Text>
         </Block>

@@ -17,12 +17,7 @@ export default class C2_Tarjetas extends React.Component {
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
         <TouchableWithoutFeedback >
           <Block flex style={styles.tarejtaDescription}>
-            <Text size={18} style={styles.tarjetaEntidad}>últimos 4 dígitos:</Text>
-            <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
-            <Text size={18} style={styles.tarjetaEntidad}>Vencimiento de la Tarjeta:</Text>
-            <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
-            <Text size={18} style={styles.tarjetaEntidad}>Saldo:</Text>
-            <Text size={20} style={styles.tarjetaEntidad}>{tarjeta}</Text>
+          
             <Text size={18} style={styles.tarjetaEntidad}>Fecha de cierre:</Text>
             <Block flex style={styles.group}>
               <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
@@ -48,7 +43,7 @@ export default class C2_Tarjetas extends React.Component {
                 <Button shadowless color="success" style={[styles.button, styles.shadow]}>
                   Actualizar fechas
             </Button>
-                <Text></Text><Text></Text><Text></Text>
+                <Text></Text>
                 <Button shadowless color="red" style={[styles.button, styles.shadow]}>
                   Eliminar
             </Button>
