@@ -42,7 +42,7 @@ export default function B1_NuevoEgreso(props) {
   const [auto_manual, setAuto_manual]       = useState("manual");
   const [add_dttm, setAdd_dttm]             = useState(new Date());
   const [imagenComprobante, setImagenComprobante]   = useState(null);
-  const { navigation } = props;
+  const {navigation } = props;
 
 /********************************************************************* */
 const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -310,6 +310,7 @@ function handleOnChangeMedioDePago(medioDePago) {
       <Block>
         <CamaraPersonalizada SelectedImage={tratarImagenCallback}/>
       </Block>
+      <Text></Text>
       <Button
               shadowless
               color="success"

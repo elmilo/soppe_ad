@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, Image, StyleSheet, TouchableWithoutFeedback, StatusBar, Dimensions, Platform } from 'react-native';
 import { Block, Button, Text, theme, Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -7,17 +7,51 @@ const { height, width } = Dimensions.get('screen');
 import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import tarjetasjs from '../constants/tarjetas.js';
+import { getTarjetas } from "../Database/Database";
+import ModalPersonalizado from '../components/ModalPersonalizado';
 
-export default class C2_Tarjetas extends React.Component {
-  render() {
-    const { navigation } = this.props;
-    const { tarjeta } = this.props;
+export default function C2_Tarjetas(props) {
+  const [user_id, setUser_id] = useState(1);
+  const [tarjeta, setTarjeta] = useState("");
+  const [arrayTarjetas, setArrayTarjetas] = useState([]);
+  
+  useEffect(() => {
+    getTarjetas(user_id, successArrayTarjetas);
+  }, []);
 
+  function handleOnChangeTarjeta (unaTarjeta){
+    console.log('handleOnChangeTarjeta: ' + unaTarjeta);
+    setTarjeta(unaTarjeta);
+  }
+
+  function successArrayTarjetas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id,
+        label: elemento.emisor + '(' + elemento.ultimos_4_digitos + ')',
+      });
+    });
+
+    setArrayTarjetas(datosFinales);
+  }
+
+  function DropdownTarjeta(props) {
+    return (
+      <ModalPersonalizado
+        data={arrayTarjetas}
+        initValue="Tarjeta"
+        onSelected={handleOnChangeTarjeta}
+      />
+    );
+  };
+  
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
         <TouchableWithoutFeedback >
           <Block flex style={styles.tarejtaDescription}>
-          
+          <Text></Text>
+          {DropdownTarjeta()}
             <Text size={18} style={styles.tarjetaEntidad}>Fecha de cierre:</Text>
             <Block flex style={styles.group}>
               <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
@@ -54,7 +88,7 @@ export default class C2_Tarjetas extends React.Component {
       </Block>
     );
   }
-}
+
 
 const styles = StyleSheet.create({
   container: {
