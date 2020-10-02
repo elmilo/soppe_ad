@@ -8,6 +8,7 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Inversion, Header } from '../components';
 import { getInversiones } from "../Database/Database";
 const { height, width } = Dimensions.get('screen');
+import { getTodo } from "../Database/SelectTables";
 
 export default function E00_Inversiones(props) {
   const [datos, setDatos] = React.useState(null);

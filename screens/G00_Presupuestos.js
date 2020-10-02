@@ -9,6 +9,7 @@ import { Icon, Presupuesto, Header } from '../components';
 import presupuestos from '../constants/presupuestos';
 import { getPresupuestos } from "../Database/Database";
 const { height, width } = Dimensions.get('screen');
+import { getTodo } from "../Database/SelectTables";
 
 export default function G00_Presupuestos(props) {
   const [datos, setDatos] = React.useState(null);
