@@ -560,7 +560,7 @@ export function getPrestamos(successCallback) {
 
 export function setPrestamo(user_id, cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado) {
   console.log("SetPrestamo");
-  console.log(usar_id, cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado);
+  console.log(user_id, cuenta,S tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado);
   db.transaction(
     (tx) => {
       tx.executeSql(
