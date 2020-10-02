@@ -11,13 +11,14 @@ import ModalPersonalizado from '../components/ModalPersonalizado';
 import products from '../constants/products';
 import { setPresupuesto} from "../Database/Database";
 import  InsertMaestros  from "../Database/InsertMaestros";
+import { getTodo } from "../Database/SelectTables";
 
 const arrayCategorias = InsertMaestros.CATEGORIAS;
 const arrayRubros     = InsertMaestros.RUBROS;
 
 
 export default function G01_Presupuestos(props) {
-
+  const [user_id, setUser_id] = useState(1);
   const [categoria, SetCategoria] = useState("");
   const [rubro, SetRubro] = useState("");
   const [valorMensual, setValorMensual] = useState(0.0);
@@ -25,6 +26,15 @@ export default function G01_Presupuestos(props) {
 
   const navigation = props.navigation;
   let index = 0;
+  
+  function successCallback(rowDB) {
+    setUser_id(rowDB.idExt);
+  }
+
+  useEffect(() => {
+    getTodo("Usuarios", successCallback);
+  }, []);
+
 
   function handleOnChangeCategoria(unaCategoria) {
     SetCategoria(unaCategoria);
@@ -35,7 +45,7 @@ export default function G01_Presupuestos(props) {
   }
 
   function savePresupuesto() {
-    setPresupuesto(rubro, categoria,valorMensual,descripcion);
+    setPresupuesto(user_id, rubro, categoria,valorMensual,descripcion);
     navigation.navigate("Presupuestos");
   }
   

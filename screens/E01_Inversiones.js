@@ -12,6 +12,7 @@ import products from '../constants/products';
 import { setInversion} from "../Database/Database";
 import * as SQLite from "expo-sqlite";
 import { getCuentas } from "../Database/Database";
+import { getTodo } from "../Database/SelectTables";
 
 const arrayTipoIngreso = [
   { value: 1, label: "Plazo Fijo" },
@@ -33,7 +34,6 @@ export default function E01_Inversiones(props) {
   const [cuenta, setCuenta]= useState("");
   const [arrayCuentas, setArrayCuentas] = useState([]);
   const [tipo, SetTipo] = useState('');
-  const [cuentaIn, SetCuentaIn] = useState('');
   const [vencimiento, setVencimiento] = useState(0.0);
   const [valorInv, setValorInv] = useState(0.0);
   const [valorVenta, setValorVenta] = useState(0.0);
@@ -42,6 +42,15 @@ export default function E01_Inversiones(props) {
   const navigation = props.navigation;
   let index = 0;
 
+  function successCallback(rowDB) {
+    setUser_id(rowDB.idExt);
+  }
+  
+  useEffect(() => {
+    getTodo("Usuarios", successCallback);
+  }, []);
+
+  
   useEffect(() => {
     getCuentas(user_id, successArrayCuentas);
   }, []);
@@ -94,7 +103,7 @@ export default function E01_Inversiones(props) {
 
 
   function saveInversion() {
-    setInversion(tipo, vencimiento, cuentaIn, valorInv,valorVenta, descripcion);
+    setInversion(tipo, user_id, vencimiento, cuenta, valorInv,valorVenta, descripcion);
     navigation.navigate("Inversiones");
   }
 

@@ -21,6 +21,7 @@ import { setPrestamo, get2Cuentas } from "../Database/Database";
 import products from "../constants/products";
 import * as SQLite from "expo-sqlite";
 import { getCuentas } from "../Database/Database";
+import { getTodo } from "../Database/SelectTables";
 
 const arrayTipo = [
   { value: 1, label: "En Cuenta" },
@@ -38,12 +39,20 @@ export default function F01_Prestamos(props) {
   const [terceroDesc, setTerceroDesc] = useState(null);
   const [descripcion, setDescripcion] = useState("");
   const [cuotas, setCuotas] = useState(0.0);
-  const [fechaVencimiento, setFechaVencimiento] = useState(0.0);
   const [valorCuota, setValorCuota] = useState(0.0);
   const [valorPrestamo, setValorPrestamo] = useState(0.0);
   const [arrayCuentas, setArrayCuentas] = useState([]);
   const navigation = props.navigation;
   let index = 0;
+ 
+  function successCallback(rowDB) {
+    setUser_id(rowDB.idExt);
+  }
+
+  useEffect(() => {
+    getTodo("Usuarios", successCallback);
+  }, []);
+
 
   useEffect(() => {
     getCuentas(user_id, successArrayCuentas);
@@ -68,7 +77,7 @@ export default function F01_Prestamos(props) {
 
 
   function savePrestamo() {
-    setPrestamo(cuenta, tipoPrestamo,  terceroDesc, valorCuota, proxCuota, cuotas,valorPrestamo, descripcion, isEnabled );
+    setPrestamo(user_id, cuenta, tipoPrestamo,  terceroDesc, valorCuota, proxCuota, cuotas,valorPrestamo, descripcion, isEnabled );
     //cambiar null por terceroDesc
     navigation.navigate("Préstamos");
   }
