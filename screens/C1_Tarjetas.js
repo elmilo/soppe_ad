@@ -12,6 +12,7 @@ import products from '../constants/products';
 import * as SQLite from 'expo-sqlite';
 import { setTarjeta } from '../Database/Database';
 import { getCuentas } from "../Database/Database";
+import { getTodo } from "../Database/SelectTables";
 const db = SQLite.openDatabase("db.db");
 
 const arrayEmisorIngreso = [
@@ -29,11 +30,7 @@ const arrayTipoTarjeta1Ingreso = [
   { value: 2, label: "Crédito" },
 ];
 
-/*
-const arrayCuentaDebitoIngreso = [
-  { value: 1, label: "Banco Galicia 453/5265988" },
-];
-*/
+
 export default function C1_Tarjetas(props) {
   const [user_id, setUser_id] = useState(1);
   const [cuenta, setCuenta]= useState("");
@@ -45,9 +42,17 @@ export default function C1_Tarjetas(props) {
   const [fechaVenceResumen, setFechaVenceResumen] = useState("");
   const [fechaCierre, setFechaCierre] = useState("");
   const [saldo, setSaldo] = useState(0);
+  
   const navigation = props.navigation;
   let index = 0;
        
+  function successCallback(rowDB) {
+    setUser_id(rowDB.idExt);
+  }
+
+  useEffect(() => {
+    getTodo("Usuarios", successCallback);
+  }, []); 
 
   useEffect(() => {
     getCuentas(user_id, successArrayCuentas);
@@ -58,7 +63,6 @@ export default function C1_Tarjetas(props) {
     setCuenta(unaCuenta);
   }
 
-  
   function successArrayCuentas(rows) {
     var datosFinales = [];
     rows.forEach((elemento, key) => {
@@ -136,6 +140,7 @@ export default function C1_Tarjetas(props) {
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Input
                 right
+                keyboardType = 'numeric'
                 placeholder="Solo Números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
@@ -152,6 +157,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
+                keyboardType = 'numeric'
                 placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
@@ -167,6 +173,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
+                keyboardType = 'numeric'
                 placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{
@@ -182,6 +189,7 @@ export default function C1_Tarjetas(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
                 right
+                keyboardType = 'numeric'
                 placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{

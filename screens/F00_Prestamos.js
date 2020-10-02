@@ -29,9 +29,10 @@ export default function F00_Prestamos(props) {
     setDatos(datosTemporales);
   }
   useFocusEffect(() => {
-    getPrestamos(successCallback);
+    const id_usuario  = 1;
+    getPrestamos(id_usuario,successCallback);
   })
-
+ 
   const renderPrestamos = () => {
 
     return (
