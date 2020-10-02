@@ -19,6 +19,16 @@ import { getPrestamos } from "../Database/Database";
 
 export default function F00_Prestamos(props) {
   const [datos, setDatos] = React.useState(null);
+  const [user_id, setUser_id] = useState(1);
+ 
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+    getCuentas(user_id, successCallback);
+  }
+
+  useFocusEffect(() => {
+    getTodo("Usuarios", successCallbackUserID);    
+  })
 
   function successCallback(rows) {
     var datosTemporales = [];

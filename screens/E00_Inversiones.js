@@ -10,8 +10,9 @@ import { getInversiones } from "../Database/Database";
 const { height, width } = Dimensions.get('screen');
 
 export default function E00_Inversiones(props) {
-
-  const [datosInv, setDatos] = React.useState(null);
+  const [datos, setDatos] = React.useState(null);
+  const [user_id, setUser_id] = useState(1);
+  
 
   function successCallback(rows) {
     var datosTemporales = [];
@@ -21,9 +22,16 @@ export default function E00_Inversiones(props) {
 
     setDatos(datosTemporales);
   }
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+    getCuentas(user_id, successCallback);
+  }
+
   useFocusEffect(() => {
-    getInversiones(successCallback);
+    getTodo("Usuarios", successCallbackUserID);    
   })
+
+
 
   const renderInversiones = () => {
 
@@ -35,7 +43,7 @@ export default function E00_Inversiones(props) {
       >
         <Block flex>
           <Text></Text>
-          <Block dense>{datosInv}</Block>
+          <Block dense>{datos}</Block>
           <Button
             shadowless
             color="success"
