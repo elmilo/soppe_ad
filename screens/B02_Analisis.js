@@ -15,6 +15,8 @@ const { height, width } = Dimensions.get("screen");
 import { Images, materialTheme } from "../constants/";
 import { HeaderHeight } from "../constants/utils";
 
+import { getTodo } from "../Database/SelectTables";
+import { useFocusEffect } from '@react-navigation/native';
 import XLSX from "xlsx";
 import * as FileSystem from 'expo-file-system';
 import * as MediaLibrary from 'expo-media-library';
@@ -188,10 +190,17 @@ export default function B02_Analisis(props) {
 
     setDatos(datosTemporales);
   }
+  
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+    getMovimientosUltimoMes(rowDB.idExt, successCallback);
+  }
 
   useEffect(() => {
+    getTodo("Usuarios", successCallbackUserID);
     getMovimientosUltimoMes(user_id, successCallback);
   });
+
 
   return (
     <Block>

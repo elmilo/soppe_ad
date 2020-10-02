@@ -9,6 +9,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import  InsertMaestros  from "../Database/InsertMaestros";
 import { getCuentas, updateSaldoCuentaIngreso } from "../Database/Database";
 import { setIngreso, getIngresos } from "../Database/Ingresos";
+import { getTodo } from "../Database/SelectTables";
 
 const { height, width } = Dimensions.get("screen");
 
@@ -63,9 +64,15 @@ export default function B1_NuevoIngreso(props){
   /*********************************************************** */
   /*********************************************************** */
   useEffect(() => {
-    getCuentas(user_id, successArrayCuentas);
+    getTodo("Usuarios", successCallbackUserID);
+ 
   }, []);
-  
+
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+    getCuentas(rowDB.idExt, successArrayCuentas);
+  }
+
 
   function successArrayCuentas(rows) {
     var datosFinales = [];
@@ -163,7 +170,7 @@ function saveIngreso() {
     getIngresos();
 
     // {medio_de_pago == "Consumo Cuenta"
-    updateSaldoCuentaIngreso(cuenta.slice(cuenta.search("-")+2,-5),monto);
+    updateSaldoCuentaIngreso(cuenta.slice(cuenta.search("-")+2,-5), monto, user_id);
 
   }
 

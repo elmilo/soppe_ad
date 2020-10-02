@@ -16,9 +16,11 @@ import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import { Icon, Cuenta, Header } from "../components";
 import { getCuentas } from "../Database/Database";
+import { getTodo } from "../Database/SelectTables";
 
 export default function D0_Cuentas(props) {
   const [datos, setDatos] = React.useState(null);
+  const [user_id, setUser_id] = useState(1);
 
   function successCallback(rows) {
     var datosTemporales = [];
@@ -28,9 +30,14 @@ export default function D0_Cuentas(props) {
 
     setDatos(datosTemporales);
   }
+  
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+    getCuentas(user_id, successCallback);
+  }
+
   useFocusEffect(() => {
-    const id_usuario  = 1;
-    getCuentas(id_usuario, successCallback);
+    getTodo("Usuarios", successCallbackUserID);    
   })
 
   const renderCuentas = () => {

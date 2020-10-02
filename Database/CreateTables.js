@@ -82,7 +82,7 @@ var createTarjetas =
   "id" +
   " INTEGER PRIMARY KEY," +
   "user_id" +
-  " INT NOT NULL," +
+  " VARCHAR(45)," +
   "cuenta_id" +
   " INT NULL," +
   "saldo" +
@@ -110,7 +110,7 @@ var createPrestamos =
   "id" +
   " INTEGER PRIMARY KEY," +
   "user_id" +
-  " INT NULL," +
+  " VARCHAR(45)," +
   "cuenta_id" +
   " INT NULL," +
   "tipo" +
@@ -140,7 +140,7 @@ var createPresupuestos =
   "id" +
   " INTEGER PRIMARY KEY," +
   "user_id" +
-  " INT NULL," +
+  " VARCHAR(45)," +
   "rubro_id" +
   " INT NULL," +
   "categoria_id" +
@@ -160,7 +160,7 @@ var createInversiones =
   "cuenta_id" +
   " INT NULL," +
   "user_id" +
-  " INT NULL," +
+  " VARCHAR(45)," +
   "tipo" +
   " VARCHAR(45) NULL," +
   "fecha_vencimiento" +
@@ -180,7 +180,7 @@ var createIngresos =
   " Ingresos " +
   " ( " +
   "id" + " INTEGER PRIMARY KEY," +
-  "user_id" + " INT NULL," +
+  "user_id" + " VARCHAR(45) NULL," +
   "cuenta_id" +  " VARCHAR(96)  NULL," +
   "tipo_ingreso" +  " VARCHAR(96)  NULL," +
   "cuotas_restantes" +   " INT NULL, " +
@@ -200,7 +200,7 @@ var createEgresos =
   "id" +
   " INTEGER PRIMARY KEY," +
   "user_id" +
-  " INT NULL," +
+  " VARCHAR(45) NULL," +
   "cuenta_id" +
   " VARCHAR(96)  NULL," +
   "rubro_id" +
@@ -242,7 +242,7 @@ var createNotificaciones =
   "tabla_externa" +
   " VARCHAR(45) NULL," +
   "user_id" +
-  " INT NULL," +
+  " VARCHAR(45) NULL," +
   "notificado_dttm" +
   " DATETIME NULL" +
   ")";
@@ -334,7 +334,6 @@ export function dropAll() {
     dropCuentas,
     dropTarjetas,
     dropPrestamos,
-    dropRubros,
     dropCategorias,
     dropPresupuestos,
     dropInversiones,

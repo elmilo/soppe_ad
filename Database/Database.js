@@ -66,8 +66,8 @@ export function getCuentas(id_usuario, successCallback) {
   //where user_id = ?
   db.transaction((tx) => {
     tx.executeSql(
-      "select * from Cuentas ",
-      [],
+      "select * from Cuentas where user_id = ?",
+      [id_usuario],
       (_, { rows }) => {
         console.log('Success getCuentas: ', rows._array);
         successCallback(rows._array);
@@ -127,14 +127,14 @@ export function getCuentaDetalle(id) {
   });
 }
 
-export function updateSaldoCuentaIngreso(nroCuenta, montoIngreso) {
+export function updateSaldoCuentaIngreso(nroCuenta, montoIngreso, user_id) {
   console.log("updateSaldoCuentaIngreso");
   console.log(nroCuenta,montoIngreso);
   db.transaction(
     (tx) => {
       tx.executeSql(
         "update Cuentas set saldo = saldo + ? where user_id = ? and nro_cuenta = ?;",
-        [montoIngreso, 1, nroCuenta]
+        [montoIngreso, user_id, nroCuenta]
       );
     },
     null,

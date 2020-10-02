@@ -8,7 +8,7 @@ import ModalPersonalizado from "../components/ModalPersonalizado";
 import { FloatingAction } from "react-native-floating-action";
 import CamaraPersonalizada from "../components/CamaraPersonalizada";
 import { getCuentas, getTarjetas, updateSaldoCuentaEgreso, updateSaldoTarjetaEgreso } from "../Database/Database";
-
+import { getTodo } from "../Database/SelectTables";
 import { setEgreso, getEgresos } from "../Database/Egresos";
 import  InsertMaestros  from "../Database/InsertMaestros";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -43,6 +43,15 @@ export default function B1_NuevoEgreso(props) {
   const [add_dttm, setAdd_dttm]             = useState(new Date());
   const [imagenComprobante, setImagenComprobante]   = useState(null);
   const {navigation } = props;
+  
+  
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+  }
+
+  useEffect(() => {
+    getTodo("Usuarios", successCallbackUserID);
+  }, []);
 
 /********************************************************************* */
 const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -172,7 +181,8 @@ function handleOnChangeMedioDePago(medioDePago) {
   
   function saveEgreso() {
 
-  setEgreso(cuenta, 
+  setEgreso(user_id,
+    cuenta, 
       rubro, 
       categoria, 
       tarjeta, 
