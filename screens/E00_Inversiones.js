@@ -15,6 +15,10 @@ export default function E00_Inversiones(props) {
   const [datos, setDatos] = React.useState(null);
   const [user_id, setUser_id] = useState(1);
   
+  useFocusEffect(() => {
+    getTodo("Usuarios", successCallbackUserID);    
+  })
+
 
   function successCallback(rows) {
     var datosTemporales = [];
@@ -24,19 +28,13 @@ export default function E00_Inversiones(props) {
 
     setDatos(datosTemporales);
   }
+
   function successCallbackUserID(rowDB) {
     setUser_id(rowDB.idExt);
     getCuentas(user_id, successCallback);
   }
 
-  useFocusEffect(() => {
-    getTodo("Usuarios", successCallbackUserID);    
-  })
-
-
-
   const renderInversiones = () => {
-
 
     return (
       <ScrollView

@@ -22,10 +22,10 @@ const arrayTipoIngreso = [
 ];
 
 const arrayCuenta = [
-  { value: 1, label: "Prueba banco 1" },
-  { value: 2, label: "Prueba banco 1" },
-  { value: 3, label: "Prueba banco 1" },
-  { value: 4, label: "Prueba banco 1" },
+  { value: 1, label: "Prueba_banco_1" },
+  { value: 2, label: "Prueba_banco_2" },
+  { value: 3, label: "Prueba_banco_3" },
+  { value: 4, label: "Prueba_banco_4" },
 ];
 
 
@@ -89,7 +89,7 @@ export default function E01_Inversiones(props) {
       <Block>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
         <ModalPersonalizado
-        data={arrayCuenta}
+        data={arrayCuentas}
         initValue="Seleccione una Cuenta"
         onSelected={handleOnChangeCuenta}
       />
@@ -100,7 +100,6 @@ export default function E01_Inversiones(props) {
   function handleOnChangeTipo(unTipo) {
     SetTipo(unTipo);
   }
-
 
   function saveInversion() {
     setInversion(tipo, user_id, vencimiento, cuenta, valorInv,valorVenta, descripcion);

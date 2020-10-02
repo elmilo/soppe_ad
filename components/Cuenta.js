@@ -116,8 +116,8 @@ export default function Cuenta(props) {
           }
         >
           <Block flex space="between" style={styles.cuentaDescription}>
-            <Text size={15} style={styles.cuentaEntidad}>{cuenta.entidad_id}</Text>
-            <Text size={14} style={styles.cuentaEntidad}>{cuenta.moneda}</Text>
+            <Text size={14} style={styles.cuentaEntidad}>{cuenta.entidad_id}</Text>
+            <Text size={13} style={styles.cuentaEntidad}>{cuenta.moneda}</Text>
             <Text size={20} style={styles.cuentaEntidad}>${cuenta.saldo}</Text>
           </Block>
         </TouchableWithoutFeedback>

@@ -477,14 +477,14 @@ export function getInversiones(successCallback) {
   });
 }
 
-export function setInversion(tipo, fechaVencimiento, cuenta, compraMonto, ventaMonto, descripcion) {
+export function setInversion(tipo, user_id,fechaVencimiento, cuenta, compraMonto, ventaMonto, descripcion) {
   console.log("SetInversion");
-  console.log(tipo, fechaVencimiento, cuenta, compraMonto, ventaMonto, descripcion);
+  console.log(tipo,user_id, fechaVencimiento, cuenta, compraMonto, ventaMonto, descripcion);
   db.transaction(
     (tx) => {
       tx.executeSql(
         "insert into Inversiones (cuenta_id, user_id, tipo, fecha_vencimiento, compra_monto, venta_monto, descripcion, terminado) values (?, ?, ?, ?, ?, ?, ?, ?)",
-        [cuenta, 1, tipo, fechaVencimiento, compraMonto,ventaMonto, descripcion, 'false']
+        [cuenta, user_id, tipo, fechaVencimiento, compraMonto,ventaMonto, descripcion, 'false']
       );
     },
     null,
