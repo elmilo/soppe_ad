@@ -15,56 +15,71 @@ import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
-import { userData } from "../Database/Database";
-
+import { useFocusEffect } from '@react-navigation/native';
 import { fakeprofile as miPerfil } from "../constants";
 import { getTodo , getTodoSinFiltro} from "../Database/SelectTables";
 
-import { cuentaEnNube } from "../external/InsertAPI";
+import { enviarNube, deleteNube } from "../external/InsertAPI";
 
 
 
     
 
 export default function B01_Perfil(props) {
+  const [user_id, setUser_id] = useState(1);
+
   const [indicadorWIPE, setIndicadorWIPE] = useState(false);
   const [indicadorWIPR, setIndicadorWIPR] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-  const [datos, setDatos] = useState([]);
+  const [datosCuentas, setDatosCuentas] = useState([]);
+  
+  
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+  }
+
+  useEffect(() => {
+    getTodo("Usuarios", successCallbackUserID);
+  }, []);
+
 
   function successCallback(rowDB) {
+    console.log('Usuario: ' + JSON.stringify(rowDB));
     setNombre(rowDB.nombre);
     setApellido(rowDB.apellido);
   }
   
   function callbackCuentas(rowDB) {
-    console.log('Exito en el recuperarDatosNube: ' + res);
-    setDatos(rowDB);
+    console.log('datos cuentas: ' + rowDB);
+    //setDatosCuentas(rowDB);
+    deleteNube(user_id, 'Cuenta').then(
+      res => {if (res) {
+        console.log('Exito en el deleteNube: ' + res);
+      } else {
+        console.log('Error en el deleteNube');
+      }}
+    );
+    rowDB.forEach((unaFila) =>{
+      enviarNube(unaFila, 'Cuenta').then(res => {
+        if (res) {
+          console.log('Exito en el enviarDatosNube: ' + res);
+        } else {
+          console.log('Error en el enviarDatosNube');
+        }
+      });
+    });
+    setIndicadorWIPR(false);
   }
-
 
   useEffect(() => {
     getTodo("Usuarios", successCallback);
-    getTodoSinFiltro('Cuentas', callbackCuentas);
   }, []);
 
 
   function enviarDatosNube (){
     setIndicadorWIPR(true);
-    
-    
-    datos.forEach((unaFila) =>{
-      cuentaEnNube(unaFila).then(res => {
-        if (res) {
-          console.log('Exito en el recuperarDatosNube: ' + res);
-        } else {
-          console.log('Error en el recuperarDatosNube');
-        }
-      });
-    });
-
-    setIndicadorWIPR(false);
+    getTodoSinFiltro('Cuentas', callbackCuentas);  
   }
   
 
