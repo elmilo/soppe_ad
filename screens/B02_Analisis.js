@@ -41,67 +41,28 @@ export default function B02_Analisis(props) {
 
   const { navigation } = props;
 
-  function exportFile() {
-     /* convert AOA back to worksheet */
-   // const ws = XLSX.utils.aoa_to_sheet(datosExportar);
-   const ws = XLSX.utils.json_to_sheet(datosExportar);
 
-    /* build new workbook */
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Movimientos");
+
+  async function exportFile() {
+        
+    const worksheet = XLSX.utils.json_to_sheet(datosExportar, { skipHeader:true});
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Movimientos");
 
     /* write file */
-    const contents = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
-    const fileUri = exportDir + '/' + "data_export.xlsx";
-    //console.log("contents excel " + contents);
-    FileSystem.writeAsStringAsync(fileUri, contents).then((res) => {
-      //console.log("exportFile success" +  " Exported to res: " + contents);
-      Sharing.shareAsync(fileUri, {
-        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        dialogTitle: 'Bajar datos exportados',
-        UTI: 'com.microsoft.excel.xlsx'
-      });
-      
-        MediaLibrary.saveToLibraryAsync(fileUri);
-        
-      })
-      .catch((err) => {
-        console.log("exportFile Error", "Error " + err.message);
-      });
-  }
+    const contents = XLSX.write(workbook, { type: 'base64', bookType: 'xlsx' });    
+    const fileUri = exportDir + "data_export.xlsx";
 
-/*  const wbout = XLSX.write(wb, {
-    type: 'base64',
-    bookType: "xlsx"
-  });*/
- 
-
-  /*await FileSystem.writeAsStringAsync(uri, wbout, {
-    encoding: FileSystem.EncodingType.Base64
-  });
-  
-  await Sharing.shareAsync(uri, {
-    mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    dialogTitle: 'MyWater data',
-    UTI: 'com.microsoft.excel.xlsx'
-  });*/
- /* function getCurrentTime() {
-    // Get the current 'global' time from an API using Promise
-    return new Promise((resolve, reject) => {
-      setTimeout(function () {
-        var didSucceed = Math.random() >= 0.5;
-        didSucceed ? resolve(new Date()) : reject("Error");
-      }, 2000);
+    await FileSystem.writeAsStringAsync(fileUri, contents , {
+      encoding: FileSystem.EncodingType.Base64
     });
-  }
-  getCurrentTime()
-    .then((currentTime) => getCurrentTime())
-    .then((currentTime) => {
-      console.log("The current time is: " + currentTime);
-      return true;
+    
+    await Sharing.shareAsync(fileUri, {
+      mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      dialogTitle: 'Bajar datos exportados',
+      UTI: 'com.microsoft.excel.xlsx'
     })
-    .catch((err) => console.log("There was an error:" + err));
-  */
+  }
 
   function callbackExportData(rows) {
       /*var datosTemporales = {
@@ -128,7 +89,7 @@ export default function B02_Analisis(props) {
     color={materialTheme.COLORS.ACTIVE}
     onPress={() => {
       exportFile();
-      setBotonExportar(false);
+      setBotonOpciones(false);
     }}
   >
     BAJAR
@@ -169,13 +130,15 @@ export default function B02_Analisis(props) {
             shadowless
             color={materialTheme.COLORS.INFO}
             onPress={() => {
-              getMovimientosYTD (1, callbackExportData);
-              
-              setBotonExportar(true);
+              getMovimientosYTD (user_id, callbackExportData);
+              alert('Espere mientras preparamos sus datos. Luego presione en BAJAR'); 
             }}
           >
-            Descargar Movimientos Año Actual
+            Movimientos Año Actual
           </Button>
+          <Block>
+            {botonExportar? renderBotonDescargar() : null}
+          </Block>
         </Block>
       </Block>
     );
@@ -184,7 +147,6 @@ export default function B02_Analisis(props) {
   function successCallback(rows) {
     var datosTemporales = [];
     rows.forEach((elemento, index) => {
-      //console.log('un Movimiento: ' + JSON.stringify(elemento));
       datosTemporales.push(<Movimiento unMovimiento={elemento} />);
     });
 
@@ -204,10 +166,11 @@ export default function B02_Analisis(props) {
 
   return (
     <Block>
+      <Block center>
       {botonOpciones
         ? renderOpcionesDescargas()
         : renderBotonOpcionesDescarga()}
-      {botonExportar? renderBotonDescargar() : null}
+        </Block>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.cuentas}
