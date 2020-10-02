@@ -10,6 +10,7 @@ import presupuestos from '../constants/presupuestos';
 import { getPresupuestos } from "../Database/Database";
 const { height, width } = Dimensions.get('screen');
 import { getTodo } from "../Database/SelectTables";
+import { getCuentas } from "../Database/Database";
 
 export default function G00_Presupuestos(props) {
   const [datos, setDatos] = React.useState(null);

@@ -18,6 +18,7 @@ import { Tarjeta } from "../components";
 import { getTarjetas} from "../Database/Database";
 import { getTodo } from "../Database/SelectTables";
 
+
 export default function C0_Tarjetas(props) {
   const [datos, setDatos] = React.useState(null);
 

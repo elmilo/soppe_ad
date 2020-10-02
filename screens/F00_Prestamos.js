@@ -17,10 +17,12 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Cuenta, Header, Prestamo } from "../components";
 import { getPrestamos } from "../Database/Database";
 import { getTodo } from "../Database/SelectTables";
+import { getCuentas } from "../Database/Database";
 
 export default function F00_Prestamos(props) {
   const [datos, setDatos] = React.useState(null);
   const [user_id, setUser_id] = useState(1);
+  
  
   function successCallbackUserID(rowDB) {
     setUser_id(rowDB.idExt);

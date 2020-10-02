@@ -195,6 +195,7 @@ export default function D1_Cuentas(props) {
         <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
           <Input
             right
+            keyboardType = 'numeric'
             placeholder="$"
             placeholderTextColor={materialTheme.COLORS.DEFAULT}
             style={{
