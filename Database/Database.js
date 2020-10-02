@@ -69,7 +69,7 @@ export function getCuentas(id_usuario, successCallback) {
       "select * from Cuentas where user_id = ?",
       [id_usuario],
       (_, { rows }) => {
-        console.log('Success getCuentas: ', rows._array);
+        //console.log('Success getCuentas: ', rows._array);
         successCallback(rows._array);
       },
       (_, error) => {
