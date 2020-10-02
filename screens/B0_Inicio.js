@@ -82,13 +82,13 @@ export default function B0_Inicio (props) {
  </Text></Block>
     <Block row >
       <Block >
-      <GraficoPresupuesto avance={gastosGenerales} target={presupuestoGeneral} categoria={'General'}/>
+      <GraficoPresupuesto categoria={'General'}/>
       </Block>
       <Block >
-      <GraficoPresupuesto avance={gastoServicios} target={presupuestoServicios} categoria={'Servicios'}/>
+      <GraficoPresupuesto categoria={'Servicios'}/>
       </Block>
       <Block >
-      <GraficoPresupuesto avance={gastoOtros} target={presupuestoOtros} categoria={'Otros'}/>
+      <GraficoPresupuesto categoria={'Otros'}/>
       </Block>
       </Block>
       </Block>
