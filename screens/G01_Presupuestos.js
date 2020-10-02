@@ -78,6 +78,7 @@ export default function G01_Presupuestos(props) {
           <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
             <Input
               right
+              keyboardType = 'numeric'
               placeholder="$"
               placeholderTextColor={materialTheme.COLORS.DEFAULT}
               style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}

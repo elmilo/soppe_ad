@@ -156,6 +156,7 @@ export default function F01_Prestamos(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
               <Input
                 right
+                keyboardType = 'numeric'
                 placeholder="$"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
@@ -168,6 +169,7 @@ export default function F01_Prestamos(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
               <Input
                 right
+                keyboardType = 'numeric'
                 placeholder="$"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
@@ -180,6 +182,7 @@ export default function F01_Prestamos(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
               <Input
                 right
+                keyboardType = 'numeric'
                 placeholder="Solo números ej 25052020"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
@@ -192,6 +195,7 @@ export default function F01_Prestamos(props) {
             <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
               <Input
                 right
+                keyboardType = 'numeric'
                 placeholder="Solo números"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}

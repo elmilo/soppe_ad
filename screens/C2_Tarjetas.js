@@ -80,7 +80,8 @@ export default function C2_Tarjetas(props) {
               <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
                 <Input
                   right
-                  placeholder="01/10/2020"
+                  keyboardType = 'numeric'
+                  placeholder="Solo números ej 25052020"
                   placeholderTextColor={materialTheme.COLORS.DEFAULT}
                   style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
                   onChangeText={(text) => {setFechaCierre(text);}}
@@ -93,7 +94,8 @@ export default function C2_Tarjetas(props) {
               <Block style={{ paddingHorizontal: theme.SIZES.BASE }}>
                 <Input
                   right
-                  placeholder="15/10/2020"
+                  keyboardType = 'numeric'
+                  placeholder="Solo números ej 25052020"
                   placeholderTextColor={materialTheme.COLORS.DEFAULT}
                   style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
                   onChangeText={(text) => {setFechaVenceResumen(text);}}
