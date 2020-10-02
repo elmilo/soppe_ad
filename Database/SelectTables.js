@@ -52,6 +52,32 @@ export function getTodoSC(campos, userID, table) {
   });
 }
 
+
+
+/*
+export function getTodoSinFiltro(table, successCallback) {
+  return callgetTodoSinFiltro(table, successCallback);
+}
+
+async function callgetTodoSinFiltro(table, successCallback) {
+  try {
+    let response = await fetch(URL_API + "Cuenta", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(Cuenta),
+    });
+    let responseJson = await response.json();
+    console.log(responseJson);
+    return responseJson._id;
+  } catch (error) {
+    console.log(error);
+    return -1;
+  }
+}*/
+
 export function getTodoSinFiltro(table, successCallback) {
   db.transaction((tx) => {
     tx.executeSql(

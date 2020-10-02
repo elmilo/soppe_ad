@@ -49,18 +49,19 @@ export default function B02_Analisis(props) {
     XLSX.utils.book_append_sheet(wb, ws, "Movimientos");
 
     /* write file */
-    const contents = XLSX.write(wb, { type: "binary", bookType: "xlsx" });
+    const contents = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
     const fileUri = exportDir + '/' + "data_export.xlsx";
     //console.log("contents excel " + contents);
     FileSystem.writeAsStringAsync(fileUri, contents).then((res) => {
-      console.log("exportFile success" +  " Exported to res: " + res);
-      Sharing.shareAsync(contents, {
+      //console.log("exportFile success" +  " Exported to res: " + contents);
+      Sharing.shareAsync(fileUri, {
         mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         dialogTitle: 'Bajar datos exportados',
         UTI: 'com.microsoft.excel.xlsx'
       });
       
-      //MediaLibrary.saveToLibraryAsync(fileUri);
+        MediaLibrary.saveToLibraryAsync(fileUri);
+        
       })
       .catch((err) => {
         console.log("exportFile Error", "Error " + err.message);

@@ -34,7 +34,7 @@ export default function D1_Cuentas(props) {
   const navigation = props.navigation;
   
   function successCallback(rowDB) {
-    setUser_id(rowDB.user_id);
+    setUser_id(rowDB.idExt);
   }
 
   useEffect(() => {
