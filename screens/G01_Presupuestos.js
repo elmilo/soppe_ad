@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ImageBackground, Image, StyleSheet, StatusBar, Dimensions, Platform, ScrollView } from 'react-native';
 import { Block, Button, Text, theme, Input } from 'galio-framework';
 import { LinearGradient } from 'expo-linear-gradient';
