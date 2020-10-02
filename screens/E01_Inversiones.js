@@ -20,14 +20,14 @@ const arrayTipoIngreso = [
   { value: 3, label: "Compra Acción" },
   { value: 4, label: "Fondo de Inversion" },
 ];
-/*
-const arrayCuentaIngreso = [
-  { value: 1, label: "Banco Galicia ARS" },
-  { value: 2, label: "Banco Galicia USD" },
-  { value: 3, label: "Mercado Pago" },
-  { value: 4, label: "BBVA ARS" },
+
+const arrayCuenta = [
+  { value: 1, label: "Prueba banco 1" },
+  { value: 2, label: "Prueba banco 1" },
+  { value: 3, label: "Prueba banco 1" },
+  { value: 4, label: "Prueba banco 1" },
 ];
-*/
+
 
 export default function E01_Inversiones(props) {
   const [user_id, setUser_id] = useState(1);
@@ -89,7 +89,7 @@ export default function E01_Inversiones(props) {
       <Block>
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Cuenta Origen / Destino</Text>
         <ModalPersonalizado
-        data={arrayCuentas}
+        data={arrayCuenta}
         initValue="Seleccione una Cuenta"
         onSelected={handleOnChangeCuenta}
       />

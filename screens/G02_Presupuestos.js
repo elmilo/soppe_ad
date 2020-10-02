@@ -21,19 +21,11 @@ export default function F02_Presupuestos (props) {
 
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-      
-     
-        
-           
-     
-      
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
         <Text></Text><Text></Text>
-       
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-       
         <Button
               shadowless
               color="red"
