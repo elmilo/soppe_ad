@@ -15,7 +15,7 @@ import { getCuentas } from "../Database/Database";
 export default function G00_Presupuestos(props) {
   const [datos, setDatos] = React.useState(null);
   const [user_id, setUser_id] = useState(1);
-  
+  /*
   function successCallbackUserID(rowDB) {
     setUser_id(rowDB.idExt);
     getCuentas(user_id, successCallback);
@@ -24,7 +24,7 @@ export default function G00_Presupuestos(props) {
   useFocusEffect(() => {
     getTodo("Usuarios", successCallbackUserID);    
   })
-
+*/
   function successCallback(rows) {
     var datosTemporales = [];
     rows.forEach((presupuesto, index) => {

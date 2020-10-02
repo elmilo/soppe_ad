@@ -45,7 +45,7 @@ export default function G01_Presupuestos(props) {
   }
 
   function savePresupuesto() {
-    setPresupuesto(user_id, rubro, categoria,valorMensual,descripcion);
+    setPresupuesto(user_id, rubro, categoria, valorMensual,descripcion);
     navigation.navigate("Presupuestos");
   }
   

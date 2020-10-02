@@ -273,10 +273,10 @@ export function getOtherPresupuestos(successCallback){
 //   );
 // }
 
-export function setPresupuesto(rubro, categoria, monto, descripcion){
-  console.log(rubro, categoria, monto, descripcion);
+export function setPresupuesto(user_id, rubro, categoria, monto, descripcion){
+  console.log(user_id,rubro, categoria, monto, descripcion);
   db.transaction( tx => {
-    tx.executeSql("insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual, descripcion) values (?, ?, ?, ?, ?)", [1, rubro, categoria, monto, descripcion],
+    tx.executeSql("insert into Presupuestos (user_id, rubro_id, categoria_id, monto_mensual, descripcion) values (?, ?, ?, ?, ?)", [user_id, rubro, categoria, monto, descripcion],
     (_, { rows})  => {
     console.log("Se inserto la tabla correctamente.")
     },
@@ -558,14 +558,14 @@ export function getPrestamos(successCallback) {
   });
 }
 
-export function setPrestamo(cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado) {
+export function setPrestamo(user_id, cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado) {
   console.log("SetPrestamo");
-  console.log(cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado);
+  console.log(usar_id, cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado);
   db.transaction(
     (tx) => {
       tx.executeSql(
         "insert into Prestamos (user_id, cuenta_id, tipo, prestamo_a_tercero_descripcion, cuotas_monto, cuotas_fecha_proximo_vencimiento, cuotas_restantes, prestamo_monto, descripcion, tomado, terminado) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        [1, cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado, 0]
+        [user_id, cuenta, tipo, terceroDescripcion, cuotasMonto, fechaVencimiento, cuotasRestantes, prestamoMonto, descripcion, tomado, 0]
       );
     },
     null,
