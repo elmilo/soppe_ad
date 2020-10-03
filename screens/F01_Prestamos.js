@@ -24,8 +24,8 @@ import { getCuentas } from "../Database/Database";
 import { getTodo } from "../Database/SelectTables";
 
 const arrayTipo = [
-  { value: 1, label: "En Cuenta" },
-  { value: 2, label: "Con Tercero" },
+  { value: 1, label: "Con Tercero" },
+  { value: 2, label: "En Cuenta" },
  ];
 
 
