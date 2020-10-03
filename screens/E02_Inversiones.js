@@ -55,7 +55,7 @@ export default function D2_Inversiones(props) {
 
     function saveUpdateMonto() {
 
-      updateVentaMontoInversion(inversion.slice(inversion.search("-")+2), ventaMonto)
+      updateVentaMontoInversion(user_id,inversion.slice(inversion.search("-")+2), ventaMonto)
       navigation.navigate("Inversiones");
     }
 

@@ -68,7 +68,8 @@ export default function C2_Tarjetas(props) {
   };
   
   function updateFechas() {
-    updateFechasTarjeta(tarjeta.slice(-5,-1),fechaCierre, fechaVenceResumen);
+    console.log(user_id,tarjeta.slice(-5,-1),fechaCierre, fechaVenceResumen);
+    updateFechasTarjeta(user_id,tarjeta.slice(-5,-1),fechaCierre, fechaVenceResumen);
     navigation.navigate("Tarjetas");
       }
   

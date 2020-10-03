@@ -397,14 +397,14 @@ export function getTarjetaDetalle(id) {
   });
 }
 
-export function updateFechasTarjeta(ultimosDigitos, fechaCierre, fechaVencimientoResumen) {
+export function updateFechasTarjeta(userID,ultimosDigitos, fechaCierre, fechaVencimientoResumen) {
   console.log("updateFechasTarjeta");
-  console.log(fechaCierre, fechaVencimientoResumen, ultimosDigitos);
+  console.log(userID,ultimosDigitos, fechaCierre, fechaVencimientoResumen);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Tarjetas set fecha_cierre_resumen = ?, fecha_vencimiento_resumen = ? where ultimos_4_digitos = ?",
-        [fechaCierre, fechaVencimientoResumen, ultimosDigitos],
+        "update Tarjetas set fecha_cierre_resumen = ?, fecha_vencimiento_resumen = ? where user_id = ? and ultimos_4_digitos = ?",
+        [fechaCierre, fechaVencimientoResumen, userID, ultimosDigitos],
       );
     },
     null,
@@ -510,14 +510,14 @@ export function getInversionDetalle(id) {
   });
 }
 
-export function updateVentaMontoInversion(descInversion, ventaMonto) {
+export function updateVentaMontoInversion(userId,descInversion, ventaMonto) {
   console.log("updateVentaMontoInversion");
-  console.log(descInversion, ventaMonto);
+  console.log(userId,descInversion, ventaMonto);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Inversiones set venta_monto = ? where descripcion = ?",
-        [ventaMonto, descInversion],
+        "update Inversiones set venta_monto = ? where user_id = ? and descripcion = ?",
+        [ventaMonto, userId, descInversion],
       );
     },
     null,
