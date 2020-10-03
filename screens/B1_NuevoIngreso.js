@@ -166,11 +166,11 @@ function saveIngreso() {
       cuotas_restantes, 
       descripcion,
       auto_manual);
-    
+      console.log("CuentaXXX"+cuenta);
+    console.log("Nrocuenta?"+ (cuenta.slice(cuenta.search("-")+2,-6))+"?fin");
     getIngresos();
-
     // {medio_de_pago == "Consumo Cuenta"
-    updateSaldoCuentaIngreso(cuenta.slice(cuenta.search("-")+2,-5), monto, user_id);
+    updateSaldoCuentaIngreso(user_id,cuenta.slice(cuenta.search("-")+2,-6), monto);
 
   }
 

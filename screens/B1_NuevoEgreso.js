@@ -192,11 +192,11 @@ function handleOnChangeMedioDePago(medioDePago) {
       cuotas_restantes, 
       descripcion,
       auto_manual);
-
+    console.log("UserID:"+user_id+" Cuenta:"+cuenta.slice(cuenta.search("-")+2,-6)+" Monto:"+monto)
     getEgresos();
     {medio_de_pago == "Consumo Cuenta"
-          ? updateSaldoCuentaEgreso(cuenta.slice(cuenta.search("-")+2,-5),monto): 
-          updateSaldoTarjetaEgreso(tarjeta.slice(-5,-1),monto)
+          ? updateSaldoCuentaEgreso(user_id,cuenta.slice(cuenta.search("-")+2,-6),monto): 
+          updateSaldoTarjetaEgreso(user_id,tarjeta.slice(-5,-1),monto)
         };
     
 //;tarjeta.slice(-2,-5) = ultimos 4 digitos

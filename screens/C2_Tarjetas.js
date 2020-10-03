@@ -10,6 +10,7 @@ import tarjetasjs from '../constants/tarjetas.js';
 import { updateFechasTarjeta, deleteTarjeta } from "../Database/Database";
 import { getTarjetas } from "../Database/Database";
 import { setTarjeta } from '../Database/Database';
+import { getTodo } from '../Database/SelectTables';
 import ModalPersonalizado from '../components/ModalPersonalizado';
 
 

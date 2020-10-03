@@ -127,9 +127,9 @@ export function getCuentaDetalle(id) {
   });
 }
 
-export function updateSaldoCuentaIngreso(nroCuenta, montoIngreso, user_id) {
+export function updateSaldoCuentaIngreso(user_id, nroCuenta, montoIngreso) {
   console.log("updateSaldoCuentaIngreso");
-  console.log(nroCuenta,montoIngreso);
+  console.log(user_id, nroCuenta, montoIngreso);
   db.transaction(
     (tx) => {
       tx.executeSql(
@@ -142,14 +142,14 @@ export function updateSaldoCuentaIngreso(nroCuenta, montoIngreso, user_id) {
   );
 }
 
-  export function updateSaldoCuentaEgreso(nroCuenta, montoEgreso) {
+  export function updateSaldoCuentaEgreso(userID,nroCuenta, montoEgreso) {
     console.log("updateSaldoCuentaEgreso");
-    console.log(nroCuenta, montoEgreso);
+    console.log(userID,nroCuenta, montoEgreso);
     db.transaction(
       (tx) => {
         tx.executeSql(
           "update Cuentas set saldo = saldo - ? where user_id = ? and nro_cuenta = ?;",
-          [montoEgreso, 1, nroCuenta]
+          [montoEgreso, userID, nroCuenta]
         );
       },
       null,
@@ -412,14 +412,14 @@ export function updateFechasTarjeta(ultimosDigitos, fechaCierre, fechaVencimient
   );
 }
 
-export function updateSaldoTarjetaEgreso(ultimosDigitos, montoEgreso) {
-  console.log("updateSaldoCuentaEgreso");
-  console.log(ultimosDigitos, montoEgreso);
+export function updateSaldoTarjetaEgreso(userID, ultimosDigitos, montoEgreso) {
+  console.log("updateSaldoTarjetaEgreso");
+  console.log(ultimosDigitos, userID, montoEgreso);
   db.transaction(
     (tx) => {
       tx.executeSql(
         "update Tarjetas set saldo = saldo + ? where user_id = ? and ultimos_4_digitos = ?;",
-        [montoEgreso, 1, ultimosDigitos]
+        [montoEgreso, userID, ultimosDigitos]
       );
     },
     null,
