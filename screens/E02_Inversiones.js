@@ -11,17 +11,23 @@ import ModalPersonalizado from "../components/ModalPersonalizado";
 import { setIngresoVentaInversion } from "../Database/Ingresos";
 import { getInversionDetalle } from "../Database/Database";
 import { deleteInversion, getInversiones, updateVentaMontoInversion } from "../Database/Database";
+import { getTodo } from '../Database/SelectTables';
 
 export default function D2_Inversiones(props) {
     const [user_id, setUser_id] = useState(1);
-    const [inversionId, SetInversionId] = useState("");
+    const [inversion, SetInversion] = useState("");
     const [arrayInversiones, setArrayInversiones] = useState([]);
+    const [ventaMonto, setVentaMonto] = useState("");
     const navigation = props.navigation;
    
-    useEffect(() => {
-      getInversiones(user_id, successArrayInversiones);
-    }, []);
+    function successCallbackUserID(rowDB) {
+      setUser_id(rowDB.idExt);
+      getInversiones(rowDB.idExt, successArrayInversiones);
+    }
   
+    useEffect(() => {
+      getTodo("Usuarios", successCallbackUserID);    
+    }, []);
 
     const arrayInversiones1 = [
       { value: 1, label: "Inversion1" },
@@ -31,7 +37,7 @@ export default function D2_Inversiones(props) {
     ];
 
     function handleOnChangeInversion(elemento) {
-      SetInversionId(elemento);
+      SetInversion(elemento);
     }
   
 
@@ -48,8 +54,9 @@ export default function D2_Inversiones(props) {
     }
 
     function saveUpdateMonto() {
-      updateVentaMontoInversion(inversionId, ventaMonto)
 
+      updateVentaMontoInversion(inversion.slice(inversion.search("-")+2), ventaMonto)
+      navigation.navigate("Inversiones");
     }
 
     function eliminarInversion() {
@@ -83,6 +90,7 @@ export default function D2_Inversiones(props) {
                 placeholder="$"
                 placeholderTextColor={materialTheme.COLORS.DEFAULT}
                 style={{ borderRadius: 1, borderColor: materialTheme.COLORS.INPUT }}
+                onChangeText={(text) => {setVentaMonto(text);}}
               />
             </Block>
             </Block>
@@ -94,7 +102,7 @@ export default function D2_Inversiones(props) {
         <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
        
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-        <Button shadowless color="success" style={[styles.button, styles.shadow]}onPress={() => {updateVentaMontoInversion();}}>
+        <Button shadowless color="success" style={[styles.button, styles.shadow]}onPress={() => {saveUpdateMonto();}}>
               Actualizar
               
             </Button>

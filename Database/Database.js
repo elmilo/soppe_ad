@@ -461,11 +461,11 @@ export function deleteTarjeta(ultimosDigitos) {
 
 //*******INVERSIONES************
 
-export function getInversiones(successCallback) {
+export function getInversiones(userID,successCallback) {
   db.transaction((tx) => {
     tx.executeSql(
-      "select * from Inversiones",
-      [],
+      "select * from Inversiones where user_id = ?",
+      [userID],
       (_, { rows }) => {
         console.log('Success getInversiones: ', rows._array);
         successCallback(rows._array);
@@ -510,14 +510,14 @@ export function getInversionDetalle(id) {
   });
 }
 
-export function updateVentaMontoInversion(id, ventaMonto) {
+export function updateVentaMontoInversion(descInversion, ventaMonto) {
   console.log("updateVentaMontoInversion");
-  console.log(id, ventaMonto);
+  console.log(descInversion, ventaMonto);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Inversiones set venta_monto = ? where id = ?",
-        [ventaMonto, id],
+        "update Inversiones set venta_monto = ? where descripcion = ?",
+        [ventaMonto, descInversion],
       );
     },
     null,
