@@ -192,14 +192,14 @@ export function getSaldoEgresosCuenta(cuenta) {
   });
 }
 
-export function deleteCuenta(nroCuenta) {
+export function deleteCuenta(userId,nroCuenta) {
   console.log("deleteCuenta");
-  console.log(nroCuenta);
+  console.log(userId,nroCuenta);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Cuentas where nro_cuenta = nroCuenta",
-        [nroCuenta]
+        "delete from Cuentas where user_id = ? and nro_cuenta = ?",
+        [userId, nroCuenta]
       );
     },
     null,
@@ -210,11 +210,11 @@ export function deleteCuenta(nroCuenta) {
 
 //*******PRESUPUESTOS************
 
-export function getPresupuestos(successCallback) {
+export function getPresupuestos(id_usuario,successCallback) {
   db.transaction((tx) => {
     tx.executeSql(
-      "select * from Presupuestos",
-      [],
+      "select * from Presupuestos where user_id = ?",
+      [id_usuario],
       (_, { rows }) => {
         console.log('Success getpresupuesto: ', rows._array);
         successCallback(rows._array);
@@ -443,21 +443,20 @@ export function updateResetSaldoTarjeta(ultimosDigitos) {
 }
 
 
-export function deleteTarjeta(ultimosDigitos) {
+export function deleteTarjeta(userId,ultimosDigitos) {
   console.log("deleteTarjeta");
-  console.log(ultimosDigitos);
+  console.log(userId,ultimosDigitos);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Tarjetas where ultimos_4_digitos = ?",
-        [ultimosDigitos]
+        "delete from Tarjetas where user_id = ? and ultimos_4_digitos = ?",
+        [userId,ultimosDigitos]
       );
     },
     null,
     () => console.log("la Tarjeta se borró correctamente")
   );
 }
-
 
 //*******INVERSIONES************
 
@@ -525,14 +524,13 @@ export function updateVentaMontoInversion(userId,descInversion, ventaMonto) {
   );
 }
 
-export function deleteInversion(id) {
+export function deleteInversion(userId,descInversion) {
   console.log("deleteInversion");
-  console.log(cbu);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Inversiones where id = ?",
-        [id]
+        "delete from Inversiones where user_id = ? and descripcion = ?",
+        [userId,descInversion]
       );
     },
     null,

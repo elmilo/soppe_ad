@@ -74,7 +74,7 @@ export default function C2_Tarjetas(props) {
       }
   
       function eliminarTarjeta() {
-        deleteTarjeta(tarjeta.slice(-5,-1));
+        deleteTarjeta(user_id,tarjeta.slice(-5,-1));
         navigation.navigate("Tarjetas");
           }
     return (

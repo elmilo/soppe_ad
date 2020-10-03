@@ -10,6 +10,7 @@ import { HeaderHeight } from "../constants/utils";
 import * as SQLite from "expo-sqlite";
 import { deleteCuenta, getCuentas } from "../Database/Database";
 import ModalPersonalizado from '../components/ModalPersonalizado';
+import { getTodo } from '../Database/SelectTables';
 
 
 export default function D2_Cuentas (props) {
@@ -18,8 +19,13 @@ export default function D2_Cuentas (props) {
   const [arrayCuentas, setArrayCuentas] = useState([]);
   const navigation = props.navigation;
   
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+    getCuentas(rowDB.idExt, successArrayCuentas);
+  }
+
   useEffect(() => {
-    getCuentas(user_id, successArrayCuentas);
+    getTodo("Usuarios", successCallbackUserID);    
   }, []);
 
   function handleOnChangeCuenta (unaCuenta){
@@ -63,8 +69,7 @@ export default function D2_Cuentas (props) {
   
 
   function eliminarCuenta() {
-    const user_id = 1;
-    deleteCuenta(cuenta.nro_cuenta);
+    deleteCuenta(user_id, cuenta.slice(cuenta.search("-")+2,-6));
     navigation.navigate("Cuentas");
   }
   
@@ -72,10 +77,6 @@ export default function D2_Cuentas (props) {
   return (
     <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>  
     {DropdownCuenta()}
-      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-      <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-      <Text></Text><Text></Text>
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
       <Button
             shadowless

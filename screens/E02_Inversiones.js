@@ -60,7 +60,7 @@ export default function D2_Inversiones(props) {
     }
 
     function eliminarInversion() {
-      deleteInversion(inversion);
+      deleteInversion(user_id,inversion.slice(inversion.search("-")+2));
       navigation.navigate("Inversiones");
         }
 
@@ -111,7 +111,7 @@ export default function D2_Inversiones(props) {
               shadowless
               color="red"
               style={[styles.button, styles.shadow]}
-              //onPress={() => {eliminarInversion();}}
+              onPress={() => {eliminarInversion();}}
 
             >
              Eliminar
