@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Dimensions,
@@ -9,6 +9,8 @@ import { theme, Text as GalioText} from "galio-framework";
 import { PieChart } from "react-native-svg-charts";
 import materialTheme from "../constants/Theme";
 import { getDisponiblesGroupedByCuenta } from '../Database/Database'
+import { useFocusEffect } from '@react-navigation/native';
+
 
 
 const screenWidth = 0.5*Dimensions.get("window").width;
@@ -20,12 +22,8 @@ const hex2rgba = (hex, alpha = 1) => {
 };
 */
 
-function randomInt(min, max) {
-  return min + Math.floor((max - min) * Math.random());
-}
 
-const values = [randomInt(1,15), randomInt(1,25), randomInt(1,35), randomInt(1,25), randomInt(1,15)];
-const keys = ['Descripción 1', 'Descripción 2', 'Descripción 3', 'Descripción 4', 'Descripción 5'];
+
 var cuentas = [];
 var saldos = [];
 
@@ -41,29 +39,26 @@ const colors = [materialTheme.COLORS.ACTIVE,
   materialTheme.COLORS.WARNING, 
   materialTheme.COLORS.ERROR];
 
-export default class GraficoAvance extends React.Component {
- constructor(props) {
-   super(props);
-    this.state = {
-      selectedSlice: {
-        label: '',
-        value: 0
-      },
-      labelWidth: 0
-    }
-  }
+export default function GraficoAvance(props) {
+ 
+  const [selectedSlice, setSelectedSlice] = useState( {
+    label: '',
+    value: 0
+  });
+  const [labelWidth, setLabelWidth] = useState(0);
 
-  componentDidMount(){
-    getDisponiblesGroupedByCuenta(setDisponibles);
-  }
-  
-
-
-  render() {
-    const { labelWidth, selectedSlice } = this.state;
-    const { label, value } = selectedSlice;
+  const { label, value } = selectedSlice;
     
-    const { titulo } = this.props; 
+  const { titulo } = props; 
+    
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getDisponiblesGroupedByCuenta(setDisponibles);
+    },
+    [setDisponibles]))
+
     
     const data = cuentas.map((key, index) => {
         return {
@@ -71,7 +66,7 @@ export default class GraficoAvance extends React.Component {
           value: saldos[index],
           svg: { fill: colors[index] },
           arc: { outerRadius: (70 + saldos[index]/200) + '%', padAngle: label === key ? 0.1 : 0 },
-          onPress: () => this.setState({ selectedSlice: { label: key, value: saldos[index] } })
+          onPress: () => setSelectedSlice({ label: key, value: saldos[index] })
         }
       })
 
@@ -85,7 +80,7 @@ export default class GraficoAvance extends React.Component {
         />
         <GalioText
           onLayout={({ nativeEvent: { layout: { width } } }) => {
-            this.setState({ labelWidth: width });
+           setLabelWidth(width);
           }}
           style={{
             position: 'absolute',
@@ -97,7 +92,6 @@ export default class GraficoAvance extends React.Component {
         <GalioText center>{titulo}</GalioText>
       </View>
     )
-  }
 
 /*
 
