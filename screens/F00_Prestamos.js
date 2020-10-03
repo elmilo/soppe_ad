@@ -18,7 +18,7 @@ import { Icon, Cuenta, Header, Prestamo } from "../components";
 import { getPrestamos } from "../Database/Database";
 import { getTodo } from "../Database/SelectTables";
 import { getCuentas } from "../Database/Database";
-import { getTodoSinFiltro } from "../Database/Database";
+import { getTodoSinFiltro } from "../Database/SelectTables";
 
 export default function F00_Prestamos(props) {
   const [datos, setDatos] = React.useState(null);

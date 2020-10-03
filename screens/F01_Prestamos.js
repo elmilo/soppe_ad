@@ -47,6 +47,7 @@ export default function F01_Prestamos(props) {
  
   function successCallbackUserID(rowDB) {
     console.log('F01 prestamos - ');
+    console.log(rowDB.idExt);
     setUser_id(rowDB.idExt);
     getCuentas(rowDB.idExt, successArrayCuentas);
   }
@@ -69,7 +70,7 @@ export default function F01_Prestamos(props) {
         label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
       });
     });
-
+   // console.log(datosFinales);
     setArrayCuentas(datosFinales);
   } 
 
@@ -142,9 +143,12 @@ export default function F01_Prestamos(props) {
         <Block />
         <Text p style={{ marginBottom: theme.SIZES.BASE / 2 }}>Tipo de Préstamo</Text>
         {DropdownTipoPrestamo()}
-        {/* {tipoPrestamo = 'En Cuenta' ? DropdownCuenta(): TerceroDescripcion()}; */}
-        {DropdownCuenta()}
-        {TerceroDescripcion()}
+        {tipoPrestamo == "En Cuenta"
+          ? DropdownCuenta()
+          :TerceroDescripcion()
+          }     
+        {/* {DropdownCuenta()}
+        {TerceroDescripcion()} */}
         <Text p style={{ fontSize: 15, marginBottom: theme.SIZES.BASE }}>Se utilizará la moneda de esta cuenta</Text>
         <Block flex>
           <Text h5 style={{ marginBottom: theme.SIZES.BASE / 2 }}>Valor de Préstamo</Text>
