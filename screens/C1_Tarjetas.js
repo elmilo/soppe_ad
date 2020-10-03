@@ -8,7 +8,7 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Product, Header, Select } from '../components';
 import ModalSelector from 'react-native-modal-selector';
 import ModalPersonalizado from '../components/ModalPersonalizado';
-import products from '../constants/products';
+import { useFocusEffect } from '@react-navigation/native'
 import * as SQLite from 'expo-sqlite';
 import { setTarjeta } from '../Database/Database';
 import { getCuentas } from "../Database/Database";
@@ -46,24 +46,23 @@ export default function C1_Tarjetas(props) {
   const navigation = props.navigation;
   let index = 0;
        
-  function successCallback(rowDB) {
+  function successCallbackUserID(rowDB) {
     setUser_id(rowDB.idExt);
+    getCuentas(rowDB.idExt, successArrayCuentas);
   }
 
   useEffect(() => {
-    getTodo("Usuarios", successCallback);
-  }, []); 
+    getTodo("Usuarios", successCallbackUserID);    
+  }, [])
 
-  useEffect(() => {
-    getCuentas(user_id, successArrayCuentas);
-  }, []);
-
+ 
   function handleOnChangeCuenta (unaCuenta){
-    console.log('handleOnChangeCuenta: ' + unaCuenta);
+    //console.log('handleOnChangeCuenta: ' + unaCuenta);
     setCuenta(unaCuenta);
   }
 
   function successArrayCuentas(rows) {
+    //console.log('En tarjeta - successArrayCuentas: ');
     var datosFinales = [];
     rows.forEach((elemento, key) => {
       datosFinales.push({
@@ -97,7 +96,6 @@ export default function C1_Tarjetas(props) {
 
 
   function saveTarjeta() {
-    const user_id = 1;
     setTarjeta(user_id, cuenta, ultimos4Digitos, emisor, tipoTarjeta, fechaVencePlastico, fechaCierre, fechaVenceResumen, saldo);
     navigation.navigate("Tarjetas");
   }

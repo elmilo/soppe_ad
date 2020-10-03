@@ -42,7 +42,7 @@ export default class Onboarding extends React.Component {
                 color={materialTheme.COLORS.BUTTON_COLOR}
                 onPress={() => 
                   {navigation.navigate('App');
-                  //dropAll(); //incluye createAll;
+                  dropAll(); //incluye createAll;
                    }
                 
                 }>

@@ -43,38 +43,41 @@ export default function F01_Prestamos(props) {
   const [valorPrestamo, setValorPrestamo] = useState(0.0);
   const [arrayCuentas, setArrayCuentas] = useState([]);
   const navigation = props.navigation;
-  let index = 0;
  
-  function successCallback(rowDB) {
+ 
+  function successCallbackUserID(rowDB) {
+    console.log('F01 prestamos - ');
     setUser_id(rowDB.idExt);
+    getCuentas(rowDB.idExt, successArrayCuentas);
   }
-
+  
   useEffect(() => {
-    getTodo("Usuarios", successCallback);
-  }, []);
+    getTodo("Usuarios", successCallbackUserID);    
+  }, [])
 
-
-  useEffect(() => {
-    getCuentas(user_id, successArrayCuentas);
-  }, []);
 
   function handleOnChangeCuenta (unaCuenta){
-    console.log('handleOnChangeCuenta: ' + unaCuenta);
     setCuenta(unaCuenta);
   }
 
-  function handleOnChangePrestamo(unPrestamo) {
-    SetPrestamo(unPrestamo);
-  }
+  
+  function successArrayCuentas(rows) {
+    var datosFinales = [];
+    rows.forEach((elemento, key) => {
+      datosFinales.push({
+        key: elemento.id + elemento.nro_cuenta ,
+        label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
+      });
+    });
+
+    setArrayCuentas(datosFinales);
+  } 
+
 
   function handleOnChangeTipo(unTipo) {
     setTipoPrestamo(unTipo);
   }
-  function handleOnChangeTipoIngreso (elemento){
-    console.log('handleOnChangeTipoIngreso: ' + elemento);
-    setTipoIngreso(elemento);
-  }
-
+ 
 
   function savePrestamo() {
     setPrestamo(user_id, cuenta, tipoPrestamo,  terceroDesc, valorCuota, proxCuota, cuotas,valorPrestamo, descripcion, isEnabled );
@@ -103,22 +106,6 @@ export default function F01_Prestamos(props) {
       />
     );
   };
-
- 
-
-
-  function successArrayCuentas(rows) {
-    var datosFinales = [];
-    rows.forEach((elemento, key) => {
-      datosFinales.push({
-        key: elemento.id + elemento.nro_cuenta ,
-        label: elemento.entidad_id  + ' - ' + elemento.nro_cuenta + ' (' + elemento.moneda + ')',
-      });
-    });
-
-    setArrayCuentas(datosFinales);
-  }
-
 
   function TerceroDescripcion(props) {
     return (

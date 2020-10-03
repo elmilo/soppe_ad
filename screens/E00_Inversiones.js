@@ -8,17 +8,23 @@ import { HeaderHeight } from "../constants/utils";
 import { Icon, Inversion, Header } from '../components';
 import { getInversiones } from "../Database/Database";
 const { height, width } = Dimensions.get('screen');
-import { getTodo } from "../Database/SelectTables";
+import { getTodoSinFiltro, getTodo } from "../Database/SelectTables";
 import { getCuentas } from "../Database/Database";
 
 export default function E00_Inversiones(props) {
   const [datos, setDatos] = React.useState(null);
-  const [user_id, setUser_id] = useState(1);
+  /*const [user_id, setUser_id] = useState(1);
+    
   
-  useFocusEffect(() => {
-    getTodo("Usuarios", successCallbackUserID);    
-  })
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+    getTodoSinFiltro('Inversiones', successCallback);
+  }*/
 
+
+  useFocusEffect(() => {
+    getTodoSinFiltro('Inversiones', successCallback); 
+  })
 
   function successCallback(rows) {
     var datosTemporales = [];
@@ -27,11 +33,6 @@ export default function E00_Inversiones(props) {
     });
 
     setDatos(datosTemporales);
-  }
-
-  function successCallbackUserID(rowDB) {
-    setUser_id(rowDB.idExt);
-    getCuentas(user_id, successCallback);
   }
 
   const renderInversiones = () => {

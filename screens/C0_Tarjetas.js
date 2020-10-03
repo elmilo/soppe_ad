@@ -16,7 +16,7 @@ import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 import { Tarjeta } from "../components";
 import { getTarjetas} from "../Database/Database";
-import { getTodo } from "../Database/SelectTables";
+import { getTodoSinFiltro, getTodo } from "../Database/SelectTables";
 
 
 export default function C0_Tarjetas(props) {
@@ -30,9 +30,14 @@ export default function C0_Tarjetas(props) {
 
     setDatos(datosTemporales);
   }
+
+  /*function successCallbackUserID() {
+    getTodoSinFiltro('Tarjetas', successCallback);
+  }*/
+
+
   useFocusEffect(() => {
-    const id_usuario  = 1;
-    getTarjetas(id_usuario, successCallback);
+    getTodoSinFiltro('Tarjetas', successCallback);   
   })
 
   const renderTarjetas = () => {

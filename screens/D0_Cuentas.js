@@ -22,7 +22,7 @@ export default function D0_Cuentas(props) {
   const [datos, setDatos] = React.useState(null);
   const [user_id, setUser_id] = useState(1);
 
-  function successCallback(rows) {
+  function successCallbackCuentas(rows) {
     var datosTemporales = [];
     rows.forEach((cuenta, index) => {
       datosTemporales.push(<Cuenta cuenta={cuenta} key={index} horizontal />);
@@ -33,7 +33,7 @@ export default function D0_Cuentas(props) {
   
   function successCallbackUserID(rowDB) {
     setUser_id(rowDB.idExt);
-    getCuentas(user_id, successCallback);
+    getCuentas(rowDB.idExt, successCallbackCuentas);
   }
 
   useFocusEffect(() => {

@@ -42,18 +42,15 @@ export default function E01_Inversiones(props) {
   const navigation = props.navigation;
   let index = 0;
 
-  function successCallback(rowDB) {
+  function successCallbackUserID(rowDB) {
     setUser_id(rowDB.idExt);
+    getCuentas(rowDB.idExt, successArrayCuentas);
   }
   
   useEffect(() => {
-    getTodo("Usuarios", successCallback);
-  }, []);
+    getTodo("Usuarios", successCallbackUserID);    
+  }, [])
 
-  
-  useEffect(() => {
-    getCuentas(user_id, successArrayCuentas);
-  }, []);
 
   function handleOnChangeCuenta (unaCuenta){
     console.log('handleOnChangeCuenta: ' + unaCuenta);

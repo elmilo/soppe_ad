@@ -11,7 +11,7 @@ export function getCompletoFormateado(table, callback) {
         callback(rows._array);
       },
       (_, error) => {
-        console.log("error getCompleto", error);
+        console.log("error getCompletoFormateado", error);
       }
     );
   });
@@ -28,7 +28,7 @@ export function getTodo(table, successCallback) {
         successCallback(rows._array[0]);
       },
       (_, error) => {
-        console.log("error getCompleto", error);
+        console.log("error getTodo", error);
       }
     );
   });
@@ -45,7 +45,7 @@ export function getTodoSC(campos, userID, table) {
         return (rows._array);
       },
       (_, error) => {
-        console.log("error getCompleto", error);
+        console.log("error getTodoSC", error);
         return ([]);
       }
     );
@@ -88,7 +88,7 @@ export function getTodoSinFiltro(table, successCallback) {
         successCallback(rows._array);
       },
       (_, error) => {
-        console.log("error getCompleto", error);
+        console.log("error getTodoSinFiltro", error);
       }
     );
   });
@@ -101,11 +101,11 @@ export function getTodoUserID(table, user_id, callback) {
       "select * from " + table + " where user_id = ?",
       [user_id],
       (_, { rows }) => {
-        console.log('Success getTodoSC: ' + table + ' -- ' + JSON.stringify(rows._array[0]));
+        console.log('Success getTodoUserID: ' + table + ' -- ' + JSON.stringify(rows._array[0]));
         callback (rows._array);
       },
       (_, error) => {
-        console.log("error getCompleto", error);
+        console.log("error getTodoUserID", error);
         return ([]);
       }
     );

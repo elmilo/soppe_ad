@@ -345,8 +345,8 @@ export function dropAll() {
 /*arrayDrop.forEach((unaQuery) => setTimeout(() => {
     dropTable(unaQuery);
   }, 500));
-  dropTable(dropCuentas);
-  */
+  dropTable(dropCuentas);*/
+  
   createAll();
 
   //Crear solamente una

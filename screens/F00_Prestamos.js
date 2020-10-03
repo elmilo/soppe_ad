@@ -26,10 +26,10 @@ export default function F00_Prestamos(props) {
  
   function successCallbackUserID(rowDB) {
     setUser_id(rowDB.idExt);
-    getCuentas(user_id, successCallback);
+    getTodoSinFiltro('Prestamos', successCallback);
   }
 
-  useFocusEffect(() => {
+  useEffect(() => {
     getTodo("Usuarios", successCallbackUserID);    
   })
 
@@ -41,10 +41,7 @@ export default function F00_Prestamos(props) {
 
     setDatos(datosTemporales);
   }
-  useFocusEffect(() => {
-    const id_usuario  = 1;
-    getPrestamos(id_usuario,successCallback);
-  })
+ 
  
   const renderPrestamos = () => {
 
