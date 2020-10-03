@@ -77,14 +77,14 @@ export default function B01_Perfil(props) {
   }, []);
 
   
-  function callbackCuentas(rowDB) {
+ /* function callbackCuentas(rowDB) {
     console.log('datos cuentas: ' + rowDB);
     //setDatosCuentas(rowDB);
     recibirNube(user_id, 'Cuenta').then(
       res => {if (res) {
         
         res.forEach((unaFila) =>{
-          insertCuenta(unaFila.id, unaFila.nombre...);
+          //insertCuenta(unaFila.id, unaFila.nombre...);
         });
 
 
@@ -104,7 +104,7 @@ export default function B01_Perfil(props) {
     });
     setIndicadorWIPR(false);
   }
-
+*/
 
   function enviarDatosNube (){
     setIndicadorWIPR(true);
