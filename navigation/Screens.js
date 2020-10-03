@@ -662,7 +662,21 @@ function AppStack(props) {
       }}
       initialRouteName="Login"
     >
- 
+    <Drawer.Screen
+        name="Inicio"
+        component={StackInicio}
+        options={{
+          drawerIcon: ({ focused }) => (
+            <Icon
+              size={16}
+              name="circle-10"
+              family="GalioExtra"
+              color={focused ? "white" : materialTheme.COLORS.MUTED}
+            />
+          ),
+        }}
+      />  
+
       <Drawer.Screen
         name="Tarjetas"
         component={StackTarjetas}
@@ -707,7 +721,7 @@ function AppStack(props) {
         }}
       />
 
-<Drawer.Screen
+    <Drawer.Screen
         name="Movimientos"
         component={StackAnalisis}
         options={{
@@ -797,20 +811,7 @@ function AppStack(props) {
         }}
       />
      
-     <Drawer.Screen
-        name="Inicio"
-        component={StackInicio}
-        options={{
-          drawerIcon: ({ focused }) => (
-            <Icon
-              size={16}
-              name="circle-10"
-              family="GalioExtra"
-              color={focused ? "white" : materialTheme.COLORS.MUTED}
-            />
-          ),
-        }}
-      />  
+
 
       <Drawer.Screen
         name="Nueva Cuenta"

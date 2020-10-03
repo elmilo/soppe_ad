@@ -28,9 +28,16 @@ export default function C2_Tarjetas(props) {
   const [fechaCierre, setFechaCierre] = useState("");
   const navigation = props.navigation;
   
+  
+  function successCallbackUserID(rowDB) {
+    setUser_id(rowDB.idExt);
+    getTarjetas(rowDB.idExt, successArrayTarjetas);
+  }
+
   useEffect(() => {
-    getTarjetas(user_id, successArrayTarjetas);
+    getTodo("Usuarios", successCallbackUserID);    
   }, []);
+
 
   function handleOnChangeTarjeta (unaTarjeta){
     console.log('handleOnChangeTarjeta: ' + unaTarjeta);

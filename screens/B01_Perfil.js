@@ -76,6 +76,35 @@ export default function B01_Perfil(props) {
     getTodo("Usuarios", successCallback);
   }, []);
 
+  
+  function callbackCuentas(rowDB) {
+    console.log('datos cuentas: ' + rowDB);
+    //setDatosCuentas(rowDB);
+    recibirNube(user_id, 'Cuenta').then(
+      res => {if (res) {
+        
+        res.forEach((unaFila) =>{
+          insertCuenta(unaFila.id, unaFila.nombre...);
+        });
+
+
+      } else {
+        
+      }}
+    );
+    
+    rowDB.forEach((unaFila) =>{
+      enviarNube(unaFila, 'Cuenta').then(res => {
+        if (res) {
+          console.log('Exito en el enviarDatosNube: ' + res);
+        } else {
+          console.log('Error en el enviarDatosNube');
+        }
+      });
+    });
+    setIndicadorWIPR(false);
+  }
+
 
   function enviarDatosNube (){
     setIndicadorWIPR(true);

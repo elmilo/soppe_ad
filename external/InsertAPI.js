@@ -57,7 +57,29 @@ export const cuentaEnNube = (Cuenta, userID) => {
       });
       let responseJson = await response.json();
       console.log(responseJson);
-      return responseJson._id;
+      return responseJson;
+    } catch (error) {
+      console.log(error);
+      return -1;
+    }
+  }
+
+
+  export function recibirNube(user_id, ENDPOINT) {
+    return callRecibirNube(user_id, ENDPOINT);
+  }
+  
+  async function callRecibirNube(user_id, ENDPOINT) {
+    try {
+      let response = await fetch(URL_API + ENDPOINT + '/' + user_id, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        }
+      });
+      let responseJson = await response.json();
+      return responseJson;
     } catch (error) {
       console.log(error);
       return -1;
