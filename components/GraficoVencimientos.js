@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Dimensions,
@@ -9,6 +9,7 @@ import { theme, Text as GalioText} from "galio-framework";
 import { PieChart } from "react-native-svg-charts";
 import materialTheme from "../constants/Theme";
 import { getActiveEgresos } from '../Database/Egresos'
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const screenWidth = 0.5*Dimensions.get("window").width;
@@ -35,37 +36,32 @@ const colors = [materialTheme.COLORS.ACTIVE,
   materialTheme.COLORS.WARNING, 
   materialTheme.COLORS.ERROR];
 
-export default class GraficoVencimientos extends React.Component {
- constructor(props) {
-   super(props);
-    this.state = {
-      selectedSlice: {
-        label: '',
-        value: 0
-      },
-      labelWidth: 0
-    }
-  }
+export default function GraficoVencimientos (props) {
+  
+  const [selectedSlice, setSelectedSlice] = useState( {
+    label: '',
+    value: 0
+  });
+  const [labelWidth, setLabelWidth] = useState(0);
 
-  componentDidMount(){
-    getActiveEgresos(setEgresos);
-  }
+  const { label, value } = selectedSlice;
+    
+  const { titulo } = props; 
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getActiveEgresos(setEgresos);
+    },
+    [setEgresos]))
   
 
-
-  render() {
-    const { labelWidth, selectedSlice } = this.state;
-    const { label, value } = selectedSlice;
-    
-    const { titulo } = this.props; 
-    
     const data = descripciones.map((key, index) => {
         return {
           key,
           value: montos[index],
           svg: { fill: colors[index] },
           arc: { outerRadius: (70 + montos[index]/200) + '%', padAngle: label === key ? 0.1 : 0 },
-          onPress: () => this.setState({ selectedSlice: { label: key, value: montos[index] } })
+          onPress: () => setSelectedSlice({ label: key, value: montos[index] })
         }
       })
 
@@ -79,7 +75,7 @@ export default class GraficoVencimientos extends React.Component {
         />
         <GalioText
           onLayout={({ nativeEvent: { layout: { width } } }) => {
-            this.setState({ labelWidth: width });
+            setLabelWidth(width);
           }}
           style={{
             position: 'absolute',
@@ -91,7 +87,7 @@ export default class GraficoVencimientos extends React.Component {
         <GalioText center>{titulo}</GalioText>
       </View>
     )
-  }
+  
 
 /*
 
