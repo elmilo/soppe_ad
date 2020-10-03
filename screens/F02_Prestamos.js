@@ -8,26 +8,41 @@ import { Images, materialTheme } from '../constants';
 import { HeaderHeight } from "../constants/utils";
 import prestamos from '../constants/prestamos.js';
 import { deletePrestamo } from '../Database/Database';
+import ModalPersonalizado from "../components/ModalPersonalizado";
+
+
+const arrayTipo = [
+  { value: 1, label: "Con Tercero" },
+  { value: 2, label: "En Cuenta" },
+ ];
+
 
 export default function F02_Prestamos (props) {
-  
+  const [tipoPrestamo, setTipoPrestamo] = useState("");
   function eliminarPrestamo() {
     deletePrestamo(id);
     navigation.navigate("Prestamo");
       }
 
+      function handleOnChangeTipo(unTipo) {
+        setTipoPrestamo(unTipo);
+      }
+     
+      function DropdownTipoPrestamo(props) {
+        return (
+          <ModalPersonalizado
+            data={arrayTipo}
+            initValue="Préstamo"
+            onSelected={handleOnChangeTipo}
+          />
+        );
+      };
     
     return (
       <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-   
-          
-            
-
-         
-       
+      {DropdownTipoPrestamo()}
         <Block style={{ paddingHorizontal: theme.SIZES.BASE, paddingVertical: theme.SIZES.BASE }}>
-       
-            <Text></Text>
+             <Text></Text>
             <Button
               shadowless
               color="red"

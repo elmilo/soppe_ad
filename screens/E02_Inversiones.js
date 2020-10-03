@@ -103,10 +103,10 @@ export default function D2_Inversiones(props) {
               shadowless
               color="red"
               style={[styles.button, styles.shadow]}
-              onPress={() => {eliminarInversion();}}
+              //onPress={() => {eliminarInversion();}}
 
             >
-            Vender y Eliminar
+             Eliminar
             </Button>
             </Block>
                      
