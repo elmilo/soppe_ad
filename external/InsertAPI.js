@@ -57,7 +57,7 @@ export const cuentaEnNube = (Cuenta, userID) => {
       });
       let responseJson = await response.json();
       console.log(responseJson);
-      return responseJson;
+      return (responseJson.ok > 0);
     } catch (error) {
       console.log(error);
       return -1;

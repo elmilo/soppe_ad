@@ -298,8 +298,6 @@ var dropTarjetas = "DROP TABLE Tarjetas;";
 
 var dropPrestamos = "DROP TABLE Prestamos;";
 
-var dropRubros = "DROP TABLE Rubros;";
-
 var dropCategorias = "DROP TABLE Categorias;";
 
 var dropPresupuestos = "DROP TABLE Presupuestos;";
@@ -354,3 +352,57 @@ export function dropAll() {
   //createTable(createEgresos);
 
 }
+
+
+/*export async function deleteAllFrom(table) {
+try{
+  db.transaction(
+    (tx) => {
+      tx.executeSql(
+        "DELETE FROM " + table,
+        []
+      );
+    },
+    null,
+    () => {console.log("se vació la tabla " + table);
+            return true;}       
+    
+    );
+  }catch{ 
+
+    console.log("Error en deleteAllFrom - tabla " + table);
+    return false;
+
+  }
+};*/
+
+
+
+/*export async function deleteAllFrom(table) {
+  const result = await callDeleteAllFrom(table);
+  console.log(result);
+}*/
+
+export function deleteAllFrom(table) {
+  return callDeleteAllFrom(table);
+}
+
+
+async function callDeleteAllFrom(table) {
+  return new Promise(function(resolve, reject) {
+    db.transaction(
+      (tx) => {
+        tx.executeSql(
+          "DELETE FROM " + table,
+          []
+        );
+      },
+      null,
+      () => {console.log("se vació la tabla " + table);
+        resolve(true)}       
+      
+      );
+  });
+};
+
+

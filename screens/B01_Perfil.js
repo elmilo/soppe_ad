@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Dimensions,
+  TouchableHighlight,
   ActivityIndicator,
-  Image,
+  Modal,
   ImageBackground,
   Platform,
+  View
 } from "react-native";
-import { Button, Block, Text, Input, theme } from "galio-framework";
+import { Button, Block, Text, theme } from "galio-framework";
 import { LinearGradient } from "expo-linear-gradient";
 
 import { Icon } from "../components";
@@ -17,25 +19,30 @@ const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
 import { useFocusEffect } from '@react-navigation/native';
 import { fakeprofile as miPerfil } from "../constants";
-import { getTodo , getTodoSinFiltro} from "../Database/SelectTables";
+import { getTodo , getEntidades} from "../Database/SelectTables";
 
-import { enviarNube, deleteNube } from "../external/InsertAPI";
+import { enviarNube, deleteNube, recibirNube } from "../external/InsertAPI";
 
-
+import { setCuentaUnica, setTarjeta, setInversion, setPrestamo, setPresupuesto } from "../Database/Database";
+import { setEgreso } from "../Database/Egresos";
+import { setIngreso } from "../Database/Ingresos";
+import { deleteAllFrom } from "../Database/CreateTables";
 
     
 
 export default function B01_Perfil(props) {
   const [user_id, setUser_id] = useState(1);
 
-  const [indicadorWIPE, setIndicadorWIPE] = useState(false);
-  const [indicadorWIPR, setIndicadorWIPR] = useState(false);
+  const [indicadorTrabajando, setIndicadorTrabajando] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-  const [datosCuentas, setDatosCuentas] = useState([]);
   
-  
+  /********************************* */
+
   function successCallbackUserID(rowDB) {
+    console.log('Usuario: ' + JSON.stringify(rowDB));
+    setNombre(rowDB.nombre);
+    setApellido(rowDB.apellido);
     setUser_id(rowDB.idExt);
   }
 
@@ -43,40 +50,30 @@ export default function B01_Perfil(props) {
     getTodo("Usuarios", successCallbackUserID);
   }, []);
 
-
-  function successCallback(rowDB) {
-    console.log('Usuario: ' + JSON.stringify(rowDB));
-    setNombre(rowDB.nombre);
-    setApellido(rowDB.apellido);
-  }
   
-  function callbackCuentas(rowDB) {
-    console.log('datos cuentas: ' + rowDB);
-    //setDatosCuentas(rowDB);
-    deleteNube(user_id, 'Cuenta').then(
-      res => {if (res) {
-        console.log('Exito en el deleteNube: ' + res);
-      } else {
+  function callbackEnviarEntidad(rowDB, Entidad) {
+    deleteNube(user_id, Entidad ).then(
+      res => {if (res) {        
+          rowDB.forEach((unaFila) =>{
+            enviarNube(unaFila, Entidad).then(res => {
+            if (res) {
+              console.log('Exito en el enviarDatosNube: ' + res);
+              
+            } else {
+              console.log('Error en el enviarDatosNube');
+              return false;
+            }
+          });
+        });
+
+    } else {
         console.log('Error en el deleteNube');
       }}
     );
-    rowDB.forEach((unaFila) =>{
-      enviarNube(unaFila, 'Cuenta').then(res => {
-        if (res) {
-          console.log('Exito en el enviarDatosNube: ' + res);
-        } else {
-          console.log('Error en el enviarDatosNube');
-        }
-      });
-    });
-    setIndicadorWIPR(false);
+    
   }
 
-  useEffect(() => {
-    getTodo("Usuarios", successCallback);
-  }, []);
-
-  
+  //              {indicadorWIPE? <ActivityIndicator /> : null}
  /* function callbackCuentas(rowDB) {
     console.log('datos cuentas: ' + rowDB);
     //setDatosCuentas(rowDB);
@@ -106,21 +103,100 @@ export default function B01_Perfil(props) {
   }
 */
 
-  function enviarDatosNube (){
-    setIndicadorWIPR(true);
-    getTodoSinFiltro('Cuentas', callbackCuentas);  
-  }
+function enviarDatosNube (){
+    /*setIndicadorTrabajando(true);
+    getEntidades('Cuentas', callbackEnviarEntidad);
+    getEntidades('Tarjetas', callbackEnviarEntidad);
+    getEntidades('Inversiones', callbackEnviarEntidad);
+    getEntidades('Presupuestos', callbackEnviarEntidad);
+    getEntidades('Prestamos', callbackEnviarEntidad);
+    getEntidades('Ingresos', callbackEnviarEntidad);
+    getEntidades('Egresos', callbackEnviarEntidad);
+    setTimeout(
+      () => setIndicadorTrabajando(false), 
+      7000
+    );*/
+   }
   
 
-  function recuperarDatosNube (){
-    setIndicadorWIPR(true);
-    getTodo('Cuentas', callbackCuentas);
-    setIndicadorWIPR(false);
+  async function recuperarDatosNube (){
+    //setIndicadorTrabajando(true);
+    /*recibirNube(user_id, 'Cuenta').then(
+      res => {if (res) {      
+        deleteAllFrom('Cuentas').then( () => {
+          res.forEach((unaFila) =>{
+            setCuentaUnica(unaFila.cbu, unaFila.user_id, unaFila.entidad_id, unaFila.moneda, unaFila.nro_cuenta, unaFila.alias, unaFila.saldo);
+          })
+        });
 
+      } else {
+        console.log('Error en recibir cuenta')
+      }}
+    );*/
+    recibirNube(user_id, 'Tarjeta').then(
+      res => {if (res) {      
+        deleteAllFrom('Tarjetas').then( () => {
+          res.forEach((unaFila) =>{
+            setTarjeta(unaFila.user_id, unaFila.cuenta_id, unaFila.ultimos_4_digitos, 
+              unaFila.emisor, unaFila.tipo , unaFila.fecha_vencimiento_tarjeta, 
+              unaFila.fecha_cierre_resumen, unaFila.fecha_vencimiento_resumen, unaFila.saldo);
+          })
+        });
+
+      } else {
+        console.log('Error en recibir cuenta')
+      }}
+    );
+    /*setEntidades('Tarjetas', callbackRecibirEntidad);
+    setEntidades('Inversiones', callbackRecibirEntidad);
+    setEntidades('Presupuestos', callbackRecibirEntidad);
+    setEntidades('Prestamos', callbackRecibirEntidad);
+    setEntidades('Ingresos', callbackRecibirEntidad);
+    setEntidades('Egresos', callbackRecibirEntidad);*/
+
+    /*setTimeout(
+      () => setIndicadorTrabajando(false), 
+      7000
+    );*/
+  }
+  
+  /*function renderBoton(){
+    return(
+      <TouchableHighlight
+      style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+      onPress={() => {
+        setIndicadorTrabajando(false);
+      }}
+    >
+      <Text style={styles.textStyle}>¡Terminado!</Text>
+    </TouchableHighlight>
+    )
+  }*/
+
+  function renderCartel() {
+    return (
+      <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        presentationStyle='fullscreen'
+        visible={indicadorTrabajando}
+        onRequestClose={() => {
+          console.log("Modal cerrado");
+        }}
+      >
+        <View style={styles.centeredView}>
+        <Text>Por favor, espere mientras procesamos</Text>
+        {indicadorTrabajando? <ActivityIndicator size='large'/> : null}
+            </View>
+      </Modal>
+      </View>
+    );
   }
 
   return (
     <Block flex style={styles.profile}>
+     
       <Block flex>
         <ImageBackground
           source={miPerfil.avatar}
@@ -150,7 +226,7 @@ export default function B01_Perfil(props) {
             />
           </Block>
         </ImageBackground>
-
+        
         <Block>
           <Block center>
             <Button
@@ -158,11 +234,9 @@ export default function B01_Perfil(props) {
               color={materialTheme.COLORS.INFO}
               onPress={() => {
                 enviarDatosNube();
-                alert("ok");
               }}
             >
               <Text>Enviar mis datos a la nube</Text>
-              {indicadorWIPE? <ActivityIndicator /> : null}
             </Button>
 
             <Button
@@ -170,12 +244,11 @@ export default function B01_Perfil(props) {
               color={materialTheme.COLORS.LABEL}
               onPress={() => {
                 recuperarDatosNube();
-                alert("ok");
               }}
             >
               <Text>Recuperar datos de la nube</Text>
-              {indicadorWIPR? <ActivityIndicator /> : null}
             </Button>
+            {renderCartel()}
           </Block>
         </Block>
       </Block>
@@ -254,4 +327,40 @@ const styles = StyleSheet.create({
     marginTop: theme.SIZES.BASE,
     marginBottom: theme.SIZES.BASE,
   },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 22
+    },
+    modalView: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5
+    },
+    openButton: {
+      backgroundColor: "#F194FF",
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 15,
+      textAlign: "center"
+    }
 });

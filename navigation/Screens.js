@@ -481,7 +481,6 @@ function StackAnalisis(props) {
         options={{
           header: ({ navigation, scene }) => (
             <Header
-              back
               title="Movimientos"
               scene={scene}
               navigation={navigation}

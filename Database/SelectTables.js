@@ -1,5 +1,16 @@
 import * as SQLite from "expo-sqlite";
+import { cuentas } from "../constants";
 const db = SQLite.openDatabase("db2.db");
+
+const ENTIDADES ={
+  Cuentas: 'Cuenta',
+  Egresos: 'Egreso',
+  Ingresos: 'Ingreso',
+  Prestamos: 'Prestamo',
+  Inversiones: 'Inversion',
+  Presupuestos: 'Presupuesto',
+  Tarjetas: 'Tarjeta'  
+};
 
 export function getCompletoFormateado(table, callback) {
   db.transaction((tx) => {
@@ -41,7 +52,7 @@ export function getTodoSC(campos, userID, table) {
       "select "+ campos +  " from " + table,
       [userID],
       (_, { rows }) => {
-        console.log('Success getTodoSC: ' + table + ' -- ' + JSON.stringify(rows._array[0]));
+        //console.log('Success getTodoSC: ' + table + ' -- ' + JSON.stringify(rows._array[0]));
         return (rows._array);
       },
       (_, error) => {
@@ -84,7 +95,7 @@ export function getTodoSinFiltro(table, successCallback) {
       "select * from " + table,
       [],
       (_, { rows }) => {
-        console.log('Success getTodoSinFiltro: ' + table + ' -- ' + JSON.stringify(rows._array));
+        //console.log('Success getTodoSinFiltro: ' + table + ' -- ' + JSON.stringify(rows._array));
         successCallback(rows._array);
       },
       (_, error) => {
@@ -107,6 +118,24 @@ export function getTodoUserID(table, user_id, callback) {
       (_, error) => {
         console.log("error getTodoUserID", error);
         return ([]);
+      }
+    );
+  });
+}
+
+
+export function getEntidades(table, successCallback) {
+  //console.log('ENTIDADES[table] : ' + ENTIDADES[table]);  
+  db.transaction((tx) => {
+    tx.executeSql(
+      "select * from " + table,
+      [],
+      (_, { rows }) => {
+        console.log('Success getEntidades: ' + table + ' -- ' + JSON.stringify(rows._array));
+        successCallback(rows._array, ENTIDADES[table]);
+      },
+      (_, error) => {
+        console.log("error getEntidades", error);
       }
     );
   });
