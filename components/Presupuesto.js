@@ -73,7 +73,7 @@ export default function Presupuesto(props) {
           }
         >
           <Block flex space="between" style={styles.cuentaDescription}>
-            <Text size={17} style={styles.presupuestoEntidad}>{presupuesto.descripcion}</Text>
+            <Text size={14} style={styles.presupuestoEntidad}>{presupuesto.descripcion}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Categoria:</Text>
             <Text size={13} style={styles.presupuestoEntidad}>{presupuesto.categoria_id}</Text>
             <Text size={9} muted={!saldoColor} color={saldoColor}>Valor:</Text>
@@ -119,7 +119,7 @@ export default function Presupuesto(props) {
           }
         >
           <Block flex space="between" style={styles.presupuestoDescription}>
-            <Text size={17} style={styles.presupuestoEntidad}>
+            <Text size={14} style={styles.presupuestoEntidad}>
               {presupuesto.rubro_id}
             </Text>
             <Text size={13} style={styles.presupuestoEntidad}>
