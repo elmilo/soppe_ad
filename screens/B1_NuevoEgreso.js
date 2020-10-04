@@ -192,8 +192,8 @@ function handleOnChangeMedioDePago(medioDePago) {
       cuotas_restantes, 
       descripcion,
       auto_manual);
-    console.log("UserID:"+user_id+" Cuenta:"+cuenta.slice(cuenta.search("-")+2,-6)+" Monto:"+monto)
-    getEgresos();
+
+      getEgresos();
     {medio_de_pago == "Consumo Cuenta"
           ? updateSaldoCuentaEgreso(user_id,cuenta.slice(cuenta.search("-")+2,-6),monto): 
           updateSaldoTarjetaEgreso(user_id,tarjeta.slice(-5,-1),monto)

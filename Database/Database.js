@@ -192,14 +192,14 @@ export function getSaldoEgresosCuenta(cuenta) {
   });
 }
 
-export function deleteCuenta(nroCuenta) {
+export function deleteCuenta(userId,nroCuenta) {
   console.log("deleteCuenta");
-  console.log(nroCuenta);
+  console.log(userId,nroCuenta);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Cuentas where nro_cuenta = nroCuenta",
-        [nroCuenta]
+        "delete from Cuentas where user_id = ? and nro_cuenta = ?",
+        [userId, nroCuenta]
       );
     },
     null,
@@ -210,11 +210,11 @@ export function deleteCuenta(nroCuenta) {
 
 //*******PRESUPUESTOS************
 
-export function getPresupuestos(successCallback) {
+export function getPresupuestos(id_usuario,successCallback) {
   db.transaction((tx) => {
     tx.executeSql(
-      "select * from Presupuestos",
-      [],
+      "select * from Presupuestos where user_id = ?",
+      [id_usuario],
       (_, { rows }) => {
         console.log('Success getpresupuesto: ', rows._array);
         successCallback(rows._array);
@@ -397,14 +397,14 @@ export function getTarjetaDetalle(id) {
   });
 }
 
-export function updateFechasTarjeta(ultimosDigitos, fechaCierre, fechaVencimientoResumen) {
+export function updateFechasTarjeta(userID,ultimosDigitos, fechaCierre, fechaVencimientoResumen) {
   console.log("updateFechasTarjeta");
-  console.log(fechaCierre, fechaVencimientoResumen, ultimosDigitos);
+  console.log(userID,ultimosDigitos, fechaCierre, fechaVencimientoResumen);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Tarjetas set fecha_cierre_resumen = ?, fecha_vencimiento_resumen = ? where ultimos_4_digitos = ?",
-        [fechaCierre, fechaVencimientoResumen, ultimosDigitos],
+        "update Tarjetas set fecha_cierre_resumen = ?, fecha_vencimiento_resumen = ? where user_id = ? and ultimos_4_digitos = ?",
+        [fechaCierre, fechaVencimientoResumen, userID, ultimosDigitos],
       );
     },
     null,
@@ -443,14 +443,14 @@ export function updateResetSaldoTarjeta(ultimosDigitos) {
 }
 
 
-export function deleteTarjeta(ultimosDigitos) {
+export function deleteTarjeta(userId,ultimosDigitos) {
   console.log("deleteTarjeta");
-  console.log(ultimosDigitos);
+  console.log(userId,ultimosDigitos);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Tarjetas where ultimos_4_digitos = ?",
-        [ultimosDigitos]
+        "delete from Tarjetas where user_id = ? and ultimos_4_digitos = ?",
+        [userId,ultimosDigitos]
       );
     },
     null,
@@ -458,14 +458,13 @@ export function deleteTarjeta(ultimosDigitos) {
   );
 }
 
-
 //*******INVERSIONES************
 
-export function getInversiones(successCallback) {
+export function getInversiones(userID,successCallback) {
   db.transaction((tx) => {
     tx.executeSql(
-      "select * from Inversiones",
-      [],
+      "select * from Inversiones where user_id = ?",
+      [userID],
       (_, { rows }) => {
         console.log('Success getInversiones: ', rows._array);
         successCallback(rows._array);
@@ -510,14 +509,14 @@ export function getInversionDetalle(id) {
   });
 }
 
-export function updateVentaMontoInversion(id, ventaMonto) {
+export function updateVentaMontoInversion(userId,descInversion, ventaMonto) {
   console.log("updateVentaMontoInversion");
-  console.log(id, ventaMonto);
+  console.log(userId,descInversion, ventaMonto);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "update Inversiones set venta_monto = ? where id = ?",
-        [ventaMonto, id],
+        "update Inversiones set venta_monto = ? where user_id = ? and descripcion = ?",
+        [ventaMonto, userId, descInversion],
       );
     },
     null,
@@ -525,14 +524,13 @@ export function updateVentaMontoInversion(id, ventaMonto) {
   );
 }
 
-export function deleteInversion(id) {
+export function deleteInversion(userId,descInversion) {
   console.log("deleteInversion");
-  console.log(cbu);
   db.transaction(
     (tx) => {
       tx.executeSql(
-        "delete from Inversiones where id = ?",
-        [id]
+        "delete from Inversiones where user_id = ? and descripcion = ?",
+        [userId,descInversion]
       );
     },
     null,
