@@ -32,6 +32,13 @@ import {
 } from "../Database/Movimientos";
 import Movimiento from "../components/Movimiento";
 
+
+import {
+  getEgresos
+} from "../Database/Egresos";
+
+
+
 export default function B02_Analisis(props) {
   const [user_id, setUser_id] = useState(1);
   const [datos, setDatos] = useState([]);

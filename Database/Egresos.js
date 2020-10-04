@@ -96,18 +96,22 @@ export function getEgresosFromEfectivo(successCallback){
 }
 
 //SETS MANUALES
-export function setEgreso(user_id, cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion, auto_manual, comprobante) {
-  const fechaInsert = moment().format("YYYY-MM-DD");
-  
+export function setEgreso(user_id, cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion, auto_manual, foto_comprobante) {
+  const fechaInsert = moment().format("YYYY-MM-DD");  
+  setEgresoConFecha(user_id, cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion, auto_manual, fechaInsert, foto_comprobante);
+}
+
+
+export function setEgresoConFecha(user_id, cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion, auto_manual, add_dttm, foto_comprobante) {  
   db.transaction((tx) => {
     tx.executeSql(
       'INSERT into Egresos (user_id, cuenta_id, rubro_id, categoria_id, tarjeta_id, medio_de_pago, monto, cuotas_fechas, cuotas_restantes, descripcion, auto_manual, add_dttm, foto_comprobante) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [user_id, cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion, auto_manual, fechaInsert, comprobante],
+      [user_id, cuenta, rubro, categoria, tarjeta, medioDePago, monto, fechaVencimiento, cuotasRestantes, descripcion, auto_manual, add_dttm, foto_comprobante],
       (_, { rows }) => {
-        console.log('el Egreso se guardó correctamente: ' + JSON.stringify(rows));
+        console.log('el setEgresoConFecha se guardó correctamente: ' + JSON.stringify(rows));
       },
       (_, error) => {
-        console.log('error en el setEgreso: ' + error);
+        console.log('error en el setEgresoConFecha: ' + error);
       }
     );
   });  

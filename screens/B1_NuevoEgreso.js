@@ -40,7 +40,6 @@ export default function B1_NuevoEgreso(props) {
   const [cuotas_restantes, setCuotas_restantes] = useState(1024);
   const [descripcion, setDescripcion]       = useState("");
   const [auto_manual, setAuto_manual]       = useState("manual");
-  const [add_dttm, setAdd_dttm]             = useState(new Date());
   const [imagenComprobante, setImagenComprobante]   = useState(null);
   const {navigation } = props;
   
@@ -180,7 +179,8 @@ function handleOnChangeMedioDePago(medioDePago) {
   }
   
   function saveEgreso() {
-
+   /* setEgreso(user_id, cuenta, rubro, categoria, tarjeta, medioDePago, monto, 
+      fechaVencimiento, cuotasRestantes, descripcion, auto_manual, foto_comprobante)*/
   setEgreso(user_id,
     cuenta, 
       rubro, 
@@ -191,9 +191,9 @@ function handleOnChangeMedioDePago(medioDePago) {
       cuotas_fechas, 
       cuotas_restantes, 
       descripcion,
-      auto_manual);
+      auto_manual, imagenComprobante);
 
-      getEgresos();
+      //getEgresos();
     {medio_de_pago == "Consumo Cuenta"
           ? updateSaldoCuentaEgreso(user_id,cuenta.slice(cuenta.search("-")+2,-6),monto): 
           updateSaldoTarjetaEgreso(user_id,tarjeta.slice(-5,-1),monto)
@@ -210,7 +210,6 @@ function handleOnChangeMedioDePago(medioDePago) {
     setCuotas_restantes(1024);
     setDescripcion("");
     setAuto_manual("manual");
-    setAdd_dttm(new Date());
     setImagenComprobante(null);
 
   }

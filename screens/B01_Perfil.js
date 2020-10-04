@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Platform,
   View,
+  TouchableHighlight
 } from "react-native";
 import { Button, Block, Text, theme } from "galio-framework";
 import { LinearGradient } from "expo-linear-gradient";
@@ -29,21 +30,22 @@ import {
   setPrestamo,
   setPresupuesto,
 } from "../Database/Database";
-import { setEgreso } from "../Database/Egresos";
-import { setIngreso } from "../Database/Ingresos";
+import { setEgresoConFecha } from "../Database/Egresos";
+import { setIngresoConFecha } from "../Database/Ingresos";
 import { deleteAllFrom } from "../Database/CreateTables";
 
 export default function B01_Perfil(props) {
   const [user_id, setUser_id] = useState(1);
-
-  const [indicadorTrabajando, setIndicadorTrabajando] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [indicadorTrabajando, setIndicadorTrabajando] = useState(false);
+  const [mensaje, setMensaje] = useState("");
   /********************************* */
 
   function successCallbackUserID(rowDB) {
-    console.log("Usuario: " + JSON.stringify(rowDB));
+    //console.log("Usuario: " + JSON.stringify(rowDB));
     setNombre(rowDB.nombre);
     setApellido(rowDB.apellido);
     setUser_id(rowDB.idExt);
@@ -51,7 +53,7 @@ export default function B01_Perfil(props) {
 
   useEffect(() => {
     getTodo("Usuarios", successCallbackUserID);
-  }, []);
+  });
 
   function callbackEnviarEntidad(rowDB, Entidad) {
     deleteNube(user_id, Entidad).then((res) => {
@@ -74,14 +76,14 @@ export default function B01_Perfil(props) {
 
   function enviarDatosNube() {
     setIndicadorTrabajando(true);
-    getEntidades("Cuentas", callbackEnviarEntidad);
+    /*getEntidades("Cuentas", callbackEnviarEntidad);
     getEntidades("Tarjetas", callbackEnviarEntidad);
     getEntidades("Inversiones", callbackEnviarEntidad);
     getEntidades("Presupuestos", callbackEnviarEntidad);
-    getEntidades("Prestamos", callbackEnviarEntidad);
+    getEntidades("Prestamos", callbackEnviarEntidad);*/
     getEntidades("Ingresos", callbackEnviarEntidad);
     getEntidades("Egresos", callbackEnviarEntidad);
-    setTimeout(() => setIndicadorTrabajando(false), 7000);
+    setTimeout(() => handleIndicadorTrabajando(false, 'El envío de datos ha terminado con éxito'), 7000);
   }
 
   async function recuperarDatosNube() {
@@ -165,6 +167,8 @@ export default function B01_Perfil(props) {
     });
     recibirNube(user_id, "Prestamo").then((res) => {
       if (res) {
+        console.log('recibirNube ' + JSON.stringify(res));
+        console.log('recibirNube user_id' + user_id);
         deleteAllFrom("Prestamos").then(() => {
           res.forEach((unaFila) => {
             setPrestamo(
@@ -189,7 +193,7 @@ export default function B01_Perfil(props) {
       if (res) {
         deleteAllFrom("Ingresos").then(() => {
           res.forEach((unaFila) => {
-            setIngreso(
+            setIngresoConFecha(
               unaFila.user_id,
               unaFila.cuenta_id,
               unaFila.tipo_ingreso,
@@ -197,7 +201,8 @@ export default function B01_Perfil(props) {
               unaFila.cuotas_fechas,
               unaFila.cuotas_restantes,
               unaFila.descripcion,
-              unaFila.auto_manual
+              unaFila.auto_manual,
+              unaFila.add_dttm
             );
           });
         });
@@ -210,7 +215,7 @@ export default function B01_Perfil(props) {
       if (res) {
         deleteAllFrom("Egresos").then(() => {
           res.forEach((unaFila) => {
-            setEgreso(
+            setEgresoConFecha(
               unaFila.user_id,
               unaFila.cuenta_id,
               unaFila.rubro_id,
@@ -221,7 +226,9 @@ export default function B01_Perfil(props) {
               unaFila.cuotas_fechas,
               unaFila.cuotas_restantes,
               unaFila.descripcion,
-              unaFila.auto_manual
+              unaFila.auto_manual,
+              unaFila.add_dttm,
+              null
             );
           });
         });
@@ -230,9 +237,53 @@ export default function B01_Perfil(props) {
       }
     });
 
-    setTimeout(() => setIndicadorTrabajando(false), 7000);
+    setTimeout(() => handleIndicadorTrabajando(false, 'La importación ha terminado con éxito'), 7000);
   }
 
+    function handleIndicadorTrabajando (status, mensaje){
+      setIndicadorTrabajando(status);
+      setModalVisible(!status);      
+      setMensaje(mensaje);
+    }
+
+
+    function renderCartelExito (){
+      return(<View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            Alert.alert("Cerrado el modal del cartel");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>{mensaje}</Text>
+  
+              <TouchableHighlight
+                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
+                onPress={() => {
+                  setModalVisible(false);
+                }}
+              >
+                <Text style={styles.textStyle}>Aceptar</Text>
+              </TouchableHighlight>
+            </View>
+          </View>
+        </Modal>
+  
+        <TouchableHighlight
+          style={styles.openButton}
+          onPress={() => {
+            setModalVisible(true);
+          }}
+        >
+          <Text style={styles.textStyle}>Show Modal</Text>
+        </TouchableHighlight>
+      </View>
+      )
+    }
   /*function renderBoton(){
     return(
       <TouchableHighlight
@@ -321,6 +372,7 @@ export default function B01_Perfil(props) {
               <Text>Recuperar datos de la nube</Text>
             </Button>
             {renderCartel()}
+            {renderCartelExito()}
           </Block>
         </Block>
       </Block>

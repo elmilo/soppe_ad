@@ -79,13 +79,15 @@ export function getIngresosEgresos(successCallback) {
   
   export function setIngreso(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual) {
     const fechaInsert = moment().format("YYYY-MM-DD");
-    //console.log(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual)
-    
-    
+    //console.log(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual)    
+    setIngresoConFecha(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual, fechaInsert);  
+  }
+
+  export function setIngresoConFecha(user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual, add_dttm) {    
     db.transaction((tx) => {
         tx.executeSql(
             "insert into Ingresos (user_id, cuenta_id, tipo_ingreso, monto, cuotas_fechas, cuotas_restantes, descripcion, auto_manual, add_dttm) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual, fechaInsert],
+            [user_id, cuenta,  tipoIngreso,  monto, cuotas_fechas,  cuotas_restantes,  descripcion, auto_manual, add_dttm],
           (_, { rows }) => {
             console.log('Exito en setIngreso: ' + JSON.stringify(rows));
           },
@@ -94,8 +96,6 @@ export function getIngresosEgresos(successCallback) {
           }
         );
       }); 
-    
-  
   }
 
 
