@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
-  ImageBackground,
-  Image,
+  ActivityIndicator,
+  Modal,
   StyleSheet,
   ScrollView,
   Dimensions,
-  Platform
+  Platform,
+  View
 } from "react-native";
 import { Block, Button, Text, theme } from "galio-framework";
 
@@ -35,40 +36,52 @@ export default function B02_Analisis(props) {
   const [user_id, setUser_id] = useState(1);
   const [datos, setDatos] = useState([]);
   const [botonOpciones, setBotonOpciones] = useState(false);
-  const [datosExportar, setDatosExportar] = useState([]);
+
 
   const [botonExportar, setBotonExportar] = useState(false);
+  const [indicadorTrabajando, setIndicadorTrabajando] = useState(false);
 
   const { navigation } = props;
 
+  const [datosExportar, setDatosExportar] = useState([]);
 
+async function createExcelFile(data) {
+  const worksheet = XLSX.utils.json_to_sheet(data, {
+    skipHeader: true,
+  });
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Movimientos");
 
-  async function exportFile() {
-        
-    const worksheet = XLSX.utils.json_to_sheet(datosExportar, { skipHeader:true});
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Movimientos");
+  /* write file */
+  const contents = XLSX.write(workbook, { type: "base64", bookType: "xlsx" });
+  const fileUri = exportDir + "data_export.xlsx";
 
-    /* write file */
-    const contents = XLSX.write(workbook, { type: 'base64', bookType: 'xlsx' });    
-    const fileUri = exportDir + "data_export.xlsx";
+  await FileSystem.writeAsStringAsync(fileUri, contents, {
+    encoding: FileSystem.EncodingType.Base64,
+  });
 
-    await FileSystem.writeAsStringAsync(fileUri, contents , {
-      encoding: FileSystem.EncodingType.Base64
-    });
-    
-    await Sharing.shareAsync(fileUri, {
-      mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-      dialogTitle: 'Bajar datos exportados',
-      UTI: 'com.microsoft.excel.xlsx'
+  await Sharing.shareAsync(fileUri, {
+    mimeType:
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    dialogTitle: "Bajar datos exportados",
+    UTI: "com.microsoft.excel.xlsx",
+  });
+  
+}
+
+function exportFile() {
+  getMovimientosYTD(user_id, callbackExportData)
+    .then((s) => {
+      console.log("Exito en el then de exportar " + s);
+      setIndicadorTrabajando(false);
     })
-  }
+    .catch((e) => {
+      console.log("Error en el catch de exportar " + e);
+      setIndicadorTrabajando(false);
+    });
+}
 
   function callbackExportData(rows) {
-      /*var datosTemporales = {
-        cols: [{ name: "A", key: 0 }, { name: "B", key: 1 }, { name: "C", key: 2 }, { name: "D", key: 3 }],
-        data: []
-      };*/
       var datosTemporales = [];
       var cabeceras = [ "Tipo",    "Fecha", "Descripción" , "Monto"];
       datosTemporales.push(cabeceras);
@@ -78,11 +91,10 @@ export default function B02_Analisis(props) {
         var unaFila = [elemento.origen, elemento.fecha, elemento.descripcion, elemento.monto];
         datosTemporales.push(unaFila);
       });
-      setDatosExportar(datosTemporales);
-      setBotonOpciones(false);
+      createExcelFile(datosTemporales);  
     }
 
-  function renderBotonDescargar(){
+  /*function renderBotonDescargar(){
     return(
     <Button
     shadowless
@@ -94,22 +106,32 @@ export default function B02_Analisis(props) {
   >
     BAJAR
   </Button>)
-  }
+  }*/
 
 
-  function renderBotonOpcionesDescarga() {
+  
+  
+  function renderCartel() {
     return (
-      <Button
-        shadowless
-        color={materialTheme.COLORS.ACTIVE}
-        onPress={() => {
-          setBotonOpciones(true);
-        }}
-      >
-        Opciones de descarga de info
-      </Button>
+      <View style={styles.centeredView}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          presentationStyle="fullscreen"
+          visible={indicadorTrabajando}
+          onRequestClose={() => {
+            console.log("Modal cerrado");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <Text>Por favor, espere mientras procesamos</Text>
+            {indicadorTrabajando ? <ActivityIndicator size="large" /> : null}
+          </View>
+        </Modal>
+      </View>
     );
   }
+
 
   function renderOpcionesDescargas() {
     return (
@@ -130,7 +152,15 @@ export default function B02_Analisis(props) {
             shadowless
             color={materialTheme.COLORS.INFO}
             onPress={() => {
-              getMovimientosYTD (user_id, callbackExportData); 
+              setIndicadorTrabajando(true);
+              exportFile();
+              /************************************************
+               * 
+               * 
+               * 
+               * 
+               * 
+               */
             }}
           >
             Movimientos Año Actual
@@ -161,6 +191,19 @@ export default function B02_Analisis(props) {
     getTodo("Usuarios", successCallbackUserID);
   });
 
+  function renderBotonOpcionesDescarga() {
+    return (
+      <Button
+        shadowless
+        color={materialTheme.COLORS.ACTIVE}
+        onPress={() => {
+          setBotonOpciones(true);
+        }}
+      >
+        Opciones de descarga de info
+      </Button>
+    );
+  }
 
   return (
     <Block>
@@ -174,6 +217,7 @@ export default function B02_Analisis(props) {
         contentContainerStyle={styles.cuentas}
       >
         <Block flex>
+        {renderCartel()}
           <Block dense>{datos}</Block>
         </Block>
       </ScrollView>
@@ -213,5 +257,11 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 66,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
   },
 });

@@ -253,7 +253,7 @@ function createTable(query) {
       query,
       null,
       (_, { rows }) => {
-        console.log("Se creó la tabla correctamente." + query);
+        //console.log("Se creó la tabla correctamente." + query);
       },
       (_, error) => {
         console.log("ERROR - La tabla no pudo ser creada.  " + error);

@@ -41,9 +41,8 @@ export function getMovimientosUltimoMes(user_id, successCallback) {
 
 
   /******************************************************************* */
-  export function getMovimientosYTD(user_id, successCallback) {
+  /*export function getMovimientosYTD(user_id, successCallback) {
     const begin = moment().format("YYYY-01-01");
-    //const end = moment().format("YYYY-MM-") + moment().daysInMonth();
     db.transaction((tx) => {
       tx.executeSql(
         `SELECT
@@ -72,6 +71,49 @@ export function getMovimientosUltimoMes(user_id, successCallback) {
         }
       );
     });
-  }
+  }*/
 
   /********************************************************** */
+
+
+  export function getMovimientosYTD(user_id, successCallback)  {
+    return callGetMovimientosYTD(user_id, successCallback) ;
+  }
+  
+  
+  async function callGetMovimientosYTD(user_id, successCallback) {
+    const begin = moment().format("YYYY-01-01");
+    
+    return new Promise(function(resolve, reject) {
+      db.transaction((tx) => {
+        tx.executeSql(
+          `SELECT
+              'Egreso' as origen, 
+              descripcion,
+              monto,
+              add_dttm as fecha
+              FROM Egresos 
+              WHERE user_id = ? AND add_dttm >= ?
+           UNION
+           SELECT
+              'Ingreso' as origen, 
+              descripcion, 
+              monto,
+              add_dttm as fecha
+              FROM Ingresos 
+              WHERE user_id = ? AND add_dttm >= ?`,
+          [user_id, begin, user_id, begin],
+          (_, { rows }) => {
+            console.log('Success callGetMovimientosYTD: ', rows._array);
+            successCallback(rows._array)
+            resolve(true);
+          },
+          (_, error) => {
+            console.log('error callGetMovimientosYTD: ' + error);
+            reject(false);
+          }
+        );
+      });
+
+    });
+  };
