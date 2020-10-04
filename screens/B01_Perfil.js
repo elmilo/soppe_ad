@@ -76,11 +76,11 @@ export default function B01_Perfil(props) {
 
   function enviarDatosNube() {
     setIndicadorTrabajando(true);
-    /*getEntidades("Cuentas", callbackEnviarEntidad);
+    getEntidades("Cuentas", callbackEnviarEntidad);
     getEntidades("Tarjetas", callbackEnviarEntidad);
     getEntidades("Inversiones", callbackEnviarEntidad);
     getEntidades("Presupuestos", callbackEnviarEntidad);
-    getEntidades("Prestamos", callbackEnviarEntidad);*/
+    getEntidades("Prestamos", callbackEnviarEntidad);
     getEntidades("Ingresos", callbackEnviarEntidad);
     getEntidades("Egresos", callbackEnviarEntidad);
     setTimeout(() => handleIndicadorTrabajando(false, 'El envío de datos ha terminado con éxito'), 7000);
