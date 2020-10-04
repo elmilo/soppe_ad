@@ -79,7 +79,7 @@ export default function B02_Analisis(props) {
         datosTemporales.push(unaFila);
       });
       setDatosExportar(datosTemporales);
-      setBotonExportar(true);
+      setBotonOpciones(false);
     }
 
   function renderBotonDescargar(){
@@ -130,8 +130,7 @@ export default function B02_Analisis(props) {
             shadowless
             color={materialTheme.COLORS.INFO}
             onPress={() => {
-              getMovimientosYTD (user_id, callbackExportData);
-              alert('Espere mientras preparamos sus datos. Luego presione en BAJAR'); 
+              getMovimientosYTD (user_id, callbackExportData); 
             }}
           >
             Movimientos Año Actual
@@ -160,7 +159,6 @@ export default function B02_Analisis(props) {
 
   useEffect(() => {
     getTodo("Usuarios", successCallbackUserID);
-    getMovimientosUltimoMes(user_id, successCallback);
   });
 
 

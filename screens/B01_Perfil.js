@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Dimensions,
-  TouchableHighlight,
   ActivityIndicator,
   Modal,
   ImageBackground,
   Platform,
-  View
+  View,
 } from "react-native";
 import { Button, Block, Text, theme } from "galio-framework";
 import { LinearGradient } from "expo-linear-gradient";
@@ -17,18 +16,22 @@ import { Images, materialTheme } from "../constants";
 import { HeaderHeight } from "../constants/utils";
 const { width, height } = Dimensions.get("screen");
 const thumbMeasure = (width - 48 - 32) / 3;
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect } from "@react-navigation/native";
 import { fakeprofile as miPerfil } from "../constants";
-import { getTodo , getEntidades} from "../Database/SelectTables";
+import { getTodo, getEntidades } from "../Database/SelectTables";
 
 import { enviarNube, deleteNube, recibirNube } from "../external/InsertAPI";
 
-import { setCuentaUnica, setTarjeta, setInversion, setPrestamo, setPresupuesto } from "../Database/Database";
+import {
+  setCuentaUnica,
+  setTarjeta,
+  setInversion,
+  setPrestamo,
+  setPresupuesto,
+} from "../Database/Database";
 import { setEgreso } from "../Database/Egresos";
 import { setIngreso } from "../Database/Ingresos";
 import { deleteAllFrom } from "../Database/CreateTables";
-
-    
 
 export default function B01_Perfil(props) {
   const [user_id, setUser_id] = useState(1);
@@ -36,11 +39,11 @@ export default function B01_Perfil(props) {
   const [indicadorTrabajando, setIndicadorTrabajando] = useState(false);
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
-  
+
   /********************************* */
 
   function successCallbackUserID(rowDB) {
-    console.log('Usuario: ' + JSON.stringify(rowDB));
+    console.log("Usuario: " + JSON.stringify(rowDB));
     setNombre(rowDB.nombre);
     setApellido(rowDB.apellido);
     setUser_id(rowDB.idExt);
@@ -50,116 +53,186 @@ export default function B01_Perfil(props) {
     getTodo("Usuarios", successCallbackUserID);
   }, []);
 
-  
   function callbackEnviarEntidad(rowDB, Entidad) {
-    deleteNube(user_id, Entidad ).then(
-      res => {if (res) {        
-          rowDB.forEach((unaFila) =>{
-            enviarNube(unaFila, Entidad).then(res => {
+    deleteNube(user_id, Entidad).then((res) => {
+      if (res) {
+        rowDB.forEach((unaFila) => {
+          enviarNube(unaFila, Entidad).then((res) => {
             if (res) {
-              console.log('Exito en el enviarDatosNube: ' + res);
-              
+              console.log("Exito en el enviarDatosNube: " + res);
             } else {
-              console.log('Error en el enviarDatosNube');
+              console.log("Error en el enviarDatosNube");
               return false;
             }
           });
         });
-
-    } else {
-        console.log('Error en el deleteNube');
-      }}
-    );
-    
-  }
-
-  //              {indicadorWIPE? <ActivityIndicator /> : null}
- /* function callbackCuentas(rowDB) {
-    console.log('datos cuentas: ' + rowDB);
-    //setDatosCuentas(rowDB);
-    recibirNube(user_id, 'Cuenta').then(
-      res => {if (res) {
-        
-        res.forEach((unaFila) =>{
-          //insertCuenta(unaFila.id, unaFila.nombre...);
-        });
-
-
       } else {
-        
-      }}
-    );
-    
-    rowDB.forEach((unaFila) =>{
-      enviarNube(unaFila, 'Cuenta').then(res => {
-        if (res) {
-          console.log('Exito en el enviarDatosNube: ' + res);
-        } else {
-          console.log('Error en el enviarDatosNube');
-        }
-      });
+        console.log("Error en el deleteNube");
+      }
     });
-    setIndicadorWIPR(false);
   }
-*/
 
-function enviarDatosNube (){
-    /*setIndicadorTrabajando(true);
-    getEntidades('Cuentas', callbackEnviarEntidad);
-    getEntidades('Tarjetas', callbackEnviarEntidad);
-    getEntidades('Inversiones', callbackEnviarEntidad);
-    getEntidades('Presupuestos', callbackEnviarEntidad);
-    getEntidades('Prestamos', callbackEnviarEntidad);
-    getEntidades('Ingresos', callbackEnviarEntidad);
-    getEntidades('Egresos', callbackEnviarEntidad);
-    setTimeout(
-      () => setIndicadorTrabajando(false), 
-      7000
-    );*/
-   }
-  
-
-  async function recuperarDatosNube (){
-    //setIndicadorTrabajando(true);
-    /*recibirNube(user_id, 'Cuenta').then(
-      res => {if (res) {      
-        deleteAllFrom('Cuentas').then( () => {
-          res.forEach((unaFila) =>{
-            setCuentaUnica(unaFila.cbu, unaFila.user_id, unaFila.entidad_id, unaFila.moneda, unaFila.nro_cuenta, unaFila.alias, unaFila.saldo);
-          })
-        });
-
-      } else {
-        console.log('Error en recibir cuenta')
-      }}
-    );*/
-    recibirNube(user_id, 'Tarjeta').then(
-      res => {if (res) {      
-        deleteAllFrom('Tarjetas').then( () => {
-          res.forEach((unaFila) =>{
-            setTarjeta(unaFila.user_id, unaFila.cuenta_id, unaFila.ultimos_4_digitos, 
-              unaFila.emisor, unaFila.tipo , unaFila.fecha_vencimiento_tarjeta, 
-              unaFila.fecha_cierre_resumen, unaFila.fecha_vencimiento_resumen, unaFila.saldo);
-          })
-        });
-
-      } else {
-        console.log('Error en recibir cuenta')
-      }}
-    );
-    /*setEntidades('Tarjetas', callbackRecibirEntidad);
-    setEntidades('Inversiones', callbackRecibirEntidad);
-    setEntidades('Presupuestos', callbackRecibirEntidad);
-    setEntidades('Prestamos', callbackRecibirEntidad);
-    setEntidades('Ingresos', callbackRecibirEntidad);
-    setEntidades('Egresos', callbackRecibirEntidad);*/
-
-    /*setTimeout(
-      () => setIndicadorTrabajando(false), 
-      7000
-    );*/
+  function enviarDatosNube() {
+    setIndicadorTrabajando(true);
+    getEntidades("Cuentas", callbackEnviarEntidad);
+    getEntidades("Tarjetas", callbackEnviarEntidad);
+    getEntidades("Inversiones", callbackEnviarEntidad);
+    getEntidades("Presupuestos", callbackEnviarEntidad);
+    getEntidades("Prestamos", callbackEnviarEntidad);
+    getEntidades("Ingresos", callbackEnviarEntidad);
+    getEntidades("Egresos", callbackEnviarEntidad);
+    setTimeout(() => setIndicadorTrabajando(false), 7000);
   }
-  
+
+  async function recuperarDatosNube() {
+    setIndicadorTrabajando(true);
+
+    recibirNube(user_id, "Cuenta").then((res) => {
+      if (res) {
+        deleteAllFrom("Cuentas").then(() => {
+          res.forEach((unaFila) => {
+            setCuentaUnica(
+              unaFila.cbu,
+              unaFila.user_id,
+              unaFila.entidad_id,
+              unaFila.moneda,
+              unaFila.nro_cuenta,
+              unaFila.alias,
+              unaFila.saldo
+            );
+          });
+        });
+      } else {
+        console.log("Error en recibir Cuenta");
+      }
+    });
+    recibirNube(user_id, "Tarjeta").then((res) => {
+      if (res) {
+        deleteAllFrom("Tarjetas").then(() => {
+          res.forEach((unaFila) => {
+            setTarjeta(
+              unaFila.user_id,
+              unaFila.cuenta_id,
+              unaFila.ultimos_4_digitos,
+              unaFila.emisor,
+              unaFila.tipo,
+              unaFila.fecha_vencimiento_tarjeta,
+              unaFila.fecha_cierre_resumen,
+              unaFila.fecha_vencimiento_resumen,
+              unaFila.saldo
+            );
+          });
+        });
+      } else {
+        console.log("Error en recibir Tarjeta");
+      }
+    });
+    recibirNube(user_id, "Inversion").then((res) => {
+      if (res) {
+        deleteAllFrom("Inversiones").then(() => {
+          res.forEach((unaFila) => {
+            setInversion(
+              unaFila.tipo,
+              unaFila.user_id,
+              unaFila.fecha_vencimiento,
+              unaFila.cuenta_id,
+              unaFila.compra_monto,
+              unaFila.venta_monto,
+              unaFila.descripcion
+            );
+          });
+        });
+      } else {
+        console.log("Error en recibir Inversiones");
+      }
+    });
+    recibirNube(user_id, "Presupuesto").then((res) => {
+      if (res) {
+        deleteAllFrom("Presupuestos").then(() => {
+          res.forEach((unaFila) => {
+            setPresupuesto(
+              unaFila.user_id,
+              unaFila.rubro_id,
+              unaFila.categoria_id,
+              unaFila.monto_mensual,
+              unaFila.descripcion
+            );
+          });
+        });
+      } else {
+        console.log("Error en recibir Presupuestos");
+      }
+    });
+    recibirNube(user_id, "Prestamo").then((res) => {
+      if (res) {
+        deleteAllFrom("Prestamos").then(() => {
+          res.forEach((unaFila) => {
+            setPrestamo(
+              unaFila.user_id,
+              unaFila.cuenta_id,
+              unaFila.tipo,
+              unaFila.prestamo_a_tercero_descripcion,
+              unaFila.cuotas_monto,
+              unaFila.cuotas_fecha_proximo_vencimiento,
+              unaFila.cuotas_restantes,
+              unaFila.prestamo_monto,
+              unaFila.descripcion,
+              unaFila.tomado
+            );
+          });
+        });
+      } else {
+        console.log("Error en recibir Prestamos");
+      }
+    });
+    recibirNube(user_id, "Ingreso").then((res) => {
+      if (res) {
+        deleteAllFrom("Ingresos").then(() => {
+          res.forEach((unaFila) => {
+            setIngreso(
+              unaFila.user_id,
+              unaFila.cuenta_id,
+              unaFila.tipo_ingreso,
+              unaFila.monto,
+              unaFila.cuotas_fechas,
+              unaFila.cuotas_restantes,
+              unaFila.descripcion,
+              unaFila.auto_manual
+            );
+          });
+        });
+      } else {
+        console.log("Error en recibir Ingresos");
+      }
+    });
+
+    recibirNube(user_id, "Egreso").then((res) => {
+      if (res) {
+        deleteAllFrom("Egresos").then(() => {
+          res.forEach((unaFila) => {
+            setEgreso(
+              unaFila.user_id,
+              unaFila.cuenta_id,
+              unaFila.rubro_id,
+              unaFila.categoria_id,
+              unaFila.tarjeta_id,
+              unaFila.medio_de_pago,
+              unaFila.monto,
+              unaFila.cuotas_fechas,
+              unaFila.cuotas_restantes,
+              unaFila.descripcion,
+              unaFila.auto_manual
+            );
+          });
+        });
+      } else {
+        console.log("Error en recibir Egresos");
+      }
+    });
+
+    setTimeout(() => setIndicadorTrabajando(false), 7000);
+  }
+
   /*function renderBoton(){
     return(
       <TouchableHighlight
@@ -176,27 +249,26 @@ function enviarDatosNube (){
   function renderCartel() {
     return (
       <View style={styles.centeredView}>
-      <Modal
-        animationType="slide"
-        transparent={false}
-        presentationStyle='fullscreen'
-        visible={indicadorTrabajando}
-        onRequestClose={() => {
-          console.log("Modal cerrado");
-        }}
-      >
-        <View style={styles.centeredView}>
-        <Text>Por favor, espere mientras procesamos</Text>
-        {indicadorTrabajando? <ActivityIndicator size='large'/> : null}
-            </View>
-      </Modal>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          presentationStyle="fullscreen"
+          visible={indicadorTrabajando}
+          onRequestClose={() => {
+            console.log("Modal cerrado");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <Text>Por favor, espere mientras procesamos</Text>
+            {indicadorTrabajando ? <ActivityIndicator size="large" /> : null}
+          </View>
+        </Modal>
       </View>
     );
   }
 
   return (
     <Block flex style={styles.profile}>
-     
       <Block flex>
         <ImageBackground
           source={miPerfil.avatar}
@@ -226,7 +298,7 @@ function enviarDatosNube (){
             />
           </Block>
         </ImageBackground>
-        
+
         <Block>
           <Block center>
             <Button
@@ -327,40 +399,40 @@ const styles = StyleSheet.create({
     marginTop: theme.SIZES.BASE,
     marginBottom: theme.SIZES.BASE,
   },
-    centeredView: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    modalView: {
-      margin: 20,
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5
-    },
-    openButton: {
-      backgroundColor: "#F194FF",
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2
-    },
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: "center"
-    }
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  openButton: {
+    backgroundColor: "#F194FF",
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
 });

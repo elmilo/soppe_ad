@@ -120,7 +120,7 @@ var createPrestamos =
   "cuotas_monto" +
   " DECIMAL NULL," +
   "cuotas_fecha_proximo_vencimiento" +
-  " DATETIME NULL," +
+  " VARCHAR(60) NULL," +
   "cuotas_restantes" +
   " INT NULL," +
   "prestamo_monto" +

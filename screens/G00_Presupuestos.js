@@ -13,18 +13,15 @@ import { getTodo } from "../Database/SelectTables";
 import { getCuentas } from "../Database/Database";
 
 export default function G00_Presupuestos(props) {
-  const [datos, setDatos] = React.useState(null);
+  const [datos, setDatos] = React.useState([]);
   const [user_id, setUser_id] = useState(1);
-  /*
+  
   function successCallbackUserID(rowDB) {
     setUser_id(rowDB.idExt);
-    getCuentas(user_id, successCallback);
+    getPresupuestos(rowDB.idExt, successCallback);
   }
 
-  useFocusEffect(() => {
-    getTodo("Usuarios", successCallbackUserID);    
-  })
-*/
+ 
   function successCallback(rows) {
     var datosTemporales = [];
     rows.forEach((presupuesto, index) => {
@@ -34,7 +31,7 @@ export default function G00_Presupuestos(props) {
     setDatos(datosTemporales);
   }
   useFocusEffect(() => {
-    getPresupuestos(successCallback);
+    getTodo("Usuarios", successCallbackUserID);  
   })
 
   const renderPresupuestos = () => {

@@ -216,7 +216,7 @@ export function getPresupuestos(id_usuario,successCallback) {
       "select * from Presupuestos where user_id = ?",
       [id_usuario],
       (_, { rows }) => {
-        console.log('Success getpresupuesto: ', rows._array);
+        //console.log('Success getpresupuesto: ', rows._array);
         successCallback(rows._array);
       },
       (_, error) => {
